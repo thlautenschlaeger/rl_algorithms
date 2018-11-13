@@ -22,7 +22,6 @@ class ValueNetwork(nn.Module):
 
 		:param x: input as for neural network. Has dimension of num_inputs
 		"""
-		print(x)
 		x = torch.tanh(self.hidden_layer1(x))
 		x = torch.tanh(self.hidden_layer2(x))
 
@@ -61,8 +60,31 @@ class PolicyNetwork(nn.Module):
 
 		return dist
 
-def compute_general_advantage_estimate(lamb, discount, traj_length, ):
-	""" This method computes the general advantage estimate"""
+def compute_general_advantage_estimate(rewards, values, next_value, gamma, lamb):
+	""" This method computes the general advantage estimate.
+		lamb=1 high variance. Adjusting lamb adjusts bias, variance trade-off
+	:param rewards: list of rewards per trajectory
+	:param values: list of values computed by critic for previous states
+	:param next_value: next value computed by critic for next state
+	:param gamma: determines scale of value function
+	:param lamb: discount factor for reward shaping
+	"""
+	gae = 0
+	#values = torch.cat((values, next_value)) # do this outside of function
+	values = values.copy()
+	values.append(next_value)
+	advantage_estimates = torch.ones(()).new_empty((1, len(rewards)))[0]
+	#adv = np.empty((1, len(rewards)))
+	for t_step in range(len(rewards)):
+		discount = (gamma * lamb) ** t_step
+		delta = rewards[t_step] + gamma * values[t_step + 1] - values[t_step]
+		gae = delta + discount * gae # not sure if correct
+		advantage_estimates[t_step] = gae + values[t_step]
+
+	return advantage_estimates
+
+
+
 
 def discount_sum_rewards():
 	""" This method computes the discounted sum of rewards """
