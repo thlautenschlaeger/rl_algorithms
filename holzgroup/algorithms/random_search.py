@@ -14,7 +14,7 @@ def ars(alpha, iterations, v, b, n, p):
     """
     m_0, mu_0, sigma_0, j = initialize(n, p)
     while ending_condition_satisfied():
-
+        a = 4
 
 
 def initialize(n, p):
