@@ -29,15 +29,17 @@ def ppo_update(epochs, states, actions, old_log_probs, advantage_estimates, adv,
 			entropy = dist.entropy().mean()
 			log_probs = dist.log_prob(actions[i])
 
-			policy_ratio = (log_probs - old_log_probs).exp()
-			cl1 = policy_ratio * advantage_estimates[i]
-			cl2 = torch.clamp(policy_ratio, 1.0 - eps, 1.0 + eps) * advantage_estimates[i]
+			policy_ratio = (log_probs - old_log_probs[i]).exp()
+			cl1 = policy_ratio * adv[i]
+			cl2 = torch.clamp(policy_ratio, 1.0 - eps, 1.0 + eps) * adv[i]
 			clip = torch.min(cl1, cl2)
 
 			actor_loss = clip.mean() # or value network loss
-			critic_loss = (adv - value).pow(2).mean()
+			critic_loss = (advantage_estimates[i] - value).pow(2).mean()
+			#print("Critic Loss:", critic_loss)
 
-			loss = 0.5 * critic_loss - actor_loss + c1 * entropy
+			#loss = 0.5 * critic_loss - actor_loss + c1 * entropy
+			loss = critic_loss - actor_loss + c1 * entropy
 			optimizer_actor.zero_grad()
 			optimizer_critic.zero_grad()
 			loss.backward(retain_graph=True)

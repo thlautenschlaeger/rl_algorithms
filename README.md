@@ -1,5 +1,5 @@
-# rl_algorithms
+# Group ID 1 
 
 Implementation of PPO and RS
 
-# folder basic_models provides an implementation of Q-value and Policy-dist neural networks
+## Dirty versions of both algorithms runs on qube environment 
