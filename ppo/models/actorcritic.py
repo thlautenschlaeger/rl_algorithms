@@ -31,7 +31,7 @@ class ValueNetwork(nn.Module):
 class PolicyNetwork(nn.Module):
 	""" Policy network equals actor """
 
-	def __init__(self, num_inputs, num_outputs, num_hidden_neurons, std=0.01):
+	def __init__(self, num_inputs, num_outputs, num_hidden_neurons, std=0.1):
 		""" Initializes neural net with parameters
 		:param num_inputs: dimension of observation space
 		:param num_outputs: dimension of action space
@@ -60,7 +60,7 @@ class PolicyNetwork(nn.Module):
 
 		return dist
 
-def compute_general_advantage_estimate(rewards, values, next_value, gamma, lamb):
+def compute_general_advantage_estimate(rewards, values, next_value, gamma=0.99, lamb=0.95):
 	""" This method computes the general advantage estimate.
 		lamb=1 high variance. Adjusting lamb adjusts bias, variance trade-off
 	:param rewards: list of rewards per trajectory
@@ -84,17 +84,3 @@ def compute_general_advantage_estimate(rewards, values, next_value, gamma, lamb)
 	return advantage_estimates
 
 
-
-
-def discount_sum_rewards():
-	""" This method computes the discounted sum of rewards """
-	return
-
-
-
-#value_net = ValueNetwork(2, 32)
-
-#inp = np.array([0., 3.])
-#inp = torch.tensor([3.4, 2.3])
-
-#print(value_net.forward(inp))
