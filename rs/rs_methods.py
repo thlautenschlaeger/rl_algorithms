@@ -18,9 +18,10 @@ def sort_max_index(arr):
 	return np.argsort(tmp)
 
 
-def run_rs(epochs, N, alpha, v, b, H, vis=False):
+def run_rs(epochs, env_platform, N, alpha, v, b, H, vis=False):
 	""" This method runs random search on Qube-v0
 	:param epochs: number of iterations
+	:param env_platform: gym platform to run algorithm on
 	:param N: number of directions sampled per iteration
 	:param alpha: stepsize
 	:param v: standard deviation of the exploration noise
@@ -30,7 +31,8 @@ def run_rs(epochs, N, alpha, v, b, H, vis=False):
 	reward_list = []
 	show = 0
 
-	env = GentlyTerminating(gym.make('Qube-v0'))
+	#env = GentlyTerminating(gym.make('Qube-v0'))
+	env = GentlyTerminating(env_platform)
 	num_states = env.observation_space.shape[0]
 	num_actions = env.action_space.shape[0]
 
@@ -46,7 +48,7 @@ def run_rs(epochs, N, alpha, v, b, H, vis=False):
 
 		total_rewards = np.empty((N, 2)) # left negative v1, right positive v1
 
-		for k in range(N): # range of delta length
+		for k in range(N): # range of delta length parallelize from here
 			mj_plus = (linear_policy + v * deltas[k])
 
 			v1_plus_sequence = []
@@ -93,7 +95,11 @@ def run_rs(epochs, N, alpha, v, b, H, vis=False):
 			b_best_rewards[2*i+1] = total_rewards[sorted_id][1]
 			total_reward += max(total_rewards[sorted_id])
 
-		#print("Policy Matrix:", M)
+
+
+		std_rewards = np.std(b_best_rewards)
+		linear_policy = linear_policy + (alpha / ((b * std_rewards) + 0.00001)) * sum_b_best_rewards
+
 		print("Total reward:", total_reward)
 		print("-----------------------------------------")
 		reward_list.append(total_reward)
@@ -105,26 +111,22 @@ def run_rs(epochs, N, alpha, v, b, H, vis=False):
 			plt.pause(0.05)
 			show = 0
 
+	if vis:
+		env.reset()
+		if total_reward_plus > total_reward_minus:
+
+			for i in range(len(v1_plus_sequence)):
+				_, _, _, _ = env.step(v1_plus_sequence[i][0])
+				env.render()
+
+		else:
+			for i in range(len(v1_minus_sequence)):
+				_, _, _, _ = env.step(v1_minus_sequence[i][0])
+				env.render()
 
 
 
-			if vis:
-				env.reset()
-				if total_reward_plus > total_reward_minus:
-
-					for i in range(len(v1_plus_sequence)):
-						_, _, _, _ = env.step(v1_plus_sequence[i][0])
-						env.render()
-
-				else:
-					for i in range(len(v1_minus_sequence)):
-						_, _, _, _ = env.step(v1_minus_sequence[i][0])
-						env.render()
-
-		std_rewards = np.std(b_best_rewards)
-		linear_policy = linear_policy + (alpha/(b*std_rewards)) * sum_b_best_rewards
-
-run_rs(30000, 16, 0.025, 0.02, 8, 500, vis=True)
+#run_rs(30000, 16, 0.025, 0.02, 8, 500, vis=True)
 #run_rs(30000, 16, 0.04, 0.2, 8, 500, vis=True)
 
 

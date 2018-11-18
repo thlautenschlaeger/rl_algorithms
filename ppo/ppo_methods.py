@@ -6,48 +6,60 @@ import matplotlib.pyplot as plt
 from ppo.models.actorcritic import PolicyNetwork
 from ppo.models.actorcritic import ValueNetwork
 from ppo.models.actorcritic import compute_general_advantage_estimate
+'''
+def create_ppo_actor_batches(mini_batch_size, ):
+	""" This method creates batches of mini batches for ppo
+	:param mini_batch_size: size of mini batches
+	:param """
+	batch_size =
+	for _ in range(batch_size // mini_batch_size):
+'''
 
-from ppo.ppo_methods import ppo_update
 
+def ppo_update(epochs, states, actions, old_log_probs, advantage_estimates, adv, optimizer_actor, optimizer_critic, policy_net, value_net, eps, c1=0.001):
+	""" This method performs the proximal policy optimization algorithm.
+	:param epochs: number of ppo iterations
+	:param states: list of states. length equals trajectory length
+	:param actions: list of actions.
+	:param advantage_estimates: advantage estimates computed by gae
+	:param policy_net: forward propagation of policy network
+	:param value_net: forward propagation of value network
+	:param eps: clipping parameter for clipped surrogate objective
+	:param c1: coefficient for squared-error loss
+	:param c2: coefficient for entropy bonus (entropy bonus ensures sufficient exploration)
+	"""
+	for _ in range(epochs):
+		for i in range(len(states)):
+			# vector of vectors of states
+			dist = policy_net(states[i])
+			value = value_net(states[i])
+			entropy = dist.entropy().mean()
+			log_probs = dist.log_prob(actions[i])
 
-def test_env(epochs, name, model, vis=False):
-    env = GentlyTerminating(gym.make('Qube-v0')) # Qube-v0 is actual name
-    #env = GentlyTerminating(gym.make(name))
-    num_inputs = env.observation_space.shape[0]
-    num_outputs = env.action_space.shape[0]
+			policy_ratio = (log_probs - old_log_probs[i]).exp()
+			cl1 = policy_ratio * adv[i]
+			cl2 = torch.clamp(policy_ratio, 1.0 - eps, 1.0 + eps) * adv[i]
+			clip = torch.min(cl1, cl2)
 
-    model = PolicyNetwork(num_inputs, num_outputs, 64) # model
-    value_model = ValueNetwork(num_inputs, 64)
+			actor_loss = clip.mean() # or value network loss
+			critic_loss = (advantage_estimates[i] - value).pow(2).mean()
+			#print("Critic Loss:", critic_loss)
 
-    state = env.reset()
-    optimizer_p = optim.Adam(model.parameters(), lr= 0.01)
-    optimizer_v = optim.Adam(value_model.parameters(), lr = 0.01)
+			#loss = 0.5 * critic_loss - actor_loss + c1 * entropy
+			loss = critic_loss - actor_loss + c1 * entropy
+			optimizer_actor.zero_grad()
+			optimizer_critic.zero_grad()
+			loss.backward(retain_graph=True)
+			optimizer_actor.step()
+			optimizer_critic.step()
 
-    total_reward = 0
-    for i in range(epochs):
-        state = torch.FloatTensor(state)
-        dist = model.forward(state)
-        action = dist.sample()
-        next_state, reward, done, _ = env.step(action.cpu().numpy())
-        loss = -value_model.forward(state) * torch.FloatTensor([reward])
-        optimizer_p.zero_grad()
-        optimizer_v.zero_grad()
-        loss.backward()
-        optimizer_p.step()
-        optimizer_v.step()
-        state = next_state
-        total_reward += reward
-
-        print("Total rewards:", reward)
-        if vis: env.render()
-
-def run_ppo(epochs, vis=False):
+def run_ppo(epochs, env_platform, trajectory_size, vis=False, plot_reward=False):
     """ This method computes ppo on
     :param epochs: number of epochs to run ppo
+    :param env_platform: name of gym environment
     :param vis: rendering simulation if true
     """
-    env = GentlyTerminating(gym.make('Qube-v0'))
-    #env = GentlyTerminating(gym.make('CartpoleSwingShort-v0'))
+    env = GentlyTerminating(env_platform)
     num_inputs = env.observation_space.shape[0]
     num_outputs = env.action_space.shape[0]
 
@@ -60,13 +72,11 @@ def run_ppo(epochs, vis=False):
     optimizer_actor = optim.Adam(actor.parameters(), lr=0.001)
     optimizer_critic = optim.Adam(critic.parameters(), lr=0.001)
     done = False
-
+    plot_rewards = []
     action_list = []
-    plot_reward = []
+    iteration = 0
 
     for _ in range(epochs):
-        done = False
-        env.reset()
         while not done:
 
             ppo_epochs = 5
@@ -75,16 +85,15 @@ def run_ppo(epochs, vis=False):
             states = []
             actions = []
             rewards = []
-            trajectory_size = 42
             entropy = 0
             total_reward = 0
+
             for i in range(trajectory_size):
                 state = torch.FloatTensor(state)
                 dist = actor.forward(state)
                 value = critic.forward(state)
 
                 action = dist.sample()
-                action_list.append(action.cpu().numpy())
                 next_state, reward, done, info = env.step(action.cpu().numpy())
 
                 log_prob = dist.log_prob(action)
@@ -93,7 +102,7 @@ def run_ppo(epochs, vis=False):
                 log_probs.append(log_prob)
                 values.append(value)
 
-                rewards.append(torch.FloatTensor(reward))
+                rewards.append(torch.FloatTensor([reward]))
 
                 states.append(state)
 
@@ -102,11 +111,11 @@ def run_ppo(epochs, vis=False):
                 state = next_state
                 total_reward += reward
 
-
-
-            print("Reward:", total_reward)
+                if vis: env.render()
+            plot_rewards.append(total_reward)
+            print("Reward: {} Iteration: {}".format(total_reward, iteration))
             print("----------------------")
-            plot_reward.append(total_reward)
+            iteration += 1
 
 
             next_state = torch.FloatTensor(next_state)
@@ -126,13 +135,6 @@ def run_ppo(epochs, vis=False):
             ppo_update(ppo_epochs, states, actions, log_probs, advantages_estimates, advantage, optimizer_actor,
                        optimizer_critic, actor.forward, critic.forward, 0.2)
 
-        if vis:
-            env.reset()
-            for action in action_list:
-                env.step(action)
-                env.render()
-    plt.plot(plot_reward)
-    plt.show()
-
-
-run_ppo(10, vis=False)
+    if plot_reward:
+        plt.plot(plot_rewards)
+        plt.show()
