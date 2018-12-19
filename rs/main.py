@@ -22,5 +22,7 @@ def choose_environment(selection=0):
 
 
 if __name__ == '__main__':
-	environment = choose_environment(0)
-	run_rs(100, environment, 16, 0.025, 0.002, 8, 50, vis=True)
+	environment = choose_environment(1)
+	# run_rs(1000, environment, 8, 0.025, 0.02, 4, 500, vis=False)
+	run_rs(1000, environment, 8, 0.025, 0.02, 4, 1000, vis=False)
+	# run_rs(1000, environment, 16, 0.08, 0.8, 8, 50, vis=True, plot_reward=True)

@@ -23,4 +23,4 @@ def choose_environment(selection=0):
 
 if __name__ == '__main__':
 	environment = choose_environment(0)
-	run_ppo(10, environment, trajectory_size=42, vis=True, plot_reward=False)
+	run_ppo(40, environment, trajectory_size=30, vis=True, plot_reward=True)
