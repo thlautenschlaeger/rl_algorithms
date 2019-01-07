@@ -3,12 +3,12 @@ from quanser_robots import GentlyTerminating
 import torch
 import torch.optim as optim
 import matplotlib.pyplot as plt
-from ppo.models.actorcritic import PolicyNetwork
-from ppo.models.actorcritic import ValueNetwork
-from ppo.models.actorcritic import compute_general_advantage_estimate
+from ppo_old.models.actorcritic import PolicyNetwork
+from ppo_old.models.actorcritic import ValueNetwork
+from ppo_old.models.actorcritic import compute_general_advantage_estimate
 '''
 def create_ppo_actor_batches(mini_batch_size, ):
-    """ This method creates batches of mini batches for ppo
+    """ This method creates batches of mini batches for ppo_old
     :param mini_batch_size: size of mini batches
     :param """
     batch_size =
@@ -18,7 +18,7 @@ def create_ppo_actor_batches(mini_batch_size, ):
 
 def ppo_update(epochs, states, actions, old_log_probs, advantage_estimates, adv, optimizer_actor, optimizer_critic, policy_net, value_net, eps, c1=0.001):
     """ This method performs the proximal policy optimization algorithm.
-    :param epochs: number of ppo iterations
+    :param epochs: number of ppo_old iterations
     :param states: list of states. length equals trajectory length
     :param actions: list of actions.
     :param advantage_estimates: advantage estimates computed by gae
@@ -54,8 +54,8 @@ def ppo_update(epochs, states, actions, old_log_probs, advantage_estimates, adv,
             optimizer_critic.step()
 
 def run_ppo(epochs, env_platform, trajectory_size, vis=False, plot_reward=False):
-    """ This method computes ppo on
-    :param epochs: number of epochs to run ppo
+    """ This method computes ppo_old on
+    :param epochs: number of epochs to run ppo_old
     :param env_platform: name of gym environment
     :param vis: rendering simulation if true
     :param plot_reward: plots reward if true
@@ -103,7 +103,8 @@ def run_ppo(epochs, env_platform, trajectory_size, vis=False, plot_reward=False)
                 dist = actor.forward(state)
                 value = critic.forward(state)
 
-                action = dist.sample()
+                action = dist.sample()[0]
+
                 action_list.append(action)
                 next_state, reward, done, info = env.step(action.cpu().numpy())
 

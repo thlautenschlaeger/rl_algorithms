@@ -1,6 +1,6 @@
 import gym
 from quanser_robots import GentlyTerminating
-from ppo.ppo_methods import run_ppo
+from ppo_algorithm.ppo import run_ppo
 
 
 def choose_environment(selection=0):
@@ -16,11 +16,14 @@ def choose_environment(selection=0):
 	if selection == 1:
 		return gym.make('Qube-v0')
 
-	else:
+	if selection == 2:
 		return gym.make('Levitation-v0')
+
+	else:
+		return gym.make('Pendulum-v0')
 
 
 
 if __name__ == '__main__':
 	environment = choose_environment(0)
-	run_ppo(40, environment, trajectory_size=30, vis=True, plot_reward=True)
+	run_ppo(environment, training_iterations=10000, num_actors=1, ppo_epochs=4, trajectory_size=20, vis=False)
