@@ -44,4 +44,45 @@ class Critic(nn.Module):
 
         return out_value
 
+class ActorCritic(nn.Module):
+
+    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, network_type='feed_forward', std=0.0):
+        super(ActorCritic, self).__init__()
+
+        if network_type == 'feed_forward':
+            self.actor = nn.Sequential(
+                nn.Linear(num_inputs, num_hidden_neurons),
+                nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+                nn.ReLU(),
+                # nn.Tanh(),
+                nn.Linear(num_hidden_neurons, num_outputs)
+            )
+
+            self.critic = nn.Sequential(
+                nn.Linear(num_inputs, num_hidden_neurons),
+                nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+                nn.ReLU(),
+                # nn.Tanh(),
+                nn.Linear(num_hidden_neurons, 1)
+            )
+        # elif network_type == 'recurrent':
+        #     self.actor == nn.
+
+
+
+        self.log_std = nn.Parameter(torch.ones(1, num_outputs) * std)
+
+
+    def forward(self, x):
+
+        mean = self.actor(x)
+        value = self.critic(x)
+        std = torch.exp(self.log_std)
+
+        distribution = Normal(mean, std)
+
+        return distribution, value
+
+
+
 

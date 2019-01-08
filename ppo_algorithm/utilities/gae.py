@@ -22,13 +22,13 @@ def compute_gae(rewards, values, last_value, discount, lamb):
         # deltas[i] = rewards[i] + discount * values[i+1].cpu().detach().numpy()
         deltas[i] = rewards[i] + discount * values[i+1].cpu().detach().numpy() - values[i].cpu().detach().numpy()
 
-    current_traj_length = n
+    current_first_index = 0
     for i in range(n):
         advantage = 0
-        for j in range(current_traj_length):
-            advantage += deltas[j] * trade_off ** j
-
-    advantage_estimates[i] = advantage
-    current_traj_length -= 1
+        for j in range(current_first_index, n):
+            advantage += deltas[j] * np.power(trade_off, j-current_first_index)
+        advantage_estimates[i] = advantage
+        current_first_index += 1
 
     return advantage_estimates
+

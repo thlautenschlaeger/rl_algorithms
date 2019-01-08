@@ -81,7 +81,7 @@ def run_ppo(epochs, env_platform, trajectory_size, vis=False, plot_reward=False)
     for e in range(epochs):
         if done:
             done = False
-            env.reset()
+            state = env.reset()
 
         while not done:
 

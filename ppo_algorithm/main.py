@@ -19,11 +19,14 @@ def choose_environment(selection=0):
 	if selection == 2:
 		return gym.make('Levitation-v0')
 
-	else:
+	if selection == 3:
 		return gym.make('Pendulum-v0')
+
+	else:
+		raise NotImplementedError
 
 
 
 if __name__ == '__main__':
-	environment = choose_environment(0)
-	run_ppo(environment, training_iterations=10000, num_actors=1, ppo_epochs=4, trajectory_size=20, vis=False)
+	environment = choose_environment(3)
+	run_ppo(environment, training_iterations=100000, num_actors=1, ppo_epochs=4, trajectory_size=20, vis=False, plot=True)
