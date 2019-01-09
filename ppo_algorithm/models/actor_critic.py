@@ -6,7 +6,7 @@ from torch.distributions import Normal
 
 class Actor(nn.Module):
 
-    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, std=0.0):
+    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, std=2.0):
 
         super(Actor, self).__init__()
 
@@ -44,16 +44,38 @@ class Critic(nn.Module):
 
         return out_value
 
-class ActorCritic(nn.Module):
+
+def init_weights(m):
+    if isinstance(m, nn.Linear):
+        nn.init.normal_(m.weight, mean=0., std=0.1)
+        nn.init.constant_(m.bias, 0.0)
+
+class ActorCriticMLP(nn.Module):
+    """
+    Actor-Critic as multi layer perceptron
+    """
 
     def __init__(self, num_inputs, num_hidden_neurons, num_outputs, network_type='feed_forward', std=0.0):
-        super(ActorCritic, self).__init__()
+        super(ActorCriticMLP, self).__init__()
 
         if network_type == 'feed_forward':
+            # self.linears = nn.ModuleList([nn.Linear(input_size, layers_size)])
+            # self.linears.extend([nn.Linear(layers_size, layers_size) for i in range(1, self.num_layers - 1)])
+            # self.linears.append(nn.Linear(layers_size, output_size)
+
+            # self.actor = nn.ModuleList([nn.Linear(num_inputs, num_hidden_neurons)])
+            # self.actor.extend([nn.ModuleList([nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+            #                    nn.Tanh(),
+            #                    nn.Linear(num_hidden_neurons, num_hidden_neurons)]) for _ in range(1)])
+            # self.actor.append(nn.Linear(num_hidden_neurons, num_outputs))
+
             self.actor = nn.Sequential(
                 nn.Linear(num_inputs, num_hidden_neurons),
                 nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-                nn.ReLU(),
+                # nn.ReLU(),
+                nn.Tanh(),
+                # nn.Linear(num_hidden_neurons, num_hidden_neurons),
+                # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.Tanh(),
                 nn.Linear(num_hidden_neurons, num_outputs)
             )
@@ -61,27 +83,45 @@ class ActorCritic(nn.Module):
             self.critic = nn.Sequential(
                 nn.Linear(num_inputs, num_hidden_neurons),
                 nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-                nn.ReLU(),
+                # nn.ReLU(),
+                nn.Tanh(),
+                # nn.Linear(num_hidden_neurons, num_hidden_neurons),
+                # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.Tanh(),
                 nn.Linear(num_hidden_neurons, 1)
             )
-        # elif network_type == 'recurrent':
-        #     self.actor == nn.
+
+            # applies fn recursively to every submodule
+            self.apply(init_weights)
 
 
+        elif network_type == 'recurrent':
+        #     self.actor == nn.LSTM()
+            raise NotImplementedError
 
+        self.no = num_outputs
         self.log_std = nn.Parameter(torch.ones(1, num_outputs) * std)
-
 
     def forward(self, x):
 
         mean = self.actor(x)
         value = self.critic(x)
-        std = torch.exp(self.log_std)
+        std = (self.log_std).exp()
 
         distribution = Normal(mean, std)
 
         return distribution, value
+
+class ActorCriticLSTM(nn.Module):
+    """
+    Actor-Critic as LSTM Network
+    """
+
+    def __init__(self, minibatch_size, num_inputs, num_outputs, num_layers=1):
+        super(ActorCriticLSTM, self).__init__()
+
+        self.actor = nn.LSTM(num_inputs, num_outputs, num_layers=num_layers)
+        self.critic = nn.LSTM(num_inputs, 1, num_layers=num_layers)
 
 
 

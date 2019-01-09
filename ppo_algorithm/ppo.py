@@ -25,21 +25,23 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
     # ---------------------------------------- #
     num_inputs = env.observation_space.shape[0]
     num_outputs = env.action_space.shape[0]
-    num_hidden_neurons = 64
+    num_hidden_neurons = 32
 
     # actor_net = actor_critic.Actor(num_inputs, num_hidden_neurons, num_outputs)
     # critic_net = actor_critic.Critic(num_inputs, num_hidden_neurons)
 
-    ac_net = actor_critic.ActorCritic(num_inputs, num_hidden_neurons, num_outputs)
+    ac_net = actor_critic.ActorCriticMLP(num_inputs, num_hidden_neurons, num_outputs)
 
 
-    lel_rerwards = []
+    cumulative_rerwards = []
     state = env.reset()
     for epoch in range(training_iterations):
         rewards = []
         values = []
         states = []
         actions = []
+        # used for penalize entering done state
+        masks = []
         # necessary for ratio of old and new policy during ppo_algorithm update
         old_log_probs = []
 
@@ -54,8 +56,9 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
 
                 # sample state from normal distribution
                 dist, value = ac_net(state)
-                # dist = actor_net(state)
                 action = dist.sample()
+
+                # dist = actor_net(state)
                 # value = critic_net(state)
 
                 # execute action
@@ -69,6 +72,7 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
                 actions.append(action)
                 state = next_state
                 rewards.append(reward)
+                masks.append(1 - done)
                 lel_rerward += reward
 
                 if vis:
@@ -79,11 +83,11 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
 
 
             print('LEL REWARD von ACOTR:', lel_rerward)
-            lel_rerwards.append(lel_rerward)
+            cumulative_rerwards.append(lel_rerward)
 
             _, last_value = ac_net(torch.FloatTensor(next_state))
 
-            advantage_estimates = compute_gae(rewards, values, last_value, 0.99, 0.95)
+            advantage_estimates = compute_gae(rewards, values, last_value, masks, 0.99, 0.9)
 
             values = torch.cat(values).detach()
             old_log_probs = torch.cat(old_log_probs).detach()
@@ -97,8 +101,8 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
             if plot:
                 if epoch % 100 == 0:
                     plot_avg_reward = []
-                    for i in range(len(lel_rerwards)):
-                        tmp = np.mean(lel_rerwards[i:i+20])
+                    for i in range(len(cumulative_rerwards)):
+                        tmp = np.mean(cumulative_rerwards[i:i+trajectory_size])
                         plot_avg_reward.append(tmp)
 
                     plt.plot(plot_avg_reward)
@@ -107,7 +111,7 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
 
 # def ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs, actor_net, critic_net, minibatch_size, eps=0.1):
 def ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs, ac_net,
-                   minibatch_size, eps=0.1):
+                   minibatch_size, eps=0.2):
     """
     This method performs proximal policy update over batches of inputs
 
@@ -127,36 +131,52 @@ def ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log
     ac_optim = optim.Adam(ac_net.parameters(), lr=0.0001)
 
     # constants for surrogate objective
-    c1,c2 = 0.9, 0.01
+    c1,c2 = 0.99, 0.01
 
+    randomize = np.arange(len(states))
+    # randomize = torch.randperm(len(states))
+
+    # shape states for further processing
+    states = torch.stack(states)
+
+    # normalize advantages
+    advantage_estimates = (advantage_estimates - advantage_estimates.mean()) / (advantage_estimates.std() + 1e-8)
 
     for _ in range(ppo_epochs):
-        for i in range(0, len(states), minibatch_size):
+        # shuffle inputs every ppo epoch
+        np.random.shuffle(randomize)
+        old_log_probs = old_log_probs[randomize]
+        actions = actions[randomize]
+        values = values[randomize]
+        advantage_estimates = advantage_estimates[randomize]
+        states = states[randomize]
 
-            dist, target_value = ac_net(torch.stack(states[i:i+minibatch_size]))
-            # target_value = critic_net(torch.stack(states[i:i+minibatch_size]))
+        for i in range(0, len(states), minibatch_size):
+            dist, target_value = ac_net(states[i:i+minibatch_size])
+
             new_log_prob = dist.log_prob(actions[i:i+minibatch_size])
             entropy = dist.entropy().mean()
 
             ratio = torch.exp(new_log_prob - old_log_probs[i:i+minibatch_size])
 
             # shape advantage estimate vector
-            advantage_batch = torch.FloatTensor(advantage_estimates[i:i+minibatch_size]).view(advantage_estimates[i:i+minibatch_size].shape, 1)
+            advantage_batch = torch.FloatTensor(advantage_estimates[i:i+minibatch_size]).view(advantage_estimates[i:i+minibatch_size].shape[0], 1)
 
-            # surr1 = ratio * advantage_estimates[i:i+minibatch_size]
             surr = ratio * advantage_batch
             clipped_surr = torch.clamp(ratio, 1-eps, 1+eps) * advantage_batch
 
-            actor_loss = torch.min(surr, clipped_surr).mean()
-            critic_loss = ((values[i:i+minibatch_size] - target_value) ** 2).mean()
+            actor_loss = torch.min(surr, clipped_surr).mean() # not sure when to use min or max
+            critic_loss = ((advantage_batch - values[i:i+minibatch_size] - target_value) ** 2).mean()
+            # critic_loss = ((values[i:i + minibatch_size] - target_value) ** 2).mean()
+
+            # loss = actor_loss + c1 * critic_loss - c2 * entropy
 
             loss = actor_loss - c1 * critic_loss + c2 * entropy
 
-            # optim_critic.zero_grad()
-            # optim_actor.zero_grad()
             ac_optim.zero_grad()
+            # computes gradient
             loss.backward()
+            torch.nn.utils.clip_grad_norm_(ac_net.parameters(), 0.5)
             ac_optim.step()
-            # optim_critic.step()
-            # optim_actor.step()
+
 

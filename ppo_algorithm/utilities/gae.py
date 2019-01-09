@@ -1,7 +1,7 @@
 import torch
 import numpy as np
 
-def compute_gae(rewards, values, last_value, discount, lamb):
+def compute_gae(rewards, values, last_value, masks, discount, lamb):
     """
     This method computes general advantage estimates
 
@@ -19,14 +19,13 @@ def compute_gae(rewards, values, last_value, discount, lamb):
     deltas = np.empty(shape=n)
 
     for i in range(n):
-        # deltas[i] = rewards[i] + discount * values[i+1].cpu().detach().numpy()
-        deltas[i] = rewards[i] + discount * values[i+1].cpu().detach().numpy() - values[i].cpu().detach().numpy()
+        deltas[i] = rewards[i] + discount * values[i+1].cpu().detach().numpy() * masks[i] - values[i].cpu().detach().numpy()
 
     current_first_index = 0
     for i in range(n):
         advantage = 0
         for j in range(current_first_index, n):
-            advantage += deltas[j] * np.power(trade_off, j-current_first_index)
+            advantage += deltas[j] * np.power(trade_off * masks[j], j-current_first_index)
         advantage_estimates[i] = advantage
         current_first_index += 1
 
