@@ -2,10 +2,12 @@ import gym
 from quanser_robots import GentlyTerminating
 import torch
 import torch.optim as optim
-from ppo_algorithm.utilities.gae import compute_gae
-from ppo_algorithm.models import actor_critic
 import matplotlib.pyplot as plt
 import numpy as np
+from ppo_algorithm.utilities.gae import compute_gae
+from ppo_algorithm.models import actor_critic
+from ppo_algorithm.ppo_hyperparams import ppo_params
+
 
 def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, vis=False, plot=False):
     """
@@ -25,7 +27,7 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
     # ---------------------------------------- #
     num_inputs = env.observation_space.shape[0]
     num_outputs = env.action_space.shape[0]
-    num_hidden_neurons = 32
+    num_hidden_neurons = ppo_params['num_hidden_neurons']
 
     # actor_net = actor_critic.Actor(num_inputs, num_hidden_neurons, num_outputs)
     # critic_net = actor_critic.Critic(num_inputs, num_hidden_neurons)
@@ -33,7 +35,7 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
     ac_net = actor_critic.ActorCriticMLP(num_inputs, num_hidden_neurons, num_outputs)
 
 
-    cumulative_rerwards = []
+    total_rewards = []
     state = env.reset()
     for epoch in range(training_iterations):
         rewards = []
@@ -50,16 +52,13 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
             # ------------------ #
             #### run policy ####
             # ------------------ #
-            lel_rerward = 0
+            total_reward = 0
             for t in range(trajectory_size):
                 state = torch.FloatTensor(state)
 
                 # sample state from normal distribution
                 dist, value = ac_net(state)
                 action = dist.sample()
-
-                # dist = actor_net(state)
-                # value = critic_net(state)
 
                 # execute action
                 next_state, reward, done, _ = env.step(action.cpu().detach().numpy()[0])
@@ -73,7 +72,7 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
                 state = next_state
                 rewards.append(reward)
                 masks.append(1 - done)
-                lel_rerward += reward
+                total_reward += reward
 
                 if vis:
                     env.render()
@@ -82,12 +81,14 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
                     break
 
 
-            print('LEL REWARD von ACOTR:', lel_rerward)
-            cumulative_rerwards.append(lel_rerward)
+            print('LEL REWARD von ACOTR:', total_reward)
+            total_rewards.append(total_reward)
 
             _, last_value = ac_net(torch.FloatTensor(next_state))
 
-            advantage_estimates = compute_gae(rewards, values, last_value, masks, 0.99, 0.9)
+            advantage_estimates = compute_gae(rewards, values, last_value, masks,
+                                              ppo_params['advantage_discount'],
+                                              ppo_params['bias_var_trade_off'])
 
             values = torch.cat(values).detach()
             old_log_probs = torch.cat(old_log_probs).detach()
@@ -96,13 +97,14 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
             # advantage_estimates = torch.cat(advantage_estimates)
 
             # ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs, actor_net, critic_net, 5)
-            ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs, ac_net, 5, 0.2)
+            ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs,
+                       ac_net, ppo_params['minibatch_size'], ppo_params['clipping'])
 
             if plot:
                 if epoch % 100 == 0:
                     plot_avg_reward = []
-                    for i in range(len(cumulative_rerwards)):
-                        tmp = np.mean(cumulative_rerwards[i:i+trajectory_size])
+                    for i in range(len(total_rewards)):
+                        tmp = np.mean(total_rewards[i:i+trajectory_size])
                         plot_avg_reward.append(tmp)
 
                     plt.plot(plot_avg_reward)
@@ -126,15 +128,12 @@ def ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log
     :param minibatch_size:
     :return:
     """
-    # optim_critic = optim.Adam(actor_net.parameters(), lr=0.001)
-    # optim_actor = optim.Adam(critic_net.parameters(), lr=0.001)
-    ac_optim = optim.Adam(ac_net.parameters(), lr=0.0001)
+    ac_optim = optim.Adam(ac_net.parameters(), lr=ppo_params['optim_lr'])
 
     # constants for surrogate objective
-    c1,c2 = 0.99, 0.01
+    c1,c2 = ppo_params['critic_loss_coeff'], ppo_params['entropy_loss_coeff']
 
     randomize = np.arange(len(states))
-    # randomize = torch.randperm(len(states))
 
     # shape states for further processing
     states = torch.stack(states)

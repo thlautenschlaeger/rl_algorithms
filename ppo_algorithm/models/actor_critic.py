@@ -121,7 +121,12 @@ class ActorCriticLSTM(nn.Module):
         super(ActorCriticLSTM, self).__init__()
 
         self.actor = nn.LSTM(num_inputs, num_outputs, num_layers=num_layers)
+        # self.actor_out_layer = nn.Linear(num)
         self.critic = nn.LSTM(num_inputs, 1, num_layers=num_layers)
+
+    # def forward(self, x):
+
+
 
 
 

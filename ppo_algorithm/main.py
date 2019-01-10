@@ -1,6 +1,6 @@
 import gym
-from quanser_robots import GentlyTerminating
 from ppo_algorithm.ppo import run_ppo
+from ppo_algorithm.ppo_hyperparams import ppo_params
 
 
 def choose_environment(selection=0):
@@ -29,5 +29,7 @@ def choose_environment(selection=0):
 
 if __name__ == '__main__':
 	environment = choose_environment(0)
-	run_ppo(environment, training_iterations=100000, num_actors=1,
-			ppo_epochs=3, trajectory_size=50, vis=True, plot=True)
+
+	run_ppo(environment, training_iterations=ppo_params['num_iterations'], num_actors=ppo_params['num_actors'],
+			ppo_epochs=ppo_params['ppo_epochs'], trajectory_size=ppo_params['trajectory_size'],
+			vis=True, plot=True)
