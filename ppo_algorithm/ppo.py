@@ -51,8 +51,6 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
         masks = []
         # necessary for ratio of old and new policy during ppo_algorithm update
         old_log_probs = []
-        advantage_estimates = np.array([])
-        returns = np.array([])
         for i in range(num_actors):
 
             state = env.reset()
@@ -100,30 +98,29 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
             # ------------------------------------------------------ #
             #### compute advantage estimates from trajectory ####
             # ------------------------------------------------------ #
-            advantage_estimates_, returns_ = compute_gae(rewards, values, last_value, masks,
+            advantage_estimates, returns = compute_gae(rewards, values, last_value, masks,
                                                    ppo_params['advantage_discount'],
                                                    ppo_params['bias_var_trade_off'])
 
-            advantage_estimates = np.concatenate((advantage_estimates, advantage_estimates_))
-            returns = np.concatenate((returns, returns_))
-        values = torch.cat(values).detach()
-        old_log_probs = torch.cat(old_log_probs).detach()
-        actions = torch.cat(actions)
+            
+            values = torch.cat(values).detach()
+            old_log_probs = torch.cat(old_log_probs).detach()
+            actions = torch.cat(actions)
+    
+                # advantage_estimates = torch.cat(advantage_estimates)
+    
+            ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs,
+                           ac_net, ppo_params['minibatch_size'], returns, ppo_params['clipping'])
 
-            # advantage_estimates = torch.cat(advantage_estimates)
 
-        ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs,
-                       ac_net, ppo_params['minibatch_size'], returns, ppo_params['clipping'])
-
-
-        if plot and epoch % 10 == 0:
-            plt.plot(total_rewards)
-            plt.show()
-            # if epoch % 10 == 0:
-            # plot_utility.plot_moving_avg_reward(total_rewards, trajectory_size)
-            # u = len(total_rewards)
-            # plot_utility.plot_running_mean(total_rewards, trajectory_size)
-            # plot_utility.plot_running_mean(total_rewards, len(total_rewards))
+            if plot and epoch % 10 == 0:
+                plt.plot(total_rewards)
+                plt.show()
+                # if epoch % 10 == 0:
+                # plot_utility.plot_moving_avg_reward(total_rewards, trajectory_size)
+                # u = len(total_rewards)
+                # plot_utility.plot_running_mean(total_rewards, trajectory_size)
+                # plot_utility.plot_running_mean(total_rewards, len(total_rewards))
 
 
 def ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs,
