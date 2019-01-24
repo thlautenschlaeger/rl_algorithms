@@ -8,7 +8,7 @@ ppo_params = {
     'max_grad_norm' : 0.5,
     'minibatch_size' : 32, #4
     'actor_network_std' : 0.0,
-    'num_actors': 2,
+    'num_actors': 4,
     'num_hidden_neurons' : 128,
     'num_hidden_layers' : 1,
     'num_iterations' : 1000000,
@@ -17,6 +17,6 @@ ppo_params = {
     'optim_lr' : 0.00005,
     # 'optim_lr' : lambda f: f * 1.e-4,
 
-    'visualize' : False,
+    'visualize' : True,
     'plot_reward' : False
 }

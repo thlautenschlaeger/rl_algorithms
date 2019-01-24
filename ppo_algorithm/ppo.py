@@ -89,18 +89,17 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
                     state = env.reset()
                     # break
 
-            if epoch % 1 ==0:
-                print('#############################################')
-                print('Total reward: {} in epoch: {}'.format(total_reward, epoch) )
-                print('Variance: {}'.format(dist.variance.detach().numpy().squeeze()))
-            total_rewards.append(total_reward)
+
 
             _, last_value = ac_net(torch.FloatTensor(next_state))
 
             # ------------------------------------------------------ #
             #### compute advantage estimates from trajectory ####
             # ------------------------------------------------------ #
-            advantage_estimates_, returns_ = compute_gae(rewards, values, last_value, masks,
+            advantage_estimates_, returns_ = compute_gae(rewards[i*trajectory_size:i*trajectory_size+trajectory_size],
+                                                         values[i*trajectory_size:i*trajectory_size+trajectory_size],
+                                                         last_value,
+                                                         masks[i*trajectory_size:i*trajectory_size+trajectory_size],
                                                    ppo_params['advantage_discount'],
                                                    ppo_params['bias_var_trade_off'])
 
@@ -109,6 +108,12 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
         values = torch.cat(values).detach()
         old_log_probs = torch.cat(old_log_probs).detach()
         actions = torch.cat(actions)
+
+        if epoch % 1 == 0:
+            print('#############################################')
+            print('Total reward: {} in epoch: {}'.format(total_reward, epoch))
+            print('Variance: {}'.format(dist.variance.detach().numpy().squeeze()))
+        total_rewards.append(total_reward/ppo_params['num_actors'])
 
             # advantage_estimates = torch.cat(advantage_estimates)
 
@@ -119,12 +124,6 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
         if plot and epoch % 10 == 0:
             plt.plot(total_rewards)
             plt.show()
-            # if epoch % 10 == 0:
-            # plot_utility.plot_moving_avg_reward(total_rewards, trajectory_size)
-            # u = len(total_rewards)
-            # plot_utility.plot_running_mean(total_rewards, trajectory_size)
-            # plot_utility.plot_running_mean(total_rewards, len(total_rewards))
-
 
 def ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs,
                ac_net, minibatch_size, returns, eps=0.2):
