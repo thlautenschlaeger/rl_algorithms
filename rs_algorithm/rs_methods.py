@@ -2,7 +2,7 @@ import gym
 from quanser_robots import GentlyTerminating
 import torch
 import torch.optim as optim
-from rs import rs_methods
+from rs_algorithm import rs_methods
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -21,7 +21,7 @@ def sort_max_index_reversed(arr):
 
 def ars_v1(epochs, env_platform, N, alpha, v, b, H, vis=False):
 	"""
-	This method runs augmented random search on gym environments
+	This method runs augmented random search v1 on gym environments
 
 	:param epochs: number of iterations
 	:param env_platform: gym platform to run algorithm on

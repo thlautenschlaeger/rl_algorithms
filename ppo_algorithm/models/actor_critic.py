@@ -6,7 +6,7 @@ from torch.distributions import Normal
 
 class Actor(nn.Module):
 
-    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, std=2.0):
+    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, std=0.0):
 
         super(Actor, self).__init__()
 
@@ -55,25 +55,19 @@ class ActorCriticMLP(nn.Module):
     Actor-Critic as multi layer perceptron
     """
 
-    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, network_type='feed_forward', std=0.0):
+    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, network_type='feed_forward', std=1.0):
         super(ActorCriticMLP, self).__init__()
 
         if network_type == 'feed_forward':
-            # self.linears = nn.ModuleList([nn.Linear(input_size, layers_size)])
-            # self.linears.extend([nn.Linear(layers_size, layers_size) for i in range(1, self.num_layers - 1)])
-            # self.linears.append(nn.Linear(layers_size, output_size)
-
-            # self.actor = nn.ModuleList([nn.Linear(num_inputs, num_hidden_neurons)])
-            # self.actor.extend([nn.ModuleList([nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-            #                    nn.Tanh(),
-            #                    nn.Linear(num_hidden_neurons, num_hidden_neurons)]) for _ in range(1)])
-            # self.actor.append(nn.Linear(num_hidden_neurons, num_outputs))
 
             self.actor = nn.Sequential(
                 nn.Linear(num_inputs, num_hidden_neurons),
                 nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.ReLU(),
                 nn.Tanh(),
+                # nn.Linear(num_hidden_neurons, num_hidden_neurons),
+                # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+                # nn.Tanh(),
                 # nn.Linear(num_hidden_neurons, num_hidden_neurons),
                 # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.Tanh(),
@@ -85,6 +79,9 @@ class ActorCriticMLP(nn.Module):
                 nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.ReLU(),
                 nn.Tanh(),
+                # nn.Linear(num_hidden_neurons, num_hidden_neurons),
+                # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+                # nn.Tanh(),
                 # nn.Linear(num_hidden_neurons, num_hidden_neurons),
                 # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.Tanh(),

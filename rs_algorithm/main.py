@@ -1,7 +1,7 @@
 import gym
 from quanser_robots import GentlyTerminating
-from rs.rs_methods import ars_v1
-from rs.rs_methods import ars_v2
+from rs_algorithm.rs_methods import ars_v1
+from rs_algorithm.rs_methods import ars_v2
 
 
 def choose_environment(selection=0):
