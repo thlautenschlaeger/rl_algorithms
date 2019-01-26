@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="983d662b-7897-404d-9dbd-f3b57a898ee4" name="Default Changelist" comment="Added random search">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/ppo.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/ppo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" afterDir="false" />
     </list>
@@ -13,7 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/rl_algorithms$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1548324089554" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo_algorithm" />
+    <SUITE FILE_PATH="coverage/rl_algorithms$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1548432079537" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo_algorithm" />
     <SUITE FILE_PATH="coverage/rl_algorithms$qube.coverage" NAME="qube Coverage Results" MODIFIED="1542114941694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/basic_rl_model/quanser_platforms" />
     <SUITE FILE_PATH="coverage/rl_algorithms$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1542211651532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/holzgroup/quanser_platforms" />
     <SUITE FILE_PATH="coverage/rl_algorithms$main.coverage" NAME="main Coverage Results" MODIFIED="1546704251737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo" />
@@ -26,14 +28,14 @@
     <SUITE FILE_PATH="coverage/rl_algorithms$ppo.coverage" NAME="ppo Coverage Results" MODIFIED="1542475055370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.4970803">
+    <splitter split-orientation="horizontal" split-proportion="0.65839416">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="812">
-                  <caret line="62" column="39" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
+                <state relative-caret-position="1531">
+                  <caret line="110" column="26" selection-start-line="110" selection-start-column="26" selection-end-line="110" selection-end-column="26" />
                   <folding>
                     <element signature="e#0#12#0" expanded="true" />
                   </folding>
@@ -42,10 +44,19 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
+            <entry file="file://$USER_HOME$/anaconda3/envs/rl_torch/lib/python3.6/site-packages/torch/distributions/normal.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="70">
-                  <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+                <state relative-caret-position="217">
+                  <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="-1434">
+                  <caret line="67" column="89" selection-start-line="67" selection-start-column="89" selection-end-line="67" selection-end-column="89" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
                   </folding>
@@ -54,10 +65,10 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
+            <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-63">
-                  <caret line="119" column="52" selection-start-line="119" selection-start-column="52" selection-end-line="119" selection-end-column="52" />
+                <state relative-caret-position="448">
+                  <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
                   </folding>
@@ -69,28 +80,19 @@
             <entry file="file://$PROJECT_DIR$/rs_algorithm/basis_functions.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="42">
-                  <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+                  <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
                 </state>
               </provider>
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/rs_algorithm/rs_methods.py">
+            <entry file="file://$PROJECT_DIR$/ppo_algorithm/utilities/plot_utility.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="238">
-                  <caret line="23" column="47" selection-start-line="23" selection-start-column="47" selection-end-line="23" selection-end-column="47" />
+                <state relative-caret-position="420">
+                  <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
                   <folding>
-                    <element signature="e#0#10#0" expanded="true" />
+                    <element signature="e#0#31#0" expanded="true" />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$USER_HOME$/anaconda3/envs/rl_torch/lib/python3.6/site-packages/matplotlib/pyplot.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="38640">
-                  <caret line="2809" column="4" selection-start-line="2809" selection-start-column="4" selection-end-line="2809" selection-end-column="4" />
                 </state>
               </provider>
             </entry>
@@ -111,7 +113,7 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ppo_algorithm/utilities/gae.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="126">
+                <state relative-caret-position="112">
                   <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
                   <folding>
                     <element signature="e#0#12#0" expanded="true" />
@@ -123,8 +125,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="140">
-                  <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+                <state relative-caret-position="84">
+                  <caret line="6" column="76" selection-start-line="6" selection-start-column="76" selection-end-line="6" selection-end-column="76" />
                 </state>
               </provider>
             </entry>
@@ -203,20 +205,18 @@
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/plot_reward.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/plot_utility.py" />
         <option value="$PROJECT_DIR$/rs/rs_methods.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" />
         <option value="$PROJECT_DIR$/rs_algorithm/basis_functions.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/gae.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/main.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/ppo.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/main.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="1440" />
-    <option name="y" value="-73" />
-    <option name="width" value="1920" />
-    <option name="height" value="1057" />
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+    <option name="width" value="714" />
+    <option name="height" value="900" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -238,6 +238,18 @@
               <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
               <item name="ppo_algorithm" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
+              <item name="ppo_algorithm" type="462c0819:PsiDirectoryNode" />
+              <item name="models" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
+              <item name="ppo_algorithm" type="462c0819:PsiDirectoryNode" />
+              <item name="utilities" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -251,7 +263,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="PyScientificConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -466,7 +478,11 @@
       <workItem from="1548170692748" duration="7000" />
       <workItem from="1548267187570" duration="3189000" />
       <workItem from="1548324450127" duration="43000" />
-      <workItem from="1548324511834" duration="263000" />
+      <workItem from="1548324511834" duration="13788000" />
+      <workItem from="1548344609350" duration="76000" />
+      <workItem from="1548347756651" duration="6491000" />
+      <workItem from="1548411091117" duration="15444000" />
+      <workItem from="1548455923742" duration="4134000" />
     </task>
     <task id="LOCAL-00001" summary="Added quanser platforms with example code">
       <created>1542026556544</created>
@@ -507,7 +523,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="270791000" />
+    <option name="totallyTimeSpent" value="310461000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -519,15 +535,15 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1440" y="-73" width="1920" height="1057" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13844515" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.13876967" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4972973" weight="0.3284974" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32891566" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.84" weight="0.24572004" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.84" weight="0.17016317" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32930514" />
@@ -536,12 +552,12 @@
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.20162162" side_tool="true" weight="0.21139896" />
       <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49927008" weight="0.32930514" />
-      <window_info active="true" anchor="bottom" x="69" y="559" width="1850" height="204" id="Python Console" order="12" sideWeight="0.7983784" visible="true" weight="0.22155085" />
+      <window_info active="true" anchor="bottom" x="69" y="559" width="1850" height="204" id="Python Console" order="12" sideWeight="0.7983784" visible="true" weight="0.26456878" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="SciView" order="3" sideWeight="0.7237762" weight="0.31309903" />
-      <window_info anchor="right" x="0" y="0" width="303" height="677" id="Documentation" order="4" sideWeight="0.27622378" side_tool="true" weight="0.31789136" />
+      <window_info anchor="right" id="SciView" order="3" sideWeight="0.7210777" visible="true" weight="0.37911302" />
+      <window_info anchor="right" x="0" y="0" width="303" height="677" id="Documentation" order="4" sideWeight="0.27892235" side_tool="true" weight="0.6502146" />
       <window_info anchor="right" id="R Graphics" order="5" weight="0.32960597" />
       <window_info anchor="right" id="R Packages" order="6" weight="0.32960597" />
       <window_info anchor="right" id="Database" order="7" />
@@ -584,6 +600,11 @@
           <url>file://$PROJECT_DIR$/ppo_old/quanser_platforms/qube.py</url>
           <line>95</line>
           <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ppo_algorithm/ppo.py</url>
+          <line>34</line>
+          <option name="timeStamp" value="79" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -793,23 +814,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/anaconda3/envs/rl_torch/lib/python3.6/site-packages/torch/distributions/normal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="245">
-          <caret line="39" column="8" selection-start-line="39" selection-start-column="8" selection-end-line="39" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utilities/plot_utility.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="35" lean-forward="true" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda3/envs/rl_torch/lib/python3.6/site-packages/torch/nn/modules/conv.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="277">
@@ -821,26 +825,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="606">
           <caret line="2091" column="4" selection-start-line="2091" selection-start-column="4" selection-end-line="2091" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="812">
-          <caret line="62" column="39" selection-start-line="62" selection-start-column="39" selection-end-line="62" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="70">
-          <caret line="8" column="20" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -856,8 +840,25 @@
     </entry>
     <entry file="file://$USER_HOME$/anaconda3/envs/rl_torch/lib/python3.6/site-packages/matplotlib/pyplot.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38640">
+        <state relative-caret-position="335">
           <caret line="2809" column="4" selection-start-line="2809" selection-start-column="4" selection-end-line="2809" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/basis_functions.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="42">
+          <caret line="3" column="23" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utilities/plot_utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="32" column="14" selection-start-line="32" selection-start-column="14" selection-end-line="32" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -870,7 +871,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ppo_algorithm/utilities/gae.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
+        <state relative-caret-position="112">
           <caret line="9" column="17" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
           <folding>
             <element signature="e#0#12#0" expanded="true" />
@@ -878,17 +879,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rs_algorithm/basis_functions.py">
+    <entry file="file://$USER_HOME$/anaconda3/envs/rl_torch/lib/python3.6/site-packages/torch/distributions/normal.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
+        <state relative-caret-position="217">
+          <caret line="42" column="8" selection-start-line="42" selection-start-column="8" selection-end-line="42" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1531">
+          <caret line="110" column="26" selection-start-line="110" selection-start-column="26" selection-end-line="110" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-63">
-          <caret line="119" column="52" selection-start-line="119" selection-start-column="52" selection-end-line="119" selection-end-column="52" />
+        <state relative-caret-position="-1434">
+          <caret line="67" column="89" selection-start-line="67" selection-start-column="89" selection-end-line="67" selection-end-column="89" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -897,8 +908,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+        <state relative-caret-position="84">
+          <caret line="6" column="76" selection-start-line="6" selection-start-column="76" selection-end-line="6" selection-end-column="76" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

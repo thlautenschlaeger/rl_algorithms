@@ -3,6 +3,7 @@ from torch import nn
 import torch.nn.functional as F
 import numpy as np
 from torch.distributions import Normal
+from ppo_algorithm.ppo_hyperparams import ppo_params
 
 class Actor(nn.Module):
 
@@ -63,11 +64,12 @@ class ActorCriticMLP(nn.Module):
             self.actor = nn.Sequential(
                 nn.Linear(num_inputs, num_hidden_neurons),
                 nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-                # nn.ReLU(),
+                # nn.ReLU(), nn
+                # nn.ELU(),
                 nn.Tanh(),
-                # nn.Linear(num_hidden_neurons, num_hidden_neurons),
-                # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-                # nn.Tanh(),
+                nn.Linear(num_hidden_neurons, num_hidden_neurons),
+                nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+                nn.Tanh(),
                 # nn.Linear(num_hidden_neurons, num_hidden_neurons),
                 # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.Tanh(),
@@ -77,11 +79,11 @@ class ActorCriticMLP(nn.Module):
             self.critic = nn.Sequential(
                 nn.Linear(num_inputs, num_hidden_neurons),
                 nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-                # nn.ReLU(),
+                # nn.ELU(),
                 nn.Tanh(),
-                # nn.Linear(num_hidden_neurons, num_hidden_neurons),
-                # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-                # nn.Tanh(),
+                nn.Linear(num_hidden_neurons, num_hidden_neurons),
+                nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+                nn.Tanh(),
                 # nn.Linear(num_hidden_neurons, num_hidden_neurons),
                 # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.Tanh(),
@@ -104,7 +106,8 @@ class ActorCriticMLP(nn.Module):
         mean = self.actor(x)
         value = self.critic(x)
         std = (self.log_std).exp()
-
+        # std = torch.clamp((self.log_std).exp(),ppo_params['min_std'], ppo_params['max_std'])
+        # std = ppo_params['actor_network_std']
         distribution = Normal(mean, std)
 
         return distribution, value

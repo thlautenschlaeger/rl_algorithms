@@ -30,7 +30,7 @@ def choose_environment(selection=0):
 
 
 if __name__ == '__main__':
-	environment = choose_environment(0)
+	environment = choose_environment(1)
 	run_ppo(environment, training_iterations=ppo_params['num_iterations'], num_actors=ppo_params['num_actors'],
 			ppo_epochs=ppo_params['ppo_epochs'], trajectory_size=ppo_params['trajectory_size'],
 			vis=ppo_params['visualize'], plot=ppo_params['plot_reward'])

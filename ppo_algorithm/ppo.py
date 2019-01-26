@@ -22,6 +22,10 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
     :param vis: if true than show visualization
     :return:
     """
+    # if plot:
+    #     plt.axis([0, ppo_params['plot_time_axis'], 0, ppo_params['plot_reward_axis']])
+    #     plt.ion()
+    #     plt.show()
 
     env = GentlyTerminating(env)
 
@@ -37,12 +41,7 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
 
     total_rewards = []
     state = env.reset()
-    count = 0
     for epoch in range(training_iterations):
-        # if count * trajectory_size > 2200:
-        #     state = env.reset()
-        #     count = 0
-        # count += 1
         rewards = []
         values = []
         states = []
@@ -56,9 +55,6 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
         for i in range(num_actors):
 
             state = env.reset()
-            # ------------------ #
-            #### run policy ####
-            # ------------------ #
             total_reward = 0
             for t in range(trajectory_size):
                 state = torch.FloatTensor(state)
@@ -70,7 +66,6 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
                 action = dist.sample()
 
                 next_state, reward, done, info = env.step(action.cpu().detach().numpy()[0])
-                # next_state, reward, done, info = env.step(action)
 
                 # save values and rewards for gae
                 log_prob = dist.log_prob(action)
@@ -86,9 +81,16 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
                 if vis:
                     env.render()
                 if done:
+                    # for j in range(t,trajectory_size-1):
+                    #     log_prob = dist.log_prob(action)
+                    #     values.append(value)
+                    #     old_log_probs.append(log_prob)
+                    #     states.append(states[-1])
+                    #     actions.append(action)
+                    #     rewards.append(reward)
+                    #     masks.append(1 - done)
                     state = env.reset()
                     # break
-
 
 
             _, last_value = ac_net(torch.FloatTensor(next_state))
@@ -109,21 +111,21 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
         old_log_probs = torch.cat(old_log_probs).detach()
         actions = torch.cat(actions)
 
+
         if epoch % 1 == 0:
             print('#############################################')
-            print('Total reward: {} in epoch: {}'.format(total_reward, epoch))
+            print('Total reward: {} in epoch: {}'.format(total_reward/ppo_params['num_actors'], epoch))
             print('Variance: {}'.format(dist.variance.detach().numpy().squeeze()))
         total_rewards.append(total_reward/ppo_params['num_actors'])
-
-            # advantage_estimates = torch.cat(advantage_estimates)
 
         ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs,
                        ac_net, ppo_params['minibatch_size'], returns, ppo_params['clipping'])
 
-
-        if plot and epoch % 10 == 0:
+        if plot and epoch % 500 == 0:
             plt.plot(total_rewards)
             plt.show()
+            # plt.draw()
+            # plt.pause(0.001)
 
 def ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs,
                ac_net, minibatch_size, returns, eps=0.2):
@@ -166,6 +168,10 @@ def ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log
         states = states[randomized_inds]
         returns = returns[randomized_inds]
 
+        # frac = 1.0 - (k - 1.0) / ppo_epochs
+        # Calculate the learning rate
+        # lrnow = lr(frac)
+
         for i in range(0, len(states), minibatch_size):
             dist, current_policy_value = ac_net(states[i:i+minibatch_size])
 
@@ -185,16 +191,17 @@ def ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log
             actor_loss = torch.min(surr, clipped_surr).mean()
             # critic_loss = ((advantage_batch - values[i:i+minibatch_size] - target_value) ** 2).mean()
 
-            target_value = torch.FloatTensor(returns[i:i + minibatch_size])
+            target_value = torch.FloatTensor(returns[i:i + minibatch_size]).detach()
             critic_loss = ((current_policy_value - target_value).pow(2)).mean()
 
-            # loss = actor_loss + c1 * critic_loss - c2 * entropy
+            # loss = -(actor_loss + c1 * critic_loss - c2 * entropy)
+            loss = -(actor_loss - c1 * critic_loss + c2 * entropy)
 
-            loss = actor_loss - c1 * critic_loss + c2 * entropy
+            # loss = actor_loss - c1 * critic_loss + c2 * entropy
 
             ac_optim.zero_grad()
             loss.backward()
-            torch.nn.utils.clip_grad_norm_(ac_net.parameters(), ppo_params['max_grad_norm'])
+            # torch.nn.utils.clip_grad_norm_(ac_net.parameters(), ppo_params['max_grad_norm'])
             ac_optim.step()
 
 
