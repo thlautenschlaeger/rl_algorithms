@@ -1,15 +1,11 @@
-import gym
 from quanser_robots import GentlyTerminating
 import torch
 import torch.optim as optim
 import matplotlib.pyplot as plt
 import numpy as np
-import pandas as pd
-from ppo_algorithm.utilities.gae import compute_gae
-from ppo_algorithm.utilities.gae import compute_gae_old
+from ppo_algorithm.gae import compute_gae
 from ppo_algorithm.models import actor_critic
 from ppo_algorithm.ppo_hyperparams import ppo_params
-from ppo_algorithm.utilities import plot_utility
 
 
 def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, vis=False, plot=False):
@@ -36,7 +32,7 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
     num_outputs = env.action_space.shape[0]
     num_hidden_neurons = ppo_params['num_hidden_neurons']
 
-    ac_net = actor_critic.ActorCriticMLP(num_inputs, num_hidden_neurons,
+    ac_net = actor_critic.ActorCriticMLPShared(num_inputs, num_hidden_neurons,
                                          num_outputs, std=ppo_params['actor_network_std'])
 
     total_rewards = []
@@ -78,26 +74,19 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
                 masks.append(1 - done)
                 total_reward += reward
 
-                if vis:
-                    env.render()
+                # if vis and ((epoch > 2000 and epoch < 2010) or (epoch > 5000)):
+                #     env.render()
                 if done:
-                    # for j in range(t,trajectory_size-1):
-                    #     log_prob = dist.log_prob(action)
-                    #     values.append(value)
-                    #     old_log_probs.append(log_prob)
-                    #     states.append(states[-1])
-                    #     actions.append(action)
-                    #     rewards.append(reward)
-                    #     masks.append(1 - done)
                     state = env.reset()
-                    # break
-
 
             _, last_value = ac_net(torch.FloatTensor(next_state))
 
             # ------------------------------------------------------ #
             #### compute advantage estimates from trajectory ####
             # ------------------------------------------------------ #
+            if vis and epoch % 100 == 0:
+                cum_r = render_policy(env, ac_net)
+                # print("Cumulative reward: {} in epoch: {}".format(cum_r, epoch))
             advantage_estimates_, returns_ = compute_gae(rewards[i*trajectory_size:i*trajectory_size+trajectory_size],
                                                          values[i*trajectory_size:i*trajectory_size+trajectory_size],
                                                          last_value,
@@ -121,7 +110,7 @@ def run_ppo(env, training_iterations, num_actors, ppo_epochs, trajectory_size, v
         ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log_probs,
                        ac_net, ppo_params['minibatch_size'], returns, ppo_params['clipping'])
 
-        if plot and epoch % 500 == 0:
+        if plot and epoch % 200 == 0:
             plt.plot(total_rewards)
             plt.show()
             # plt.draw()
@@ -201,7 +190,24 @@ def ppo_update(ppo_epochs, advantage_estimates, states, actions, values, old_log
 
             ac_optim.zero_grad()
             loss.backward()
-            # torch.nn.utils.clip_grad_norm_(ac_net.parameters(), ppo_params['max_grad_norm'])
+            torch.nn.utils.clip_grad_norm_(ac_net.parameters(), ppo_params['max_grad_norm'])
             ac_optim.step()
+
+def render_policy(env, policy):
+    done = False
+    state = env.reset()
+    cum_reward = 0
+    while not done:
+        dist, _ = policy(torch.FloatTensor(state))
+        action = dist.sample()
+        state, reward, done, _ = env.step(action.cpu().detach().numpy()[0])
+        cum_reward += reward
+        # env.render()
+    print('||||||||||||||||||||||||||||||')
+    print('Cumulative reward:', cum_reward)
+    print('||||||||||||||||||||||||||||||')
+    return cum_reward
+
+
 
 

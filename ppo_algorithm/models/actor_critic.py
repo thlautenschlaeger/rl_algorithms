@@ -67,9 +67,9 @@ class ActorCriticMLP(nn.Module):
                 # nn.ReLU(), nn
                 # nn.ELU(),
                 nn.Tanh(),
-                nn.Linear(num_hidden_neurons, num_hidden_neurons),
-                nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-                nn.Tanh(),
+                # nn.Linear(num_hidden_neurons, num_hidden_neurons),
+                # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+                # nn.Tanh(),
                 # nn.Linear(num_hidden_neurons, num_hidden_neurons),
                 # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.Tanh(),
@@ -81,9 +81,6 @@ class ActorCriticMLP(nn.Module):
                 nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.ELU(),
                 nn.Tanh(),
-                nn.Linear(num_hidden_neurons, num_hidden_neurons),
-                nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-                nn.Tanh(),
                 # nn.Linear(num_hidden_neurons, num_hidden_neurons),
                 # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 # nn.Tanh(),
@@ -93,11 +90,6 @@ class ActorCriticMLP(nn.Module):
             # applies fn recursively to every submodule
             self.apply(init_weights)
 
-
-        elif network_type == 'recurrent':
-        #     self.actor == nn.LSTM()
-            raise NotImplementedError
-
         self.no = num_outputs
         self.log_std = nn.Parameter(torch.ones(1, num_outputs) * std)
 
@@ -106,8 +98,48 @@ class ActorCriticMLP(nn.Module):
         mean = self.actor(x)
         value = self.critic(x)
         std = (self.log_std).exp()
-        # std = torch.clamp((self.log_std).exp(),ppo_params['min_std'], ppo_params['max_std'])
-        # std = ppo_params['actor_network_std']
+
+        distribution = Normal(mean, std)
+
+        return distribution, value
+
+class ActorCriticMLPShared(nn.Module):
+    """
+    Single neural network for policy and value with shared parameters
+    """
+
+    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, network_type='feed_forward', std=1.0):
+        super(ActorCriticMLPShared, self).__init__()
+
+
+        if network_type == 'feed_forward':
+
+            self.network = nn.Sequential(
+                nn.Linear(num_inputs, num_hidden_neurons),
+                nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+                nn.Tanh(),
+                nn.Linear(num_hidden_neurons, num_hidden_neurons),
+                nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+                nn.Tanh(),
+                nn.Linear(num_hidden_neurons, num_outputs+1)
+            )
+
+            self.apply(init_weights)
+
+        self.num_inputs = num_inputs
+        self.num_outputs = num_outputs
+        self.log_std = nn.Parameter(torch.ones(1, num_outputs) * std)
+
+    def forward(self, x):
+
+        output = self.network(x)
+        if len(output.shape) < 2:
+            output = output.unsqueeze(0)
+
+        mean = output[:, 0:self.num_outputs].clone()
+        value = output[:, self.num_outputs:self.num_outputs+1].clone()
+
+        std = (self.log_std).exp()
         distribution = Normal(mean, std)
 
         return distribution, value

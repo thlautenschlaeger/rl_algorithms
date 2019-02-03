@@ -51,9 +51,12 @@ def compute_gae(rewards, values, last_value, masks, discount, lamb):
     advantage = 0
 
     for i in reversed(range(n)):
-        delta = rewards[i] + discount * values[i+1].cpu().detach().numpy() * \
-                    masks[i] - values[i].cpu().detach().numpy()
-        advantage = delta + trade_off * masks[i] * advantage
+        # delta = rewards[i] + discount * values[i+1].cpu().detach().numpy() * \
+        #             masks[i] - values[i].cpu().detach().numpy()
+        delta = rewards[i] + discount * values[i + 1].cpu().detach().numpy() - \
+                values[i].cpu().detach().numpy()
+        # advantage = delta + trade_off * masks[i] * advantage
+        advantage = delta + trade_off * advantage
         advantage_estimates[i] = advantage
         returns[i] = advantage + values[i].cpu().detach().numpy()
 
