@@ -46,9 +46,14 @@ class Critic(nn.Module):
         return out_value
 
 
-def init_weights(m):
+def init_weights_old(m):
     if isinstance(m, nn.Linear):
         nn.init.normal_(m.weight, mean=0., std=0.1)
+        nn.init.constant_(m.bias, 0.0)
+
+def init_weights(m):
+    if isinstance(m, nn.Linear):
+        nn.init.xavier_normal_(m.weight.data)
         nn.init.constant_(m.bias, 0.0)
 
 class ActorCriticMLP(nn.Module):
@@ -111,7 +116,6 @@ class ActorCriticMLPShared(nn.Module):
     def __init__(self, num_inputs, num_hidden_neurons, num_outputs, network_type='feed_forward', std=1.0):
         super(ActorCriticMLPShared, self).__init__()
 
-
         if network_type == 'feed_forward':
 
             self.network = nn.Sequential(
@@ -121,6 +125,9 @@ class ActorCriticMLPShared(nn.Module):
                 nn.Linear(num_hidden_neurons, num_hidden_neurons),
                 nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 nn.Tanh(),
+                # nn.Linear(num_hidden_neurons, num_hidden_neurons),
+                # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
+                # nn.ELU(),
                 nn.Linear(num_hidden_neurons, num_outputs+1)
             )
 

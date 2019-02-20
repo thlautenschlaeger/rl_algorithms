@@ -57,6 +57,30 @@ class FourierBasis():
     def __init__(self, state_dim):
         self.state_dim = state_dim
         self.num_features = np.power(state_dim, state_dim) + 1
+        self.feature_vec = self.init_feature()
+
+    def init_feature(self):
+        """
+        computes vector
+        :return:
+        """
+        feature = np.zeros(shape=(self.num_features, 1))
+        pos = 0
+        feature[pos] = 1
+        pos += 1
+        for i in range(self.state_dim):
+            for j in range(self.state_dim):
+                feature[pos] = (np.cos(2 * i * np.pi) / self.state_dim)
+                feature[pos + 1] = (np.sin(2 * i * np.pi) / self.state_dim)
+                pos += 2
+
+        return feature
+
+    def evaluate_new(self, state):
+        return
+
+
+
 
     def evaluate(self, state):
         """

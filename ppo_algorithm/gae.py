@@ -59,5 +59,8 @@ def compute_gae(rewards, values, last_value, masks, discount, lamb):
         advantage = delta + trade_off * advantage
         advantage_estimates[i] = advantage
         returns[i] = advantage + values[i].cpu().detach().numpy()
+        # return_ = (advantage + values[i].cpu().detach().numpy())[0]
+        # return_normalizer.observe(return_)
+        # returns[i] = return_normalizer.normalize(return_)
 
     return advantage_estimates, returns
