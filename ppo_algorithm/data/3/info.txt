@@ -1,0 +1,2 @@
+old network that worked
+not normalized

@@ -122,12 +122,9 @@ class ActorCriticMLPShared(nn.Module):
                 nn.Linear(num_inputs, num_hidden_neurons),
                 nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
                 nn.Tanh(),
-                nn.Linear(num_hidden_neurons, num_hidden_neurons),
-                nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-                nn.Tanh(),
                 # nn.Linear(num_hidden_neurons, num_hidden_neurons),
                 # nn.LayerNorm(num_hidden_neurons, num_hidden_neurons),
-                # nn.ELU(),
+                # nn.Tanh(),
                 nn.Linear(num_hidden_neurons, num_outputs+1)
             )
 
@@ -146,10 +143,66 @@ class ActorCriticMLPShared(nn.Module):
         mean = output[:, 0:self.num_outputs].clone()
         value = output[:, self.num_outputs:self.num_outputs+1].clone()
 
-        std = (self.log_std).exp()
+        std = torch.clamp((self.log_std).exp(), 0.3)
         distribution = Normal(mean, std)
 
         return distribution, value
+
+
+class ActorCriticMLPShared_(nn.Module):
+    """
+    Single neural network acting policy and value network with shared parameters
+    """
+
+    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, std=1.0):
+        super(ActorCriticMLPShared_, self).__init__()
+        self.hidden_layers = nn.ModuleList()
+
+
+        self.input_layer = nn.ModuleList([nn.Linear(num_inputs, num_hidden_neurons[0]),
+                            nn.LayerNorm(num_hidden_neurons[0], num_hidden_neurons[0]),
+                            nn.Tanh()])
+        if len(num_hidden_neurons) > 1:
+            for i in range(len(num_hidden_neurons) -1):
+                self.hidden_layers.append(
+                    nn.ModuleList([nn.Linear(num_hidden_neurons[i], num_hidden_neurons[i + 1]),
+                     nn.LayerNorm(num_hidden_neurons[i+1], num_hidden_neurons[i+1]),
+                     nn.Tanh()])
+                )
+
+
+
+        self.out_mean = nn.Linear(num_hidden_neurons[-1], num_outputs)
+        self.out_value = nn. Linear(num_hidden_neurons[-1], 1)
+
+        self.step_size = len(self.input_layer)
+        self.num_hidden_layers = len(self.hidden_layers)
+
+
+        self.num_inputs = num_inputs
+        self.num_outputs = num_outputs
+        self.log_std = nn.Parameter(torch.ones(1, num_outputs) * std)
+        self.apply(init_weights)
+
+
+    def forward(self, x):
+
+        for i in range(self.step_size):
+            x = self.input_layer[i](x)
+
+        for i in range(self.num_hidden_layers):
+            for j in range(self.step_size):
+                x = self.hidden_layers[i][j](x)
+
+        mean = self.out_mean(x)
+        std = self.log_std.exp()
+        # std = torch.clamp(std, 0.4, 3.)
+        value = self.out_value(x)
+
+        dist = Normal(mean, std)
+
+        return dist, value
+
 
 class ActorCriticLSTM(nn.Module):
     """

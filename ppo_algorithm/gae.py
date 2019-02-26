@@ -43,24 +43,20 @@ def compute_gae(rewards, values, last_value, masks, discount, lamb):
     :return: list of advantage estimates
     """
     n = len(rewards)
-    values = values.copy()
-    values.append(last_value)
+    values = values.clone()
+    values = torch.cat((values, last_value))
     trade_off = discount * lamb
     advantage_estimates = np.zeros(shape=n)
     returns = np.empty(shape=n)
     advantage = 0
 
     for i in reversed(range(n)):
-        # delta = rewards[i] + discount * values[i+1].cpu().detach().numpy() * \
-        #             masks[i] - values[i].cpu().detach().numpy()
-        delta = rewards[i] + discount * values[i + 1].cpu().detach().numpy() - \
-                values[i].cpu().detach().numpy()
+        # delta = rewards[i] + discount * values[i+1] * \
+        #             masks[i] - values[i]
+        delta = rewards[i] + discount * values[i + 1] - values[i]
         # advantage = delta + trade_off * masks[i] * advantage
         advantage = delta + trade_off * advantage
         advantage_estimates[i] = advantage
-        returns[i] = advantage + values[i].cpu().detach().numpy()
-        # return_ = (advantage + values[i].cpu().detach().numpy())[0]
-        # return_normalizer.observe(return_)
-        # returns[i] = return_normalizer.normalize(return_)
+        returns[i] = advantage + values[i]
 
     return advantage_estimates, returns
