@@ -53,7 +53,7 @@ def compute_gae(rewards, values, last_value, masks, discount, lamb):
     for i in reversed(range(n)):
         # delta = rewards[i] + discount * values[i+1] * \
         #             masks[i] - values[i]
-        delta = rewards[i] + discount * values[i + 1] - values[i]
+        delta = torch.tensor(rewards[i]) + discount * values[i + 1] - values[i]
         # advantage = delta + trade_off * masks[i] * advantage
         advantage = delta + trade_off * advantage
         advantage_estimates[i] = advantage
