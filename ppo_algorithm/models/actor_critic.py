@@ -211,7 +211,6 @@ class ActorCriticMLPShared__(nn.Module):
 
     def __init__(self, num_inputs, num_hidden_neurons, num_outputs, std=1.0):
         super(ActorCriticMLPShared__, self).__init__()
-        self.hidden_layers = nn.ModuleList()
 
         self.net = nn.ModuleList([nn.Linear(num_inputs, num_hidden_neurons[0]),
                                   nn.LayerNorm(num_hidden_neurons[0], num_hidden_neurons[0]),
@@ -227,7 +226,7 @@ class ActorCriticMLPShared__(nn.Module):
         self.out_value = nn.Linear(num_hidden_neurons[-1], 1)
 
         self.step_size = len(self.net)
-        self.num_hidden_layers = len(self.hidden_layers)
+        self.num_hidden_layers = len(num_hidden_neurons)
 
         self.num_inputs = num_inputs
         self.num_outputs = num_outputs
@@ -240,8 +239,9 @@ class ActorCriticMLPShared__(nn.Module):
             x = layer(x)
 
         mean = self.out_mean(x)
+        # std = torch.sigmoid(self.log_std.exp())
         std = self.log_std.exp()
-        std = torch.clamp(std, 0.4)
+        # std = torch.clamp(std, 0.4)
         value = self.out_value(x)
 
         dist = Normal(mean, std)

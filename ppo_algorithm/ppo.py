@@ -8,46 +8,51 @@ from ppo_algorithm.models import actor_critic
 from ppo_algorithm.ppo_hyperparams import ppo_params
 from ppo_algorithm.normalizer import Normalizer
 import time
-from ppo_algorithm.utilities import save_model
+from ppo_algorithm.utilities import model_handler
 
 class PPO():
 
-    # def __init__(self, env, num_iterations, num_actors, ppo_epochs,
-    #              trajectoriy_size, hidden_neurons, std, batch_size, model=None,
-    #              optimizer=None, vis=False, plot=False, continue_training=False):
+    # def __init__(self, env, path, hyper_params, continue_training=False):
     #
     #     self.env = GentlyTerminating(env)
-    #     self.num_iterations = num_iterations
-    #     self.num_actors = num_actors
-    #     self.ppo_epochs = ppo_epochs
-    #     self.trajectory_size = trajectoriy_size
-    #     self.batch_size = batch_size
-    #     self.vis = vis
-    #     self.plot = plot
+    #     self.num_iterations = hyper_params['num_iterations']
+    #     self.lamb = hyper_params['lambda']
+    #     self.clipping=hyper_params['cliprange']
+    #     self.discount = hyper_params['gamma']
+    #     self.ppo_epochs = hyper_params['ppo_epochs']
+    #     self.trajectory_size = hyper_params['nsteps']
+    #     self.batch_size = hyper_params['minibatches']
+    #     self.vf_coef = hyper_params['vf_coef']
+    #     self.entropy_coef = hyper_params['entropy_coef']
+    #     self.h_neurons = hyper_params['hidden_neurons']
+    #     self.policy_std = hyper_params['policy_std']
+    #     self.lr = hyper_params['learn_rate']
+    #     self.vf_coef = hyper_params['vf_coef']
     #
     #     self.num_inputs = self.env.observation_space.shape[0]
     #     self.num_outputs = self.env.action_space.shape[0]
     #     self.ac_net = actor_critic.ActorCriticMLPShared__(num_inputs=self.num_inputs,
-    #                                                      num_hidden_neurons=hidden_neurons,
-    #                                                      num_outputs=self.num_outputs,
-    #                                                      std=std)
+    #                                                       num_hidden_neurons=self.h_neurons,
+    #                                                       num_outputs=self.num_outputs,
+    #                                                       std=self.policy_std)
     #
     #     self.state_normalizer = Normalizer(num_inputs=self.num_inputs)
-    #     self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=ppo_params['optim_lr'])
+    #     self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=self.lr)
     #
-    #     # if continue_training:
-    #     #     load_files =
+    #     if continue_training:
+    #         self.ac_net, self.ac_optim = model_handler.load_model(path=path, model=self.ac_net,
+    #                                                           optimizer=self.ac_optim)
 
     def __init__(self, env, num_iterations, num_actors, ppo_epochs,
-                 trajectoriy_size, hidden_neurons, std, batch_size,
-                  vis=False, plot=False):
+                 trajectoriy_size, hidden_neurons, policy_std, minibatches,
+                 vis=False, plot=False):
 
         self.env = GentlyTerminating(env)
         self.num_iterations = num_iterations
         self.num_actors = num_actors
         self.ppo_epochs = ppo_epochs
         self.trajectory_size = trajectoriy_size
-        self.batch_size = batch_size
+        self.batch_size = minibatches
         self.vis = vis
         self.plot = plot
 
@@ -55,9 +60,9 @@ class PPO():
         self.num_outputs = self.env.action_space.shape[0]
         self.num_states = self.num_inputs
         self.ac_net = actor_critic.ActorCriticMLPShared__(num_inputs=self.num_inputs,
-                                                         num_hidden_neurons=hidden_neurons,
-                                                         num_outputs=self.num_outputs,
-                                                         std=std)
+                                                          num_hidden_neurons=hidden_neurons,
+                                                          num_outputs=self.num_outputs,
+                                                          std=policy_std)
 
         self.state_normalizer = Normalizer(num_inputs=self.num_inputs)
         self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=ppo_params['optim_lr'])
@@ -97,6 +102,12 @@ class PPO():
 
             if done:
                 state = self.env.reset()
+        k = 0
+        a = 0
+        for p in self.ac_net.parameters():
+            k += torch.norm(p)
+            a +=1
+        l = k / a
 
         _, last_value = self.ac_net(torch.FloatTensor(next_state))
         values = values.detach()
@@ -173,9 +184,8 @@ class PPO():
                 torch.nn.utils.clip_grad_norm_(self.ac_net.parameters(), ppo_params['max_grad_norm'])
                 self.ac_optim.step()
 
-
     def run_ppo(self):
-        folder_num = 2
+        folder_num = 4
         check_reward = 0
         cum_rewards = []
         render_rewards = []
@@ -199,8 +209,8 @@ class PPO():
             if check_reward < total_rewards:
                 print("SAVE NEW MODEL")
                 check_reward = total_rewards
-                save_model.save_files(self.ac_net, self.ac_optim, np.array(cum_rewards), np.array(render_rewards),
-                                      self.state_normalizer, path)
+                model_handler.save_model(self.ac_net, self.ac_optim, np.array(cum_rewards), np.array(render_rewards),
+                                         self.state_normalizer, path)
 
             # plotting and evaluating policy
             if i % 100 == 0:
