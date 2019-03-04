@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="983d662b-7897-404d-9dbd-f3b57a898ee4" name="Default Changelist" comment="Added random search">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/normalizer.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/normalizer.pt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/optimizer.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/optimizer.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/optimizer_state_dict.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/optimizer_state_dict.pt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/ppo_network.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/ppo_network.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/ppo_network_state_dict.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/ppo_network_state_dict.pt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/render_rewards.npy" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/render_rewards.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/reward.png" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/reward.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/rewards.npy" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/rewards.npy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/4/normalizer.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/4/normalizer.pt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/4/optimizer.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/4/optimizer.pt" afterDir="false" />
@@ -16,17 +18,9 @@
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/4/render_rewards.npy" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/4/render_rewards.npy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/4/reward.png" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/4/reward.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/4/rewards.npy" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/4/rewards.npy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/5/optimizer.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/5/optimizer.pt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/5/optimizer_state_dict.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/5/optimizer_state_dict.pt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/5/ppo_network.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/5/ppo_network.pt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/5/ppo_network_state_dict.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/5/ppo_network_state_dict.pt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/5/render_rewards.npy" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/5/render_rewards.npy" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/5/reward.png" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/5/reward.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/5/rewards.npy" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/5/rewards.npy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/ppo.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/ppo.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_old/ppo_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_old/ppo_methods.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +29,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/rl_algorithms$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1551695281342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo_algorithm" />
+    <SUITE FILE_PATH="coverage/rl_algorithms$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1551701161997" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo_algorithm" />
     <SUITE FILE_PATH="coverage/rl_algorithms$qube.coverage" NAME="qube Coverage Results" MODIFIED="1542114941694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/basic_rl_model/quanser_platforms" />
     <SUITE FILE_PATH="coverage/rl_algorithms$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1542211651532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/holzgroup/quanser_platforms" />
     <SUITE FILE_PATH="coverage/rl_algorithms$main.coverage" NAME="main Coverage Results" MODIFIED="1546704251737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo" />
@@ -54,8 +48,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="140">
-                  <caret line="215" column="76" selection-start-line="215" selection-start-column="76" selection-end-line="215" selection-end-column="76" />
+                <state relative-caret-position="476">
+                  <caret line="80" column="56" lean-forward="true" selection-start-line="80" selection-start-column="56" selection-end-line="80" selection-end-column="56" />
                   <folding>
                     <element signature="e#0#12#0" expanded="true" />
                   </folding>
@@ -84,7 +78,7 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="336">
@@ -102,11 +96,23 @@
               </provider>
             </entry>
           </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="1200">
+                  <caret line="112" column="11" selection-start-line="112" selection-start-column="11" selection-end-line="112" selection-end-column="11" />
+                  <folding>
+                    <element signature="e#0#44#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
         </leaf>
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/rs_algorithm/normalizer.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="252">
@@ -115,25 +121,13 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="504">
-                  <caret line="76" column="35" lean-forward="true" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="35" />
+                <state relative-caret-position="248">
+                  <caret line="116" column="79" lean-forward="true" selection-start-line="116" selection-start-column="79" selection-end-line="116" selection-end-column="79" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="38">
-                  <caret line="174" column="13" selection-start-line="174" selection-start-column="13" selection-end-line="174" selection-end-column="13" />
-                  <folding>
-                    <element signature="e#0#44#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -237,11 +231,11 @@
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/model_handler.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/cmd_util.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/data/4/info.txt" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" />
         <option value="$PROJECT_DIR$/ppo_old/ppo_methods.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/main.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/ppo.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" />
       </list>
     </option>
   </component>
@@ -270,6 +264,19 @@
               <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
               <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
               <item name="ppo_algorithm" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
+              <item name="ppo_algorithm" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
+              <item name="ppo_algorithm" type="462c0819:PsiDirectoryNode" />
+              <item name="data" type="462c0819:PsiDirectoryNode" />
+              <item name="good_qube_policy_2" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
@@ -534,7 +541,7 @@
       <workItem from="1551101709346" duration="5593000" />
       <workItem from="1551169740204" duration="36864000" />
       <workItem from="1551265077497" duration="16167000" />
-      <workItem from="1551292137539" duration="115514000" />
+      <workItem from="1551292137539" duration="117837000" />
     </task>
     <task id="LOCAL-00001" summary="Added quanser platforms with example code">
       <created>1542026556544</created>
@@ -575,7 +582,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="777519000" />
+    <option name="totallyTimeSpent" value="779842000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -692,7 +699,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ppo_algorithm/ppo.py</url>
-          <line>50</line>
+          <line>51</line>
           <option name="timeStamp" value="121" />
         </line-breakpoint>
       </breakpoints>
@@ -1050,16 +1057,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="215" column="76" selection-start-line="215" selection-start-column="76" selection-end-line="215" selection-end-column="76" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ppo_old/ppo_methods.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1540">
@@ -1077,30 +1074,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/normalizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="174" column="13" selection-start-line="174" selection-start-column="13" selection-end-line="174" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="252">
+          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="76" column="35" lean-forward="true" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="35" />
+        <state relative-caret-position="248">
+          <caret line="116" column="79" lean-forward="true" selection-start-line="116" selection-start-column="79" selection-end-line="116" selection-end-column="79" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rs_algorithm/normalizer.py">
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
+        <state relative-caret-position="476">
+          <caret line="80" column="56" lean-forward="true" selection-start-line="80" selection-start-column="56" selection-end-line="80" selection-end-column="56" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1200">
+          <caret line="112" column="11" selection-start-line="112" selection-start-column="11" selection-end-line="112" selection-end-column="11" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

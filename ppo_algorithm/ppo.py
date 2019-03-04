@@ -9,6 +9,7 @@ from ppo_algorithm.ppo_hyperparams import ppo_params
 from ppo_algorithm.normalizer import Normalizer
 import time
 from ppo_algorithm.utilities import model_handler
+from torch.distributions import Normal
 
 class PPO():
 
@@ -59,10 +60,10 @@ class PPO():
         self.num_inputs = self.env.observation_space.shape[0]
         self.num_outputs = self.env.action_space.shape[0]
         self.num_states = self.num_inputs
-        self.ac_net = actor_critic.ActorCriticMLPShared__(num_inputs=self.num_inputs,
-                                                          num_hidden_neurons=hidden_neurons,
-                                                          num_outputs=self.num_outputs,
-                                                          std=policy_std)
+        self.ac_net = actor_critic.ActorCriticMLPShared(num_inputs=self.num_inputs,
+                                                        num_hidden_neurons=hidden_neurons,
+                                                        num_outputs=self.num_outputs,
+                                                        std=policy_std)
 
         self.state_normalizer = Normalizer(num_inputs=self.num_inputs)
         self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=ppo_params['optim_lr'])
@@ -83,7 +84,9 @@ class PPO():
             # state = self.state_normalizer.normalize(state)
 
             # sample state from normal distribution
-            dist, value = self.ac_net(state)
+            mean, std, value = self.ac_net(state)
+
+            dist = Normal(mean, std)
 
             action = dist.sample()
 
@@ -107,7 +110,7 @@ class PPO():
                 state = self.env.reset()
 
 
-        _, last_value = self.ac_net(torch.FloatTensor(next_state))
+        _, _, last_value = self.ac_net(torch.FloatTensor(next_state))
         values = values.detach()
         last_value = last_value.detach()
         old_log_probs = old_log_probs.detach()
@@ -158,8 +161,9 @@ class PPO():
             eps = ep(frac)
 
             for i in range(0, self.trajectory_size, self.batch_size):
-                dist, current_policy_value = self.ac_net(states[i:i + self.batch_size])
+                mean, std, current_policy_value = self.ac_net(states[i:i + self.batch_size])
 
+                dist = Normal(mean, std)
                 new_log_prob = dist.log_prob(actions[i:i + self.batch_size])
                 entropy = dist.entropy().mean()
 
@@ -225,7 +229,8 @@ def render_policy(env, policy, normalizer=None):
     while not done:
         state = torch.FloatTensor(state)
         # state = normalizer.normalize(state)
-        dist, _ = policy(torch.FloatTensor(state))
+        mean, std, _ = policy(torch.FloatTensor(state))
+        dist = Normal(mean, std*0)
         action = dist.sample()
         state, reward, done, _ = env.step(action.cpu().detach().numpy()[0])
         cum_reward += reward

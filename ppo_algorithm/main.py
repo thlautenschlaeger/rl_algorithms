@@ -9,7 +9,9 @@ from ppo_algorithm.ppo_hyperparams import ppo_params
 import sys
 from ppo_algorithm.utilities import cmd_util
 import torch
+from torch.distributions import Normal
 from quanser_robots import GentlyTerminating
+from ppo_algorithm.models import actor_critic
 
 
 
@@ -101,17 +103,42 @@ def benchmark_policy(env, path):
 	:param env: gym environment
 	:param path: path of policy location
 	"""
-	return
+	policy = torch.load(path, map_location='cpu')
+	reward_list = []
+	for i in range(100):
+		cum_reward = 0
+		done = False
+		state = env.reset()
+		while not done:
+			state = torch.FloatTensor(state)
+			dist, _ = policy(torch.FloatTensor(state))
+			lel = Normal(dist.mean, dist.stddev*0.)
+			action = lel.sample()
+			state, reward, done, _ = env.step(action.cpu().detach().numpy()[0])
+			cum_reward += reward
+			# env.render()
+		print(cum_reward)
+
+
+		reward_list.append(cum_reward)
+
+	print('||||||||||||||||||||||||||||||')
+	print('Average Reward:', np.array(reward_list).sum()/100)
+	print('||||||||||||||||||||||||||||||')
 
 
 
 
 if __name__ == '__main__':
 
-	env = choose_environment(0)
+	env = choose_environment(1)
 	ppo = PPO(env, 100000, 1, ppo_params['ppo_epochs'], ppo_params['trajectory_size'], hidden_neurons=ppo_params['num_hidden_neurons'],
 			  policy_std=ppo_params['actor_network_std'], minibatches=ppo_params['minibatch_size'])
 	ppo.run_ppo()
+	# benchmark_policy(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/good_qube_policy_2/ppo_network.pt')
+
+
+
 	# run_ppo_old(env, training_iterations=ppo_params['num_iterations'], num_actors=ppo_params['num_actors'],
 	# 			ppo_epochs=ppo_params['ppo_epochs'], trajectory_size=ppo_params['trajectory_size'],
 	# 			vis=ppo_params['visualize'], plot=ppo_params['plot_reward'])
