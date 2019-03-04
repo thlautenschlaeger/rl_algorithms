@@ -47,7 +47,7 @@ class PPO():
                  trajectoriy_size, hidden_neurons, policy_std, minibatches,
                  vis=False, plot=False):
 
-        self.env = GentlyTerminating(env)
+        self.env = env
         self.num_iterations = num_iterations
         self.num_actors = num_actors
         self.ppo_epochs = ppo_epochs
@@ -89,6 +89,9 @@ class PPO():
 
             next_state, reward, done, info = self.env.step(action.cpu().detach().numpy()[0])
 
+            if reward >= 1.9999:
+                reward *= 2.0
+
             # save values and rewards for gae
             log_prob = dist.log_prob(action)
             values[i] = value
@@ -102,12 +105,7 @@ class PPO():
 
             if done:
                 state = self.env.reset()
-        k = 0
-        a = 0
-        for p in self.ac_net.parameters():
-            k += torch.norm(p)
-            a +=1
-        l = k / a
+
 
         _, last_value = self.ac_net(torch.FloatTensor(next_state))
         values = values.detach()
@@ -231,7 +229,7 @@ def render_policy(env, policy, normalizer=None):
         action = dist.sample()
         state, reward, done, _ = env.step(action.cpu().detach().numpy()[0])
         cum_reward += reward
-        # env.render()
+        env.render()
     print('||||||||||||||||||||||||||||||')
     print('Cumulative reward:', cum_reward)
     print('||||||||||||||||||||||||||||||')

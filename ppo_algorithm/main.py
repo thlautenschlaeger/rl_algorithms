@@ -9,6 +9,7 @@ from ppo_algorithm.ppo_hyperparams import ppo_params
 import sys
 from ppo_algorithm.utilities import cmd_util
 import torch
+from quanser_robots import GentlyTerminating
 
 
 
@@ -21,16 +22,19 @@ def choose_environment(selection=0):
 	:param selection: select environment as integer
 	"""
 	if selection == 0:
-		return gym.make('CartpoleSwingShort-v0')
+		env = GentlyTerminating(gym.make('CartpoleSwingShort-v0'))
+		env.action_space.high = np.array([6.0])
+		env.action_space.low = np.array([-6.0])
+		return env
 
 	if selection == 1:
-		return gym.make('Qube-v0')
+		return GentlyTerminating(gym.make('Qube-v0'))
 
 	if selection == 2:
-		return gym.make('Levitation-v0')
+		return GentlyTerminating(gym.make('Levitation-v0'))
 
 	if selection == 3:
-		return gym.make('Pendulum-v0')
+		return GentlyTerminating(gym.make('Pendulum-v0'))
 
 	else:
 		raise NotImplementedError
@@ -104,7 +108,7 @@ def benchmark_policy(env, path):
 
 if __name__ == '__main__':
 
-	env = choose_environment(1)
+	env = choose_environment(0)
 	ppo = PPO(env, 100000, 1, ppo_params['ppo_epochs'], ppo_params['trajectory_size'], hidden_neurons=ppo_params['num_hidden_neurons'],
 			  policy_std=ppo_params['actor_network_std'], minibatches=ppo_params['minibatch_size'])
 	ppo.run_ppo()

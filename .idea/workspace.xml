@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="983d662b-7897-404d-9dbd-f3b57a898ee4" name="Default Changelist" comment="Added random search">
-      <change afterPath="$PROJECT_DIR$/ppo_algorithm/utilities/cmd_util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/4/info.txt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/4/info.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/normalizer.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/normalizer.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/optimizer.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/optimizer.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/ppo_network.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/ppo_network.pt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/render_rewards.npy" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/render_rewards.npy" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/1/rewards.npy" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/1/rewards.npy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/4/normalizer.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/4/normalizer.pt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/4/optimizer.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/4/optimizer.pt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/4/optimizer_state_dict.pt" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/4/optimizer_state_dict.pt" afterDir="false" />
@@ -21,10 +24,9 @@
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/5/reward.png" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/5/reward.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/5/rewards.npy" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/data/5/rewards.npy" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/ppo.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/ppo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/utilities/save_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/utilities/model_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_old/ppo_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_old/ppo_methods.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -33,7 +35,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/rl_algorithms$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1551610183396" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo_algorithm" />
+    <SUITE FILE_PATH="coverage/rl_algorithms$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1551695281342" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo_algorithm" />
     <SUITE FILE_PATH="coverage/rl_algorithms$qube.coverage" NAME="qube Coverage Results" MODIFIED="1542114941694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/basic_rl_model/quanser_platforms" />
     <SUITE FILE_PATH="coverage/rl_algorithms$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1542211651532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/holzgroup/quanser_platforms" />
     <SUITE FILE_PATH="coverage/rl_algorithms$main.coverage" NAME="main Coverage Results" MODIFIED="1546704251737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo" />
@@ -49,11 +51,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.4">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="532">
-                  <caret line="242" column="32" selection-start-line="242" selection-start-column="32" selection-end-line="242" selection-end-column="32" />
+                <state relative-caret-position="140">
+                  <caret line="215" column="76" selection-start-line="215" selection-start-column="76" selection-end-line="215" selection-end-column="76" />
                   <folding>
                     <element signature="e#0#12#0" expanded="true" />
                   </folding>
@@ -82,23 +84,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="1512">
-                  <caret line="111" selection-start-line="111" selection-end-line="111" />
-                  <folding>
-                    <element signature="e#0#44#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="336">
-                  <caret line="24" column="1" lean-forward="true" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+                  <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
                 </state>
               </provider>
             </entry>
@@ -116,7 +106,7 @@
       </split-first>
       <split-second>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/rs_algorithm/normalizer.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="252">
@@ -126,10 +116,10 @@
             </entry>
           </file>
           <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ppo_old/ppo_methods.py">
+            <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-184">
-                  <caret line="83" column="20" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="20" />
+                <state relative-caret-position="504">
+                  <caret line="76" column="35" lean-forward="true" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="35" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
                   </folding>
@@ -137,13 +127,13 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="434">
-                  <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
+                <state relative-caret-position="38">
+                  <caret line="174" column="13" selection-start-line="174" selection-start-column="13" selection-end-line="174" selection-end-column="13" />
                   <folding>
-                    <element signature="e#0#10#0" expanded="true" />
+                    <element signature="e#0#44#0" expanded="true" />
                   </folding>
                 </state>
               </provider>
@@ -182,11 +172,11 @@
       <find>rewar</find>
       <find>std</find>
       <find>folder</find>
-      <find>sa</find>
-      <find>save</find>
-      <find>sav</find>
       <find>hidden_la</find>
       <find>hidden_layers</find>
+      <find>sav</find>
+      <find>sa</find>
+      <find>save</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -218,7 +208,6 @@
         <option value="$PROJECT_DIR$/ppo/utilities/gae.py" />
         <option value="$PROJECT_DIR$/ppo/ppo.py" />
         <option value="$PROJECT_DIR$/ppo/main.py" />
-        <option value="$PROJECT_DIR$/ppo_old/ppo_methods.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/structures/structs.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/structures/neural_network_structs.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/structures/ppo_hyperparams.py" />
@@ -245,13 +234,14 @@
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/save_model.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/data/3/info.txt" />
         <option value="$PROJECT_DIR$/ppo_algorithm/data/5/info.txt" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/model_handler.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/cmd_util.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/data/4/info.txt" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" />
+        <option value="$PROJECT_DIR$/ppo_old/ppo_methods.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/main.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/ppo.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" />
       </list>
     </option>
   </component>
@@ -544,7 +534,7 @@
       <workItem from="1551101709346" duration="5593000" />
       <workItem from="1551169740204" duration="36864000" />
       <workItem from="1551265077497" duration="16167000" />
-      <workItem from="1551292137539" duration="100641000" />
+      <workItem from="1551292137539" duration="115514000" />
     </task>
     <task id="LOCAL-00001" summary="Added quanser platforms with example code">
       <created>1542026556544</created>
@@ -585,7 +575,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="762646000" />
+    <option name="totallyTimeSpent" value="777519000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -702,8 +692,8 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ppo_algorithm/ppo.py</url>
-          <line>111</line>
-          <option name="timeStamp" value="119" />
+          <line>50</line>
+          <option name="timeStamp" value="121" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -982,13 +972,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rs_algorithm/normalizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ppo_algorithm/data/3/info.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
@@ -1015,16 +998,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_old/ppo_methods.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-184">
-          <caret line="83" column="20" selection-start-line="83" selection-start-column="20" selection-end-line="83" selection-end-column="20" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1063,13 +1036,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="24" column="1" lean-forward="true" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/ppo_algorithm/utilities/cmd_util.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="224">
@@ -1084,10 +1050,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="215" column="76" selection-start-line="215" selection-start-column="76" selection-end-line="215" selection-end-column="76" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_old/ppo_methods.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1540">
+          <caret line="110" column="32" selection-start-line="110" selection-start-column="32" selection-end-line="110" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="336">
+          <caret line="24" column="1" selection-start-line="24" selection-start-column="1" selection-end-line="24" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1512">
-          <caret line="111" selection-start-line="111" selection-end-line="111" />
+        <state relative-caret-position="38">
+          <caret line="174" column="13" selection-start-line="174" selection-start-column="13" selection-end-line="174" selection-end-column="13" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
@@ -1096,21 +1089,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="100" lean-forward="true" selection-start-line="100" selection-end-line="100" />
+        <state relative-caret-position="504">
+          <caret line="76" column="35" lean-forward="true" selection-start-line="76" selection-start-column="35" selection-end-line="76" selection-end-column="35" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/normalizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="242" column="32" selection-start-line="242" selection-start-column="32" selection-end-line="242" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="252">
+          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
         </state>
       </provider>
     </entry>

@@ -107,6 +107,8 @@ def run_ppo(epochs, env_platform, trajectory_size, vis=False, plot_reward=False)
 
                 action_list.append(action)
                 next_state, reward, done, info = env.step(action.cpu().numpy())
+                if reward > 1.9:
+                    reward *= 2.
 
                 log_prob = dist.log_prob(action)
                 entropy += dist.entropy().mean()
