@@ -12,6 +12,7 @@ import torch
 from torch.distributions import Normal
 from quanser_robots import GentlyTerminating
 from ppo_algorithm.models import actor_critic
+import matplotlib.pyplot as plt
 
 
 
@@ -27,6 +28,8 @@ def choose_environment(selection=0):
 		env = GentlyTerminating(gym.make('CartpoleSwingShort-v0'))
 		env.action_space.high = np.array([6.0])
 		env.action_space.low = np.array([-6.0])
+
+		env.unwrapped.timing.render_rate = 100
 		return env
 
 	if selection == 1:
@@ -54,7 +57,12 @@ def start_ppo(env, args):
 
 	path = os.path.dirname(__file__) + '/data/' + env.unwrapped.spec.id + '_' + \
 		   datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-	os.makedirs(path)
+	checkpoint_path = path + '/checkpoint'
+	best_policy_path = path + '/best_policy'
+	# os.makedirs(path)
+	os.makedirs(checkpoint_path)
+	os.makedirs(best_policy_path)
+
 
 	ppo = PPO(env, hyper_params=ppo_params, path=path)
 	ppo.run_ppo()
@@ -104,8 +112,8 @@ def benchmark_policy(env, path):
 	:param path: path of policy location
 	"""
 	policy = torch.load(path, map_location='cpu')
-	reward_list = []
 	for i in range(100):
+		reward_list = []
 		cum_reward = 0
 		done = False
 		state = env.reset()
@@ -117,10 +125,10 @@ def benchmark_policy(env, path):
 			state, reward, done, _ = env.step(action.cpu().detach().numpy()[0])
 			cum_reward += reward
 			# env.render()
+			reward_list.append(cum_reward)
 		print(cum_reward)
-
-
-		reward_list.append(cum_reward)
+		plt.plot(reward_list)
+		plt.show()
 
 	print('||||||||||||||||||||||||||||||')
 	print('Average Reward:', np.array(reward_list).sum()/100)
@@ -131,7 +139,7 @@ def benchmark_policy(env, path):
 
 if __name__ == '__main__':
 
-	env = choose_environment(1)
+	env = choose_environment(0)
 	ppo = PPO(env, 100000, 1, ppo_params['ppo_epochs'], ppo_params['trajectory_size'], hidden_neurons=ppo_params['num_hidden_neurons'],
 			  policy_std=ppo_params['actor_network_std'], minibatches=ppo_params['minibatch_size'])
 	ppo.run_ppo()

@@ -3,8 +3,8 @@ ppo_params = {
     'bias_var_trade_off' : 0.97, # lambda in advantage
     # 'clipping' : 0.05,
     'clipping' : lambda f: f * 0.2,
-    'critic_loss_coeff' :  0.5,
-    'entropy_loss_coeff' : 0.000001, # 0.001 for cartpole, 0.000001 for qube
+    'critic_loss_coeff' :  0.2,
+    'entropy_loss_coeff' : 0.0000001, # 0.001 for cartpole, 0.000001 for qube
     'max_grad_norm' : .5,
     'minibatch_size' : 32, #4
     'actor_network_std' :  0.88, #0.88

@@ -92,9 +92,6 @@ class PPO():
 
             next_state, reward, done, info = self.env.step(action.cpu().detach().numpy()[0])
 
-            if reward >= 1.9999:
-                reward *= 2.0
-
             # save values and rewards for gae
             log_prob = dist.log_prob(action)
             values[i] = value
@@ -160,23 +157,24 @@ class PPO():
             self.ac_optim.param_groups[0]['lr'] = ppo_params['optim_lrr'](frac, ppo_params['optim_lr'])
             eps = ep(frac)
 
-            for i in range(0, self.trajectory_size, self.batch_size):
-                mean, std, current_policy_value = self.ac_net(states[i:i + self.batch_size])
+            for start in range(0, self.trajectory_size, self.batch_size):
+                end = start + self.batch_size
+                mean, std, current_policy_value = self.ac_net(states[start:end])
 
                 dist = Normal(mean, std)
-                new_log_prob = dist.log_prob(actions[i:i + self.batch_size])
+                new_log_prob = dist.log_prob(actions[start:end])
                 entropy = dist.entropy().mean()
 
-                ratio = torch.exp(new_log_prob - old_log_probs[i:i + self.batch_size])
+                ratio = torch.exp(new_log_prob - old_log_probs[start:end])
 
-                advantage_batch = torch.FloatTensor(advantage_estimates[i:i + self.batch_size])
+                advantage_batch = torch.FloatTensor(advantage_estimates[start:end])
 
                 surr = ratio * advantage_batch
                 clipped_surr = torch.clamp(ratio, 1 - eps, 1 + eps) * advantage_batch
 
                 pg_loss = torch.min(surr, clipped_surr).mean()
 
-                target_value = torch.FloatTensor(returns[i:i + self.batch_size]).detach()
+                target_value = torch.FloatTensor(returns[start:end]).detach()
                 vf_loss = ((current_policy_value - target_value).pow(2)).mean()
 
                 loss = -(pg_loss - c1 * vf_loss + c2 * entropy)
@@ -187,7 +185,7 @@ class PPO():
                 self.ac_optim.step()
 
     def run_ppo(self):
-        folder_num = 4
+        folder_num = 6
         check_reward = 0
         cum_rewards = []
         render_rewards = []
@@ -212,15 +210,21 @@ class PPO():
                 print("SAVE NEW MODEL")
                 check_reward = total_rewards
                 model_handler.save_model(self.ac_net, self.ac_optim, np.array(cum_rewards), np.array(render_rewards),
-                                         self.state_normalizer, path)
+                                         self.state_normalizer, path+'/best_policy')
 
             # plotting and evaluating policy
             if i % 100 == 0:
                 plt.plot(cum_rewards)
                 # plt.show()
                 plt.savefig(path+'/reward.png')
+                model_handler.save_model(self.ac_net, self.ac_optim, np.array(cum_rewards), np.array(render_rewards),
+                                         self.state_normalizer, path=path+'/checkpoint')
                 render_reward = render_policy(self.env, self.ac_net, normalizer=self.state_normalizer)
                 render_rewards.append(render_reward)
+
+def checkpoint():
+    return
+
 
 def render_policy(env, policy, normalizer=None):
     done = False
