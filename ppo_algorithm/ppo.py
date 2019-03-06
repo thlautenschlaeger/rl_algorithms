@@ -121,6 +121,7 @@ class PPO():
 
             if done:
                 state = self.env.reset()
+                print("Step {}/{}".format(i, self.horizon))
 
 
         _, _, last_value = self.ac_net(torch.FloatTensor(next_state))
@@ -214,7 +215,6 @@ class PPO():
             print("############################################:")
 
             # cum_rewards.append(total_rewards)
-            # np.insert(cum_rewards, -1, total_rewards)
             self.cum_train_rewards = np.append(self.cum_train_rewards, total_rewards)
 
             if check_reward < total_rewards:

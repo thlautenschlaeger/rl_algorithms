@@ -5,47 +5,6 @@ import numpy as np
 from torch.distributions import Normal
 from ppo_algorithm.ppo_hyperparams import ppo_params
 
-class Actor(nn.Module):
-
-    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, std=0.0):
-
-        super(Actor, self).__init__()
-
-        self.hidden_layer = nn.Linear(num_inputs, num_hidden_neurons)
-        self.layer_norm = nn.LayerNorm(num_hidden_neurons, num_hidden_neurons)
-        self.out_layer = nn.Linear(num_hidden_neurons, num_outputs)
-
-        # learn optimal standard deviation
-        self.log_std = nn.Parameter(torch.ones(1, num_outputs) * std)
-
-    def forward(self, x):
-
-        x = self.hidden_layer(x)
-        x = F.relu(self.layer_norm(x))
-        mean = self.out_layer(x)
-        std = self.log_std.exp()
-
-        return Normal(mean, std)
-
-class Critic(nn.Module):
-
-    def __init__(self, num_inputs, num_hidden_neurons):
-
-        super(Critic, self).__init__()
-
-        self.hidden_layer = nn.Linear(num_inputs, num_hidden_neurons)
-        self.layer_norm = nn.LayerNorm(num_hidden_neurons, num_hidden_neurons)
-        self.out_layer = nn.Linear(num_hidden_neurons, 1)
-
-    def forward(self, x):
-
-        x = self.hidden_layer(x)
-        x = F.relu(self.layer_norm(x))
-        out_value = self.out_layer(x)
-
-        return out_value
-
-
 def init_weights_old(m):
     if isinstance(m, nn.Linear):
         nn.init.normal_(m.weight, mean=0., std=0.1)
@@ -61,17 +20,22 @@ class ActorCriticMLPShared(nn.Module):
     Single neural network acting policy and value network with shared parameters
     """
 
-    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, std=1.0):
+    def __init__(self, num_inputs, num_hidden_neurons, num_outputs, layer_norm=False, std=1.0):
         super(ActorCriticMLPShared, self).__init__()
 
-        self.net = nn.ModuleList([nn.Linear(num_inputs, num_hidden_neurons[0]),
+        if layer_norm:
+            self.net = nn.ModuleList([nn.Linear(num_inputs, num_hidden_neurons[0]),
                                   nn.LayerNorm(num_hidden_neurons[0], num_hidden_neurons[0]),
                                   nn.Tanh()])
+        else:
+            self.net = nn.ModuleList([nn.Linear(num_inputs, num_hidden_neurons[0]),
+                                      nn.Tanh()])
 
         if len(num_hidden_neurons) > 1:
             for i in range(len(num_hidden_neurons) - 1):
                 self.net.append(nn.Linear(num_hidden_neurons[i], num_hidden_neurons[i + 1]))
-                self.net.append(nn.LayerNorm(num_hidden_neurons[i + 1], num_hidden_neurons[i + 1]))
+                if layer_norm:
+                    self.net.append(nn.LayerNorm(num_hidden_neurons[i + 1], num_hidden_neurons[i + 1]))
                 self.net.append(nn.Tanh())
 
         self.out_mean = nn.Linear(num_hidden_neurons[-1], num_outputs)
