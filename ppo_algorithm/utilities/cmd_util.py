@@ -14,7 +14,7 @@ def ppo_args_parser():
     parser.add_argument('--env', help='environment ID', type=str, default='Qube-v0')
     parser.add_argument('--ppoepochs', help='number of ppo optimization epochs', type=int, default=5)
     parser.add_argument('--ntraining_steps', help='number of total training steps', type=int, default=100)
-    parser.add_argument('--nsteps', help='number of action steps per training epoch', type=int, default=1024)
+    parser.add_argument('--horizon', help='number of action steps per training epoch', type=int, default=1024)
     parser.add_argument('--hneurons',
                         help='number of hidden neurons in list (e.g. [64, 64] for two layers each 64 neurons',
                         type=list, default=[64, 64])
@@ -32,5 +32,6 @@ def ppo_args_parser():
     parser.add_argument('--path', help='path of previously trained policy. only important if '
                                        '--evaluate_policy True', type=str, default=None)
     parser.add_argument('--lr', help='training learn rate', type=float, default=0.001)
+    parser.add_argument('--max_grad_norm', help='sets range for gradient update and clips', type=float,default=0.5)
 
     return parser

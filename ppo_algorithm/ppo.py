@@ -13,72 +13,88 @@ from torch.distributions import Normal
 
 class PPO():
 
-    # def __init__(self, env, path, hyper_params, continue_training=False):
-    #
-    #     self.env = GentlyTerminating(env)
-    #     self.num_iterations = hyper_params['num_iterations']
-    #     self.lamb = hyper_params['lambda']
-    #     self.clipping=hyper_params['cliprange']
-    #     self.discount = hyper_params['gamma']
-    #     self.ppo_epochs = hyper_params['ppo_epochs']
-    #     self.trajectory_size = hyper_params['nsteps']
-    #     self.batch_size = hyper_params['minibatches']
-    #     self.vf_coef = hyper_params['vf_coef']
-    #     self.entropy_coef = hyper_params['entropy_coef']
-    #     self.h_neurons = hyper_params['hidden_neurons']
-    #     self.policy_std = hyper_params['policy_std']
-    #     self.lr = hyper_params['learn_rate']
-    #     self.vf_coef = hyper_params['vf_coef']
-    #
-    #     self.num_inputs = self.env.observation_space.shape[0]
-    #     self.num_outputs = self.env.action_space.shape[0]
-    #     self.ac_net = actor_critic.ActorCriticMLPShared__(num_inputs=self.num_inputs,
-    #                                                       num_hidden_neurons=self.h_neurons,
-    #                                                       num_outputs=self.num_outputs,
-    #                                                       std=self.policy_std)
-    #
-    #     self.state_normalizer = Normalizer(num_inputs=self.num_inputs)
-    #     self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=self.lr)
-    #
-    #     if continue_training:
-    #         self.ac_net, self.ac_optim = model_handler.load_model(path=path, model=self.ac_net,
-    #                                                           optimizer=self.ac_optim)
+    def __init__(self, env, path, hyper_params, continue_training=False):
 
-    def __init__(self, env, num_iterations, num_actors, ppo_epochs,
-                 trajectoriy_size, hidden_neurons, policy_std, minibatches,
-                 vis=False, plot=False):
-
-        self.env = env
-        self.num_iterations = num_iterations
-        self.num_actors = num_actors
-        self.ppo_epochs = ppo_epochs
-        self.trajectory_size = trajectoriy_size
-        self.batch_size = minibatches
-        self.vis = vis
-        self.plot = plot
+        self.env = GentlyTerminating(env)
+        self.path = path
+        self.num_iterations = hyper_params['num_iterations']
+        self.lamb = hyper_params['lambda']
+        self.cliprange  =hyper_params['cliprange']
+        self.gamma = hyper_params['gamma']
+        self.ppo_epochs = hyper_params['ppo_epochs']
+        self.horizon = hyper_params['horizon']
+        self.minibatches = hyper_params['minibatches']
+        self.vf_coef = hyper_params['vf_coef']
+        self.entropy_coef = hyper_params['entropy_coef']
+        self.num_hidden_neurons = hyper_params['num_hidden_neurons']
+        self.policy_std = hyper_params['policy_std']
+        self.lr = hyper_params['lr']
+        self.vf_coef = hyper_params['vf_coef']
+        self.max_grad_norm = hyper_params['max_grad_norm']
 
         self.num_inputs = self.env.observation_space.shape[0]
         self.num_outputs = self.env.action_space.shape[0]
         self.num_states = self.num_inputs
+        self.cum_train_rewards = np.array([])
+        self.cum_eval_rewards = np.array([])
+
         self.ac_net = actor_critic.ActorCriticMLPShared(num_inputs=self.num_inputs,
-                                                        num_hidden_neurons=hidden_neurons,
-                                                        num_outputs=self.num_outputs,
-                                                        std=policy_std)
+                                                          num_hidden_neurons=self.num_hidden_neurons,
+                                                          num_outputs=self.num_outputs,
+                                                          std=self.policy_std)
 
         self.state_normalizer = Normalizer(num_inputs=self.num_inputs)
-        self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=ppo_params['optim_lr'])
+        self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=self.lr)
+        self.decay = lambda f, x: f * x
+
+        if continue_training:
+            self.ac_net, self.ac_optim, self.cum_train_rewards, self.cum_eval_rewards = \
+                model_handler.load_model(path=path, model=self.ac_net,
+                                         optimizer=self.ac_optim, from_checkpoint=True)
+
+    # def __init__(self, env, num_iterations, num_actors, ppo_epochs,
+    #              trajectoriy_size, hidden_neurons, policy_std, minibatches,
+    #              vis=False, plot=False):
+    #
+    #     self.env = env
+    #     self.num_iterations = num_iterations
+    #     self.num_actors = num_actors
+    #     self.ppo_epochs = ppo_epochs
+    #     self.trajectory_size = trajectoriy_size
+    #     self.batch_size = minibatches
+    #     self.vis = vis
+    #     self.plot = plot
+    #
+    #     self.num_inputs = self.env.observation_space.shape[0]
+    #     self.num_outputs = self.env.action_space.shape[0]
+    #     self.num_states = self.num_inputs
+    #     self.ac_net = actor_critic.ActorCriticMLPShared(num_inputs=self.num_inputs,
+    #                                                     num_hidden_neurons=hidden_neurons,
+    #                                                     num_outputs=self.num_outputs,
+    #                                                     std=policy_std)
+
+        # self.ac_net2 = actor_critic.ActorCriticMLPShared(num_inputs=self.num_inputs,
+        #                                                 num_hidden_neurons=hidden_neurons,
+        #                                                 num_outputs=self.num_outputs,
+        #                                                 std=policy_std)
+
+        # self.state_normalizer = Normalizer(num_inputs=self.num_inputs)
+        # self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=ppo_params['optim_lr'])
+        # self.ac_optim2 = optim.Adam(self.ac_net2.parameters(), lr=ppo_params['optim_lr'])
+        # self.nets = [self.ac_net, self.ac_net2]
+        # self.optims = [self.ac_optim, self.ac_optim2]
 
     def run_trajectory(self):
-        rewards = np.empty(shape=self.trajectory_size)
-        values = torch.empty(self.trajectory_size)
-        states = torch.empty(size=(self.trajectory_size, self.num_states))
-        actions = torch.empty(self.trajectory_size, 1)
-        masks = np.empty(self.trajectory_size)
-        old_log_probs = torch.empty(size=(self.trajectory_size, 1))
+        rewards = np.empty(shape=self.horizon)
+        values = torch.empty(self.horizon)
+        states = torch.empty(size=(self.horizon, self.num_states))
+        actions = torch.empty(self.horizon, 1)
+        masks = np.empty(self.horizon)
+        old_log_probs = torch.empty(size=(self.horizon, 1))
         state = self.env.reset()
         cum_reward = 0
 
-        for i in range(self.trajectory_size):
+        for i in range(self.horizon):
             state = torch.FloatTensor(state)
             # self.state_normalizer.observe(state)
             # state = self.state_normalizer.normalize(state)
@@ -116,7 +132,7 @@ class PPO():
         return values, old_log_probs, actions, states, rewards, last_value, masks
 
     def ppo_update(self, advantage_estimates, states, actions, values, old_log_probs,
-                    returns, ep=0.2):
+                   returns, eps=0.2):
         """
         This method performs proximal policy update over batches of inputs
 
@@ -131,12 +147,7 @@ class PPO():
         :param minibatch_size: size of minibatches for each ppo epoch
         :return:
         """
-
-        # constants for surrogate objective
-        c1, c2 = ppo_params['critic_loss_coeff'], ppo_params['entropy_loss_coeff']
-
-        randomized_inds = np.arange(self.trajectory_size)
-
+        randomized_inds = np.arange(self.horizon)
         # shape states for further processing
         # states = torch.stack(states)
 
@@ -154,11 +165,12 @@ class PPO():
             returns = returns[randomized_inds]
             frac = 1.0 - (k) / (self.ppo_epochs + 1)
 
-            self.ac_optim.param_groups[0]['lr'] = ppo_params['optim_lrr'](frac, ppo_params['optim_lr'])
-            eps = ep(frac)
+            # self.ac_optim.param_groups[0]['lr'] = ppo_params['optim_lrr'](frac, ppo_params['optim_lr'])
+            self.ac_optim.param_groups[0]['lr'] = self.decay(frac, self.lr)
+            eps = self.decay(frac, eps)
 
-            for start in range(0, self.trajectory_size, self.batch_size):
-                end = start + self.batch_size
+            for start in range(0, self.horizon, self.minibatches):
+                end = start + self.minibatches
                 mean, std, current_policy_value = self.ac_net(states[start:end])
 
                 dist = Normal(mean, std)
@@ -177,50 +189,52 @@ class PPO():
                 target_value = torch.FloatTensor(returns[start:end]).detach()
                 vf_loss = ((current_policy_value - target_value).pow(2)).mean()
 
-                loss = -(pg_loss - c1 * vf_loss + c2 * entropy)
+                loss = -(pg_loss - self.vf_coef * vf_loss + self.entropy_coef * entropy)
 
                 self.ac_optim.zero_grad()
                 loss.backward()
-                torch.nn.utils.clip_grad_norm_(self.ac_net.parameters(), ppo_params['max_grad_norm'])
+                torch.nn.utils.clip_grad_norm_(self.ac_net.parameters(), self.max_grad_norm)
                 self.ac_optim.step()
 
     def run_ppo(self):
-        folder_num = 6
         check_reward = 0
-        cum_rewards = []
-        render_rewards = []
-        path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/'+str(folder_num)
+        # path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/'+str(folder_num)
         for i in range(self.num_iterations):
 
             values, old_log_probs, actions, states, rewards, last_value, masks = self.run_trajectory()
 
             advantage_est, returns = compute_gae(rewards, values, last_value, masks,
-                                                 ppo_params['advantage_discount'], ppo_params['bias_var_trade_off'])
+                                                 self.lamb, self.gamma)
 
             total_rewards = rewards.sum()
 
             self.ppo_update(advantage_est, states, actions, values,
-                            old_log_probs, returns, ep=ppo_params['clipping'])
+                            old_log_probs, returns, eps=self.cliprange)
             print("Reward: {} in epoch: {}".format(rewards.sum(), i))
-            print("############################################:", folder_num)
+            print("############################################:")
 
-            cum_rewards.append(total_rewards)
+            # cum_rewards.append(total_rewards)
+            # np.insert(cum_rewards, -1, total_rewards)
+            self.cum_train_rewards = np.append(self.cum_train_rewards, total_rewards)
 
             if check_reward < total_rewards:
                 print("SAVE NEW MODEL")
                 check_reward = total_rewards
-                model_handler.save_model(self.ac_net, self.ac_optim, np.array(cum_rewards), np.array(render_rewards),
-                                         self.state_normalizer, path+'/best_policy')
+                model_handler.save_model(self.ac_net, self.ac_optim, self.cum_train_rewards,
+                                         self.cum_train_rewards, self.state_normalizer,
+                                         self.path +'/best_policy')
 
             # plotting and evaluating policy
             if i % 100 == 0:
-                plt.plot(cum_rewards)
+                plt.plot(self.cum_train_rewards)
                 # plt.show()
-                plt.savefig(path+'/reward.png')
-                model_handler.save_model(self.ac_net, self.ac_optim, np.array(cum_rewards), np.array(render_rewards),
-                                         self.state_normalizer, path=path+'/checkpoint')
+                plt.savefig(self.path+'/reward.png')
+                model_handler.save_model(self.ac_net, self.ac_optim, self.cum_train_rewards,
+                                         self.cum_train_rewards,
+                                         self.state_normalizer, path=self.path+'/checkpoint')
                 render_reward = render_policy(self.env, self.ac_net, normalizer=self.state_normalizer)
-                render_rewards.append(render_reward)
+                self.cum_eval_rewards = np.append(self.cum_eval_rewards, render_reward)
+
 
 def checkpoint():
     return
