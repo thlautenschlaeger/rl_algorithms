@@ -34,6 +34,7 @@ def ppo_args_parser():
     parser.add_argument('--path', help='path of previously trained policy. only important if '
                                        '--evaluate_policy True', type=str, default=None)
     parser.add_argument('--lr', help='training learn rate', type=float, default=ppo_params['lr'])
+    parser.add_argument('--layer_norm', help='Layer normalization for actor-critic network', type=bool, default=ppo_params['layer_norm'])
     parser.add_argument('--max_grad_norm', help='sets range for gradient update and clips', type=float,default=ppo_params['max_grad_norm'])
 
     return parser

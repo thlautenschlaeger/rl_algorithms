@@ -37,52 +37,26 @@ class PPO():
         self.num_states = self.num_inputs
         self.cum_train_rewards = np.array([])
         self.cum_eval_rewards = np.array([])
+        self.entropy = np.array([])
+        self.epoch = 0
 
         self.ac_net = actor_critic.ActorCriticMLPShared(num_inputs=self.num_inputs,
                                                           num_hidden_neurons=self.num_hidden_neurons,
                                                           num_outputs=self.num_outputs,
-                                                          std=self.policy_std)
+                                                        layer_norm=ppo_params['layer_norm'],
+                                                        std=self.policy_std)
+
 
         self.state_normalizer = Normalizer(num_inputs=self.num_inputs)
         self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=self.lr)
         self.decay = lambda f, x: f * x
 
         if continue_training:
-            self.ac_net, self.ac_optim, self.cum_train_rewards, self.cum_eval_rewards = \
+            self.ac_net, self.ac_optim, self.cum_train_rewards, \
+            self.cum_eval_rewards, self.epoch, self.entropy = \
                 model_handler.load_model(path=path, model=self.ac_net,
                                          optimizer=self.ac_optim, from_checkpoint=True)
-
-    # def __init__(self, env, num_iterations, num_actors, ppo_epochs,
-    #              trajectoriy_size, hidden_neurons, policy_std, minibatches,
-    #              vis=False, plot=False):
-    #
-    #     self.env = env
-    #     self.num_iterations = num_iterations
-    #     self.num_actors = num_actors
-    #     self.ppo_epochs = ppo_epochs
-    #     self.trajectory_size = trajectoriy_size
-    #     self.batch_size = minibatches
-    #     self.vis = vis
-    #     self.plot = plot
-    #
-    #     self.num_inputs = self.env.observation_space.shape[0]
-    #     self.num_outputs = self.env.action_space.shape[0]
-    #     self.num_states = self.num_inputs
-    #     self.ac_net = actor_critic.ActorCriticMLPShared(num_inputs=self.num_inputs,
-    #                                                     num_hidden_neurons=hidden_neurons,
-    #                                                     num_outputs=self.num_outputs,
-    #                                                     std=policy_std)
-
-        # self.ac_net2 = actor_critic.ActorCriticMLPShared(num_inputs=self.num_inputs,
-        #                                                 num_hidden_neurons=hidden_neurons,
-        #                                                 num_outputs=self.num_outputs,
-        #                                                 std=policy_std)
-
-        # self.state_normalizer = Normalizer(num_inputs=self.num_inputs)
-        # self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=ppo_params['optim_lr'])
-        # self.ac_optim2 = optim.Adam(self.ac_net2.parameters(), lr=ppo_params['optim_lr'])
-        # self.nets = [self.ac_net, self.ac_net2]
-        # self.optims = [self.ac_optim, self.ac_optim2]
+            self.ac_net.train()
 
     def run_trajectory(self):
         rewards = np.empty(shape=self.horizon)
@@ -101,12 +75,11 @@ class PPO():
 
             # sample state from normal distribution
             mean, std, value = self.ac_net(state)
-
             dist = Normal(mean, std)
-
             action = dist.sample()
 
             next_state, reward, done, info = self.env.step(action.cpu().detach().numpy()[0])
+            # self.env.render()
 
             # save values and rewards for gae
             log_prob = dist.log_prob(action)
@@ -121,8 +94,6 @@ class PPO():
 
             if done:
                 state = self.env.reset()
-                print("Step {}/{}".format(i, self.horizon))
-
 
         _, _, last_value = self.ac_net(torch.FloatTensor(next_state))
         values = values.detach()
@@ -133,7 +104,7 @@ class PPO():
         return values, old_log_probs, actions, states, rewards, last_value, masks
 
     def ppo_update(self, advantage_estimates, states, actions, values, old_log_probs,
-                   returns, eps=0.2):
+                   returns, cliprange=0.2):
         """
         This method performs proximal policy update over batches of inputs
 
@@ -149,11 +120,9 @@ class PPO():
         :return:
         """
         randomized_inds = np.arange(self.horizon)
-        # shape states for further processing
-        # states = torch.stack(states)
 
-        # advantage_estimates = (advantage_estimates - advantage_estimates.mean()) / \
-        #                       (advantage_estimates.std() + 1e-8)
+        advantage_estimates = (advantage_estimates - advantage_estimates.mean()) / \
+                              (advantage_estimates.std() + 1e-8)
 
         for k in range(self.ppo_epochs):
             # shuffle inputs every ppo epoch
@@ -168,7 +137,9 @@ class PPO():
 
             # self.ac_optim.param_groups[0]['lr'] = ppo_params['optim_lrr'](frac, ppo_params['optim_lr'])
             self.ac_optim.param_groups[0]['lr'] = self.decay(frac, self.lr)
-            eps = self.decay(frac, eps)
+            eps = self.decay(frac, cliprange)
+            # self.ac_optim.param_groups[0]['lr'] = 0.001
+            # eps = 0.2
 
             for start in range(0, self.horizon, self.minibatches):
                 end = start + self.minibatches
@@ -199,8 +170,7 @@ class PPO():
 
     def run_ppo(self):
         check_reward = 0
-        # path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/'+str(folder_num)
-        for i in range(self.num_iterations):
+        for epoch in range(self.epoch, self.num_iterations):
 
             values, old_log_probs, actions, states, rewards, last_value, masks = self.run_trajectory()
 
@@ -210,30 +180,29 @@ class PPO():
             total_rewards = rewards.sum()
 
             self.ppo_update(advantage_est, states, actions, values,
-                            old_log_probs, returns, eps=self.cliprange)
-            print("Reward: {} in epoch: {}".format(rewards.sum(), i))
+                            old_log_probs, returns, cliprange=self.cliprange)
+            print("Reward: {} in epoch: {}".format(total_rewards, epoch))
             print("############################################:")
 
-            # cum_rewards.append(total_rewards)
             self.cum_train_rewards = np.append(self.cum_train_rewards, total_rewards)
 
             if check_reward < total_rewards:
                 print("SAVE NEW MODEL")
                 check_reward = total_rewards
                 model_handler.save_model(self.ac_net, self.ac_optim, self.cum_train_rewards,
-                                         self.cum_train_rewards, self.state_normalizer,
-                                         self.path +'/best_policy')
+                                         self.cum_train_rewards, self.state_normalizer, epoch=epoch,
+                                         path=self.path +'/best_policy')
 
             # plotting and evaluating policy
-            if i % 100 == 0:
+            if epoch % 100 == 0:
                 plt.plot(self.cum_train_rewards)
-                # plt.show()
                 plt.savefig(self.path+'/reward.png')
                 model_handler.save_model(self.ac_net, self.ac_optim, self.cum_train_rewards,
                                          self.cum_train_rewards,
-                                         self.state_normalizer, path=self.path+'/checkpoint')
+                                         self.state_normalizer, epoch=epoch, path=self.path+'/checkpoint')
                 render_reward = render_policy(self.env, self.ac_net, normalizer=self.state_normalizer)
                 self.cum_eval_rewards = np.append(self.cum_eval_rewards, render_reward)
+                print("Checkpoint saved")
 
 
 def checkpoint():
@@ -252,7 +221,7 @@ def render_policy(env, policy, normalizer=None):
         action = dist.sample()
         state, reward, done, _ = env.step(action.cpu().detach().numpy()[0])
         cum_reward += reward
-        env.render()
+        # env.render()
     print('||||||||||||||||||||||||||||||')
     print('Cumulative reward:', cum_reward)
     print('||||||||||||||||||||||||||||||')

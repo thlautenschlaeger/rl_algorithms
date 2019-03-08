@@ -38,7 +38,8 @@ def choose_environment(selection=0):
 		return GentlyTerminating(gym.make('Qube-v0'))
 
 	if selection == 2:
-		return GentlyTerminating(gym.make('Levitation-v0'))
+		env = GentlyTerminating(gym.make('Levitation-v1'))
+		return env
 
 	if selection == 3:
 		return GentlyTerminating(gym.make('Pendulum-v0'))
@@ -118,6 +119,7 @@ def benchmark_policy(env, policy, num_evals):
 	:param num_evals: number of policy evaluations
 	"""
 	reward_list = []
+	policy.eval()
 	for i in range(num_evals):
 		cum_reward = 0
 		done = False
@@ -125,8 +127,7 @@ def benchmark_policy(env, policy, num_evals):
 		while not done:
 			state = torch.FloatTensor(state)
 			mean, std, _ = policy(torch.FloatTensor(state))
-			# lel = Normal(dist.mean, dist.stddev*0.)
-			dist = Normal(mean, std)
+			dist = Normal(mean, std*0)
 			action = dist.sample()
 			state, reward, done, _ = env.step(action.cpu().detach().numpy()[0])
 			cum_reward += reward
@@ -163,6 +164,7 @@ if __name__ == '__main__':
 	# policy = load_best_policy(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/good_qube_policy_2')
 	# benchmark_policy(env, policy, 5)
 	start_ppo(env)
+	# continue_training(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/Levitation-v1_2019-03-08_11-26-42')
 	# policy = load_policy_from_checkpoint(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/test')
 	# benchmark_policy(env, policy, 5)
 
