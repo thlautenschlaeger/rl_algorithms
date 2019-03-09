@@ -58,28 +58,30 @@ class PPO():
                                          optimizer=self.ac_optim, from_checkpoint=True)
             self.ac_net.train()
 
-    def run_trajectory(self):
+
+    def run_trajectories(self):
         rewards = np.empty(shape=self.horizon)
+        entropy = torch.empty(self.horizon)
         values = torch.empty(self.horizon)
         states = torch.empty(size=(self.horizon, self.num_states))
         actions = torch.empty(self.horizon, 1)
         masks = np.empty(self.horizon)
         old_log_probs = torch.empty(size=(self.horizon, 1))
         state = self.env.reset()
+        last_value_list = []
+        end_trajectory_index = []
         cum_reward = 0
 
         for i in range(self.horizon):
             state = torch.FloatTensor(state)
             # self.state_normalizer.observe(state)
             # state = self.state_normalizer.normalize(state)
-
             # sample state from normal distribution
             mean, std, value = self.ac_net(state)
             dist = Normal(mean, std)
             action = dist.sample()
 
             next_state, reward, done, info = self.env.step(action.cpu().detach().numpy()[0])
-            # self.env.render()
 
             # save values and rewards for gae
             log_prob = dist.log_prob(action)
@@ -91,19 +93,30 @@ class PPO():
             rewards[i] = reward
             masks[i] = 1-done
             cum_reward += reward
+            entropy[i] = dist.entropy()
 
             if done:
                 state = self.env.reset()
+                _, _, last_value = self.ac_net(torch.FloatTensor(next_state))
+                last_value = last_value.detach()
+                last_value_list.append(last_value)
+                end_trajectory_index.append(i)
 
-        _, _, last_value = self.ac_net(torch.FloatTensor(next_state))
+
+        if not done:
+            _, _, last_value = self.ac_net(torch.FloatTensor(next_state))
+            last_value = last_value.detach()
+            last_value_list.append(last_value)
+            end_trajectory_index.append(i)
+
         values = values.detach()
-        last_value = last_value.detach()
+        entropy = entropy.mean().detach().numpy().squeeze()
         old_log_probs = old_log_probs.detach()
 
         print('std: {} variance {}'.format(self.ac_net.log_std.exp().detach().numpy().squeeze(), dist.variance.detach().numpy().squeeze()))
-        return values, old_log_probs, actions, states, rewards, last_value, masks
+        return values, old_log_probs, actions, states, rewards, last_value_list, masks, end_trajectory_index, entropy
 
-    def ppo_update(self, advantage_estimates, states, actions, values, old_log_probs,
+    def ppo_update(self, advantage_estimates, states, actions, old_log_probs,
                    returns, cliprange=0.2):
         """
         This method performs proximal policy update over batches of inputs
@@ -121,25 +134,21 @@ class PPO():
         """
         randomized_inds = np.arange(self.horizon)
 
-        advantage_estimates = (advantage_estimates - advantage_estimates.mean()) / \
-                              (advantage_estimates.std() + 1e-8)
+        # advantage_estimates = (advantage_estimates - advantage_estimates.mean()) / \
+        #                       (advantage_estimates.std() + 1e-8)
 
         for k in range(self.ppo_epochs):
             # shuffle inputs every ppo epoch
             np.random.shuffle(randomized_inds)
             old_log_probs = old_log_probs[randomized_inds]
             actions = actions[randomized_inds]
-            values = values[randomized_inds]
             advantage_estimates = advantage_estimates[randomized_inds]
             states = states[randomized_inds]
             returns = returns[randomized_inds]
             frac = 1.0 - (k) / (self.ppo_epochs + 1)
 
-            # self.ac_optim.param_groups[0]['lr'] = ppo_params['optim_lrr'](frac, ppo_params['optim_lr'])
             self.ac_optim.param_groups[0]['lr'] = self.decay(frac, self.lr)
             eps = self.decay(frac, cliprange)
-            # self.ac_optim.param_groups[0]['lr'] = 0.001
-            # eps = 0.2
 
             for start in range(0, self.horizon, self.minibatches):
                 end = start + self.minibatches
@@ -168,46 +177,76 @@ class PPO():
                 torch.nn.utils.clip_grad_norm_(self.ac_net.parameters(), self.max_grad_norm)
                 self.ac_optim.step()
 
+    def collect_advantage_estimates(self, rewards, values, last_value, masks, end_index):
+        """
+        Collects trajectories and computes general advantage
+        estimates over collected trajectories
+
+        :param rewards: list of collected rewards per environment step
+        :param values: list of computed values from actor-critic net per step
+        :param last_value: list of bootstrapping values after episode ended
+        :param masks: list of booleans that set last_value to 0 if state of last_value is bad state
+        :param end_index: list of indices that contains step where trajectory ended
+        """
+        advantages = []
+        returns = []
+
+        start = 0
+        for i in range(len(end_index)):
+            end = end_index[i] + 1
+            advantages_, returns_ = compute_gae(rewards[start:end], values[start:end], last_value[i],
+                                                masks[start:end], self.lamb, self.gamma)
+            advantages = np.append(advantages, advantages_)
+            returns = np.append(returns, returns_)
+            start = end
+
+        return advantages, returns
+
     def run_ppo(self):
         check_reward = 0
         for epoch in range(self.epoch, self.num_iterations):
 
-            values, old_log_probs, actions, states, rewards, last_value, masks = self.run_trajectory()
+            values, old_log_probs, actions, states, \
+            rewards, last_value, masks, end_index, entropy = self.run_trajectories()
+            advantage_est, returns = self.collect_advantage_estimates(rewards, values, last_value, masks, end_index)
 
-            advantage_est, returns = compute_gae(rewards, values, last_value, masks,
-                                                 self.lamb, self.gamma)
+            total_rollout_rewards = rewards.sum()
 
-            total_rewards = rewards.sum()
-
-            self.ppo_update(advantage_est, states, actions, values,
+            self.ppo_update(advantage_est, states, actions,
                             old_log_probs, returns, cliprange=self.cliprange)
-            print("Reward: {} in epoch: {}".format(total_rewards, epoch))
+            print("Reward: {} in epoch: {}".format(total_rollout_rewards, epoch))
             print("############################################:")
 
-            self.cum_train_rewards = np.append(self.cum_train_rewards, total_rewards)
+            self.cum_train_rewards = np.append(self.cum_train_rewards, total_rollout_rewards)
+            self.entropy = np.append(self.entropy, entropy)
 
-            if check_reward < total_rewards:
+            if check_reward < total_rollout_rewards:
                 print("SAVE NEW MODEL")
-                check_reward = total_rewards
-                model_handler.save_model(self.ac_net, self.ac_optim, self.cum_train_rewards,
-                                         self.cum_train_rewards, self.state_normalizer, epoch=epoch,
+                check_reward = total_rollout_rewards
+                model_handler.save_model(model=self.ac_net,
+                                         optimizer=self.ac_optim,
+                                         train_rewards=self.cum_train_rewards,
+                                         eval_rewards=self.cum_train_rewards,
+                                         state_normalizer=self.state_normalizer,
+                                         epoch=epoch,
+                                         entropy=self.entropy,
                                          path=self.path +'/best_policy')
 
             # plotting and evaluating policy
             if epoch % 100 == 0:
                 plt.plot(self.cum_train_rewards)
                 plt.savefig(self.path+'/reward.png')
-                model_handler.save_model(self.ac_net, self.ac_optim, self.cum_train_rewards,
-                                         self.cum_train_rewards,
-                                         self.state_normalizer, epoch=epoch, path=self.path+'/checkpoint')
+                model_handler.save_model(model=self.ac_net,
+                                         optimizer=self.ac_optim,
+                                         train_rewards=self.cum_train_rewards,
+                                         eval_rewards=self.cum_eval_rewards,
+                                         state_normalizer=self.state_normalizer,
+                                         epoch=epoch,
+                                         entropy=self.entropy,
+                                         path=self.path+'/checkpoint')
                 render_reward = render_policy(self.env, self.ac_net, normalizer=self.state_normalizer)
                 self.cum_eval_rewards = np.append(self.cum_eval_rewards, render_reward)
                 print("Checkpoint saved")
-
-
-def checkpoint():
-    return
-
 
 def render_policy(env, policy, normalizer=None):
     done = False

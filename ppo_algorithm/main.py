@@ -35,7 +35,8 @@ def choose_environment(selection=0):
 		return env
 
 	if selection == 1:
-		return GentlyTerminating(gym.make('Qube-v0'))
+		env = GentlyTerminating(gym.make('Qube-v0'))
+		return env
 
 	if selection == 2:
 		env = GentlyTerminating(gym.make('Levitation-v1'))
@@ -131,9 +132,9 @@ def benchmark_policy(env, policy, num_evals):
 			action = dist.sample()
 			state, reward, done, _ = env.step(action.cpu().detach().numpy()[0])
 			cum_reward += reward
-		# env.render()
+			env.render()
 
-
+		print(cum_reward)
 		reward_list.append(cum_reward)
 	# print(cum_reward)
 	# plt.plot(reward_list)
@@ -147,7 +148,8 @@ def benchmark_policy(env, policy, num_evals):
 def load_policy_from_checkpoint(env, path):
 	hyper_params = torch.load(path+'/hyper_params.pt', map_location='cpu')
 	policy = PPO(env, path, hyper_params).ac_net
-	policy.load_state_dict(torch.load(path+'/checkpoint/ppo_network_state_dict.pt', map_location='cpu'))
+	checkpoint = torch.load(path+'/checkpoint/save_file.pt', map_location='cpu')
+	policy.load_state_dict(checkpoint['model_state_dict'])
 	return policy
 
 def load_best_policy(env, path):
@@ -165,7 +167,11 @@ if __name__ == '__main__':
 	# benchmark_policy(env, policy, 5)
 	start_ppo(env)
 	# continue_training(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/Levitation-v1_2019-03-08_11-26-42')
+
 	# policy = load_policy_from_checkpoint(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/test')
+	# policy = load_policy_from_checkpoint(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-08_19-07-09')
+	# policy = load_policy_from_checkpoint(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/qube_good_policy_3')
+										 # '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-08_19-07-09')
 	# benchmark_policy(env, policy, 5)
 
 	### for eval

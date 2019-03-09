@@ -53,9 +53,9 @@ class ActorCriticMLPShared(nn.Module):
             x = layer(x)
 
         mean = self.out_mean(x)
-        # std = torch.sigmoid(self.log_std.exp())
+
         std = self.log_std.exp()
-        # std = torch.clamp(std, 0.4)
+
         value = self.out_value(x)
 
         # dist = Normal(mean, std)
