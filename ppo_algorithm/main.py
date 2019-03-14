@@ -65,6 +65,9 @@ def start_ppo(env, args=None):
 	os.makedirs(best_policy_path)
 	torch.save(ppo_params, path+'/hyper_params.pt')
 
+	with open(path+'/info.txt', 'w') as f:
+		print(ppo_params, file=f)
+
 
 	ppo = PPO(env, hyper_params=ppo_params, path=path)
 	ppo.run_ppo()
@@ -91,7 +94,7 @@ def load_input_to_dict(args):
 	"""
 	ppo_params = {
 		'ppo_epochs' : args.ppoepochs,
-		'num_iterations' : args.ntraining_steps,
+		'num_iterations' : args.training_steps,
 		'horizon' : args.horizon,
 		'num_hidden_neurons' : args.hneurons,
 		'policy_std' : args.std,
@@ -101,10 +104,10 @@ def load_input_to_dict(args):
 		'gamma' : args.gamma,
 		'cliprange' : args.cliprange,
 		'vf_coef' : args.vfc,
-		'entropy_coef' : args.entropy_coef,
+		'entropy_coef' : args.entc,
 		'lr' : args.lr,
-		'num_evals' : args.num_evals,
-		'eval_step' : args.eval_step,
+		'num_evals' : args.nevals,
+		'eval_step' : args.estep,
 		'layer_norm' : args.layer_norm
 	}
 	return ppo_params
@@ -154,13 +157,8 @@ def load_policy_from_checkpoint(env, path):
 	policy.load_state_dict(checkpoint['model_state_dict'])
 	return policy
 
-def load_best_policy(env, path):
-	hyper_params = torch.load(path + '/hyper_params.pt', map_location='cpu')
-	policy = PPO(env, path, hyper_params).ac_net
-	policy.load_state_dict(torch.load(path + '/best_policy/ppo_network_state_dict.pt', map_location='cpu'))
-	return policy
 
-def load_best_policy_(env, path):
+def load_best_policy(env, path):
 	hyper_params = torch.load(path + '/hyper_params.pt', map_location='cpu')
 	policy = PPO(env, path, hyper_params).ac_net
 	checkpoint = torch.load(path + '/best_policy/save_file.pt', map_location='cpu')
@@ -183,12 +181,14 @@ if __name__ == '__main__':
 	# 	   'reinforcement_learning/project/rl_algorithms/data/3copy'
 
 	# path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-13_15-05-02'
-	path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/' \
-		   'reinforcement_learning/project/rl_algorithms/data/cart3'
+	# path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/' \
+	# 	   'reinforcement_learning/project/rl_algorithms/data/cart3'
 	# policy = load_policy_from_checkpoint(env, path)
-	policy = load_best_policy_(env,path)
 
-	# benchmark_policy(env, policy, 1, path)
+	path = '/Users/thomas/Desktop/noob/cart4'
+	policy = load_best_policy(env, path)
+
+	benchmark_policy(env, policy, 10, path)
 	# start_ppo(env)
 	# continue_training(env, False, path)
 	# continue_training(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/lols')

@@ -152,4 +152,4 @@ def plot_expected_entropy():
 # plot_expected_cumulative_rewards_()
 # plot_expected_entropy()
 
-plot_rr()
+# plot_rr()

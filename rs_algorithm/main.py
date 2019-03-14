@@ -2,8 +2,8 @@ import gym
 from quanser_robots import GentlyTerminating
 from rs_algorithm.neural_rs import neural_ars
 import numpy as np
-from rs_algorithm.random_search import RandomSearch
-import rs_algorithm.random_search as rs
+from rs_algorithm.rs import RandomSearch
+import rs_algorithm.rs as rs
 from rs_algorithm.rs_hyperparams import rs_params
 import os
 import datetime

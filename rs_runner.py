@@ -1,15 +1,15 @@
 import gym
 from quanser_robots import GentlyTerminating
-from rs_algorithm.neural_rs import neural_ars
+from rs_algorithm.utils import cmd_util
 import numpy as np
-from rs_algorithm.random_search import RandomSearch
-import rs_algorithm.random_search as rs
-from rs_algorithm.rs_hyperparams import rs_params
+from rs_algorithm.rs import RandomSearch
+import rs_algorithm.rs as rs
 import os
 import datetime
 import matplotlib.pyplot as plt
+import torch
+import sys
 
-import rs_algorithm.rs_methods as lel
 
 
 def choose_environment(selection=0):
@@ -29,7 +29,7 @@ def choose_environment(selection=0):
 
 
 def train_rs_policy_v1(rs_hyperparams, env):
-    path = os.path.dirname(__file__) + '/data/' + env.unwrapped.spec.id + '_v1_' + \
+    path = os.path.dirname(os.path.abspath(__file__)) + '/data/' + env.unwrapped.spec.id + '_v1_' + \
            datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     os.makedirs(path)
     random_search = RandomSearch(env, rs_hyperparams, path)
@@ -37,7 +37,7 @@ def train_rs_policy_v1(rs_hyperparams, env):
 
 
 def train_rs_policy_v1_rff(rs_hyperparams, env):
-    path = os.path.dirname(__file__) + '/data/' + env.unwrapped.spec.id + '_v1_rff_' + \
+    path = os.path.dirname(os.path.abspath(__file__)) + '/data/' + env.unwrapped.spec.id + '_v1_rff_' + \
            datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     os.makedirs(path)
     random_search = RandomSearch(env, rs_hyperparams, path)
@@ -45,41 +45,91 @@ def train_rs_policy_v1_rff(rs_hyperparams, env):
 
 
 def train_rs_policy_v2(rs_hyperparams, env):
-    path = os.path.dirname(__file__) + '/data/' + env.unwrapped.spec.id + '_v2_' + \
+    path = os.path.dirname(os.path.abspath(__file__)) + '/data/' + env.unwrapped.spec.id + '_v2_' + \
            datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     os.makedirs(path)
     rs = RandomSearch(env, rs_hyperparams, path)
     rs.ars_v2()
 
-def collect_data_v1(rs_hyperparams, env, number_of_runs):
-    list_of_rewards = []
-    for i in range(number_of_runs):
-        path = os.path.dirname(__file__) + '/data/' + env.unwrapped.spec.id + '_v1_' + \
-               datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        os.makedirs(path)
-        random_search = RandomSearch(env, rs_hyperparams, path)
-        rewards = random_search.ars_v1()
-        list_of_rewards.append(rewards)
-        print('---------------')
-    path = os.path.dirname(__file__) + '/data/' + env.unwrapped.spec.id + '_v1_collected_rewards' + \
-           datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    os.makedirs(path)
-    np.save(path + '/list_of_rewards.npy', list_of_rewards)
+def run_rs(args=None):
+    """
+    Initializes random search with given arguments. Use default values if not provided
 
-def collect_data_v2(rs_hyperparams, env, number_of_runs):
-    list_of_rewards = []
-    for i in range(number_of_runs):
-        path = os.path.dirname(__file__) + '/data/' + env.unwrapped.spec.id + '_v2_' + \
-               datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-        os.makedirs(path)
-        random_search = RandomSearch(env, rs_hyperparams, path)
-        rewards = random_search.ars_v2()
-        list_of_rewards.append(rewards)
-        print('---------------')
-    path = os.path.dirname(__file__) + '/data/' + env.unwrapped.spec.id + '_v2_collected_rewards_' + \
-           datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-    os.makedirs(path)
-    np.save(path + '/list_of_rewards.npy', list_of_rewards)
+    :param args: parameter dictionary
+    """
+    parser = cmd_util.rs_args_parser()
+    args = parser.parse_known_args(args)[0]
+    env = GentlyTerminating(gym.make(args.env))
+    rs_params = load_input_to_dict(args)
+
+    if args.resume:
+        if args.path != None:
+            resume_rs(env, args.path)
+        else:
+            print("Path not provided")
+
+    if not args.resume:
+        if args.path == None:
+            path = os.path.dirname(os.path.abspath(__file__)) + '/data/rs' + env.unwrapped.spec.id + '_' + \
+                   datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        else:
+            path = args.path
+
+        checkpoint_path = path + '/checkpoint'
+        best_policy_path = path + '/best_policy'
+
+        os.makedirs(checkpoint_path)
+        os.makedirs(best_policy_path)
+
+        torch.save(rs_params, path+'/hyper_params.pt')
+
+        with open(path+ '/info.txt', 'w') as f:
+            print(rs_params, file=f)
+
+        rs = RandomSearch(env, hyperparams=rs_params, path=path)
+
+        if args.version == 0:
+            print("Start training augmented random search v1")
+            rs.ars_v1()
+
+        elif args.version == 1:
+            print("Start training augmented random search v1 with random fourier features")
+            rs.ars_v1_rff()
+        elif args.version == 2:
+            print("Start training augmented random search v2")
+            rs.ars_v2()
+        else:
+            print("Version not available")
+
+def resume_rs(env, path):
+    """
+
+    :param env:
+    :param path:
+
+    """
+
+
+
+def load_input_to_dict(args):
+    """
+    Loads command line input to dictionary for PPO hyper parameters
+    :param args: command line input
+    :return: dictionary for hyper parameters
+    """
+    rs_params = {
+        'num_deltas' : args.ndeltas,
+        'num_iterations' : args.training_steps,
+        'horizon' : args.horizon,
+        'lr' : args.lr,
+        'bbest' : args.bbest,
+        'termination_criterion' : args.tcriterion,
+        'num_features' : args.nfeatures,
+        'eval_step' : args.estep,
+        'sample_noise' : args.snoise
+    }
+    return rs_params
+
 
 
 def plot_graph(list_of_rewards):
@@ -105,6 +155,7 @@ def plot_graph(list_of_rewards):
 
 if __name__ == '__main__':
     env = choose_environment(0)
+    run_rs(sys.argv)
     # path=os.path.dirname(__file__) + '/data/' + env.unwrapped.spec.id + '_v2_' + \
     #        datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     # os.makedirs(path)
@@ -112,7 +163,7 @@ if __name__ == '__main__':
     # lel.ars_v2_bf(10000, env, 8, 0.025, 0.015, 2, 10, 0, vis=False)
     # lel.ars_v2(300, env, 8, 0.025, 0.015, 2, 1000, path, vis=False)
     # train_rs_policy_v1(rs_params, env)
-    collect_data_v2(rs_params, env, 10)
+    # collect_data_v2(rs_params, env, 10)
     # train_rs_policy_v1_rff(rs_params, env)
     # M = rs.load_policy_v1('/Users/jan/Desktop/rl_algorithms-v0.8/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-23-42')
     # rs.evaluate_policy_v1(10000, env, M,True)

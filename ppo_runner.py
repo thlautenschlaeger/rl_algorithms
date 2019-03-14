@@ -52,7 +52,7 @@ def choose_environment(selection=0):
 		raise NotImplementedError
 
 
-def start_ppo(args=None):
+def train_ppo(args=None):
 	"""
 	Initializes PPO object and starts training
 
@@ -64,37 +64,45 @@ def start_ppo(args=None):
 	env = GentlyTerminating(gym.make(args.env))
 	ppo_params = load_input_to_dict(args)
 
-	print()
-	print('LOOOL')
-	if args.path == None:
-		path = os.path.dirname(os.path.abspath(__file__)) + '/data/ppo' + env.unwrapped.spec.id + '_' + \
-			   datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
-	else:
-		path = args.path
 
-	checkpoint_path = path + '/checkpoint'
-	best_policy_path = path + '/best_policy'
-	os.makedirs(checkpoint_path)
-	os.makedirs(best_policy_path)
-	torch.save(ppo_params, path+'/hyper_params.pt')
+	if args.resume:
+		if args.path != None:
+			resume_training(env, args.path)
+		else:
+			print("Path not provided training not continued")
+
+	if not args.resume:
+		if args.path == None:
+			path = os.path.dirname(os.path.abspath(__file__)) + '/data/ppo' + env.unwrapped.spec.id + '_' + \
+				   datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+		else:
+			path = args.path
+
+		checkpoint_path = path + '/checkpoint'
+		best_policy_path = path + '/best_policy'
+		os.makedirs(checkpoint_path)
+		os.makedirs(best_policy_path)
+		torch.save(ppo_params, path+'/hyper_params.pt')
+
+		with open(path+'/info.txt', 'w') as f:
+			print(ppo_params, file=f)
 
 
-	ppo = PPO(env, hyper_params=ppo_params, path=path)
+		ppo = PPO(env, hyper_params=ppo_params, path=path)
+		ppo.run_ppo()
+
+def resume_training(env, path, new=False):
+	"""
+
+	:param env: gym environment
+	:param path:
+
+	"""
+	hyper_params = torch.load(path+'/hyper_params.pt')
+	print("Training starts")
+	ppo = PPO(env, path=path, hyper_params=hyper_params, continue_training=True, new=new)
 	ppo.run_ppo()
 
-def continue_training(env, new, path):
-	try:
-		hyper_params = torch.load(path+'/hyper_params.pt')
-	except:
-		print("Hyper parameters not found")
-		cmd = input("Continue training with default hyper parameters? y [yes], n [no]")
-	cmd = 'y'
-	if cmd == 'y' or cmd == 'yes':
-		print("Training starts")
-		ppo = PPO(env, path=path, hyper_params=hyper_params, continue_training=True, new=new)
-		ppo.run_ppo()
-	else:
-		print("Training not continued")
 
 def load_input_to_dict(args):
 	"""
@@ -104,7 +112,7 @@ def load_input_to_dict(args):
 	"""
 	ppo_params = {
 		'ppo_epochs' : args.ppoepochs,
-		'num_iterations' : args.ntraining_steps,
+		'num_iterations' : args.training_steps,
 		'horizon' : args.horizon,
 		'num_hidden_neurons' : args.hneurons,
 		'policy_std' : args.std,
@@ -114,10 +122,10 @@ def load_input_to_dict(args):
 		'gamma' : args.gamma,
 		'cliprange' : args.cliprange,
 		'vf_coef' : args.vfc,
-		'entropy_coef' : args.entropy_coef,
+		'entropy_coef' : args.entc,
 		'lr' : args.lr,
-		'num_evals' : args.num_evals,
-		'eval_step' : args.eval_step,
+		'num_evals' : args.nevals,
+		'eval_step' : args.estep,
 		'layer_norm' : args.layer_norm
 	}
 	return ppo_params
@@ -210,6 +218,6 @@ if __name__ == '__main__':
 	# policy = load_best_policy(env, path)
 
 	# benchmark_policy(env, policy, 1)
-	start_ppo(sys.argv)
+	train_ppo(sys.argv)
 
 	# start_ppo(args)

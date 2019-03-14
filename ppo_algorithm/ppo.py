@@ -6,7 +6,6 @@ import numpy as np
 from ppo_algorithm.gae import compute_gae
 from ppo_algorithm.models import actor_critic
 from ppo_algorithm.utils import plot_utility
-from ppo_algorithm.normalizer import Normalizer
 import time
 from ppo_algorithm.utils import model_handler
 from torch.distributions import Normal
@@ -80,9 +79,7 @@ class PPO():
                  old_log_probs,
                  actions, states,
                  rewards,
-                 last_value_list,
                  masks,
-                 end_trajectory_index,
                  entropy
         """
 
@@ -93,8 +90,6 @@ class PPO():
         masks = np.empty(self.horizon)
         old_log_probs = torch.empty(size=(self.horizon, 1))
         state = self.env.reset()
-        last_value_list = []
-        end_trajectory_index = []
         cum_reward = 0
 
         for i in range(self.horizon):
@@ -120,18 +115,10 @@ class PPO():
 
             if done:
                 state = self.env.reset()
-                _, _, last_value = self.ac_net(torch.FloatTensor(next_state))
-                last_value = last_value.detach()
-                last_value_list.append(last_value)
-                end_trajectory_index.append(i)
 
-        # add last value for gae if last rollout signal is not done
-        # if not done:
-        #     _, _, last_value = self.ac_net(torch.FloatTensor(next_state))
-        #     last_value = last_value.detach()
-        #     last_value_list.append(last_value)
-        #     end_trajectory_index.append(i)
 
+        _, _, last_value = self.ac_net(torch.FloatTensor(next_state))
+        last_value = last_value.detach()
         values = values.detach()
         entropy = dist.entropy().detach().numpy()[0][0]
         old_log_probs = old_log_probs.detach()
@@ -139,7 +126,8 @@ class PPO():
         print('policy stddev: {} policy variance {}'.format(
             self.ac_net.log_std.exp().detach().numpy().squeeze(),
             dist.variance.detach().numpy().squeeze()))
-        return values, old_log_probs, actions, states, rewards, last_value_list, masks, end_trajectory_index, entropy
+
+        return values, old_log_probs, actions, states, rewards, last_value, masks, entropy
 
     def ppo_update(self, advantage_estimates, states, actions, old_log_probs,
                    returns, cliprange=0.2):
@@ -179,14 +167,13 @@ class PPO():
                 new_log_prob = dist.log_prob(actions[start:end])
                 entropy = dist.entropy().mean()
 
+                # importance weights
                 ratio = torch.exp(new_log_prob - old_log_probs[start:end])
 
                 advantage_batch = advantage_estimates[start:end]
 
                 surr = ratio * advantage_batch
-
                 clipped_surr = torch.clamp(ratio, 1 - cliprange, 1 + cliprange) * advantage_batch
-
                 pg_loss = torch.min(surr, clipped_surr).mean()
 
                 target_value = returns[start:end]
@@ -199,32 +186,6 @@ class PPO():
                 torch.nn.utils.clip_grad_norm_(self.ac_net.parameters(), self.max_grad_norm)
                 self.ac_optim.step()
 
-    def collect_advantage_estimates(self, rewards, values, last_value, masks, end_index):
-        """
-        Computes general advantage estimates for every trajectory
-
-        :param rewards: list of collected rewards per environment step
-        :param values: list of computed values from actor-critic net per step
-        :param last_value: list of bootstrapping values after episode ended
-        :param masks: list of booleans that set last_value to 0 if state of last_value is bad state
-        :param end_index: list of indices that contains step where trajectory ended
-
-        :return: general advantage estimates and corresponding Q-values
-        """
-
-        advantages = torch.FloatTensor()
-        returns = torch.FloatTensor()
-        start = 0
-        for i in range(len(end_index)):
-            end = end_index[i] + 1
-            advantages_, returns_ = compute_gae(rewards[start:end], values[start:end], last_value[i],
-                                                masks[start:end], self.lamb, self.gamma)
-            advantages = torch.cat((advantages, advantages_))
-            returns = torch.cat((returns, returns_))
-            start = end
-
-        return advantages, returns
-
     def run_ppo(self):
         """
         runs ppo and logs data
@@ -235,9 +196,10 @@ class PPO():
 
             # collect trajectory data
             values, old_log_probs, actions, states, \
-            rewards, last_value, masks, end_index, entropy = self.collect_trajectories()
+            rewards, last_value, masks, entropy = self.collect_trajectories()
+
             # computes general advantages from trajectories
-            advantage_est, returns = self.collect_advantage_estimates(rewards, values, last_value, masks, end_index)
+            advantage_est, returns = compute_gae(rewards, values, last_value, masks, self.lamb, self.gamma)
 
             total_rollout_reward = rewards.sum()
 
@@ -261,7 +223,8 @@ class PPO():
 
                 plot_utility.plt_expected_cum_reward(self.cum_eval_rewards,
                                                      self.cum_eval_rewards_std,
-                                                     self.path)
+                                                     self.path,
+                                                     self.eval_step)
                 # plt.plot(self.cum_eval_rewards)
                 # plt.savefig(self.path+'/reward.png')
 

@@ -2,61 +2,216 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="983d662b-7897-404d-9dbd-f3b57a898ee4" name="Default Changelist" comment="Added random search">
-      <change afterPath="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/hyper_params.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/model/save_file.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/qube/execute_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/qube/hyper_params.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/qube/model/save_file.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/qube_rr/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/qube_rr/execute_model.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/qube_rr/hyper_params.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/qube_rr/model/save_file.pt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ppo_algorithm/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ppo_algorithm/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ppo_algorithm/utils/load.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ppo_algorithm/utils/plot_utility.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ppo_runner.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rs_algorithm_old/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rs_algorithm_old/policy.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rs_algorithm_old/rs_hyperparams.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rs_algorithm_old/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rs_algorithm_old/utils/cmd_util.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/rs_runner.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/rs_algorithm/rs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-09_14-26-13/best_policy/save_file.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-09_14-26-13/checkpoint/save_file.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-09_14-26-13/hyper_params.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-09_14-26-13/reward.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-09_14-53-34/best_policy/save_file.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-09_14-53-34/checkpoint/save_file.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-09_14-53-34/hyper_params.pt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-09_14-53-34/reward.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/gae.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/gae.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/normalizer.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/ppo.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/ppo.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/results/01_10_2019/reward.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/results/01_10_2019/setting.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/results/01_11_2019/hyperparam_setting.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/results/01_11_2019/reward.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/results/01_11_2019/swing_up_2.mov" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/results/01_11_2019/swing_up_3.mov" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/utilities/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/ppo/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/utilities/cmd_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/utils/cmd_util.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/utilities/model_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/utils/model_handler.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/utilities/plot_utility.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs_algorithm/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm_old/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs_algorithm/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs_algorithm/basis_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm_old/basis_functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs_algorithm/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm_old/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs_algorithm/neural_rs.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm_old/neural_rs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs_algorithm/normalizer.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm_old/normalizer.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs_algorithm/policy.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/execute_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs_algorithm/rs_hyperparams.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/ppo/qube/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/rs_algorithm/rs_methods.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm_old/rs_methods.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/utils/cmd_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/utils/cmd_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/utils/load.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/utils/load.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_algorithm/utils/plot_utility.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/utils/plot_utility.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ppo_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_runner.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_16-11-07/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_16-11-07/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_16-11-07/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_16-14-57/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_16-14-57/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_16-14-57/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_17-32-49/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_17-32-49/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_17-32-49/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_17-33-28/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_17-33-28/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_17-33-28/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_18-54-25/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_18-54-25/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_18-54-25/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-08-57/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-08-57/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-08-57/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-23-42/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-23-42/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-23-42/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-39-28/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-39-28/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-39-28/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-55-47/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-55-47/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-55-47/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-56-35/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-56-35/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-56-35/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-57-23/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-57-23/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-57-23/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-58-11/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-58-11/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-58-11/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-59-11/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-59-11/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_19-59-11/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_20-15-18/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_20-15-18/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_20-15-18/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_20-31-08/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_20-31-08/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_20-31-08/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_20-47-28/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_20-47-28/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_20-47-28/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-07-22/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-07-22/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-07-22/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-21-38/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-21-38/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-21-38/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-39-42/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-39-42/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-39-42/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-54-53/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-54-53/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_21-54-53/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_22-09-21/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_22-09-21/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_22-09-21/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_22-25-44/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_22-25-44/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-12_22-25-44/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-13_09-18-46/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-13_09-18-46/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_2019-03-13_09-18-46/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_collected_rewards2019-03-12_22-40-27/list_of_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_collected_rewards_2019-03-13_02-08-46/list_of_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v1_collected_rewards_2019-03-13_04-07-36/list_of_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_22-51-42/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_22-51-42/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_22-51-42/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_22-56-03/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_22-56-03/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_22-56-03/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-11-32/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-11-32/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-11-32/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-31-24/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-31-24/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-31-24/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-35-43/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-35-43/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-35-43/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-51-20/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-51-20/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-12_23-51-20/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-03-33/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-03-33/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-03-33/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-12-11/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-12-11/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-12-11/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-32-46/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-32-46/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-32-46/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-37-11/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-37-11/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-37-11/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-53-52/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-53-52/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_00-53-52/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-09-45/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-09-45/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-09-45/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-21-31/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-21-31/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-21-31/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-30-00/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-30-00/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-30-00/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-49-16/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-49-16/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-49-16/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-53-39/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-53-39/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_01-53-39/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_02-19-05/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_02-19-05/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_02-19-05/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_02-47-01/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_02-47-01/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_02-47-01/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_03-07-25/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_03-07-25/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_03-07-25/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_03-37-30/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_03-37-30/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-13_03-37-30/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_00-26-08/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_00-26-08/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_00-26-08/mean.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_00-26-08/sigma_rooted.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_00-26-08/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_04-29-31/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_04-29-31/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_04-29-31/mean.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_04-29-31/sigma_rooted.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_04-29-31/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_08-21-52/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_08-21-52/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_08-21-52/mean.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_08-21-52/sigma_rooted.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_08-21-52/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_12-23-47/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_12-23-47/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_12-23-47/mean.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_12-23-47/sigma_rooted.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_2019-03-14_12-23-47/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_ff_2019-03-12_22-51-27/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_ff_2019-03-12_22-51-27/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/CartpoleSwingShort-v0_v2_ff_2019-03-12_22-51-27/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-32-51/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-32-51/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-32-51/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-38-50/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-38-50/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-38-50/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-39-41/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-39-41/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-39-41/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-41-01/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-41-01/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_2019-03-13_11-41-01/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_rff_2019-03-13_11-42-07/features.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_rff_2019-03-13_11-42-07/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_rff_2019-03-13_11-42-07/linear_policy.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_rff_2019-03-13_11-42-07/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_rff_2019-03-13_11-43-39/features.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_rff_2019-03-13_11-43-39/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_rff_2019-03-13_11-43-39/linear_policy.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v1_rff_2019-03-13_11-43-39/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v2_2019-03-14_00-25-45/M.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v2_2019-03-14_00-25-45/hyper_params.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v2_2019-03-14_00-25-45/mean.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v2_2019-03-14_00-25-45/sigma_rooted.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/data/Levitation-v1_v2_2019-03-14_00-25-45/training_rewards.npy" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/model_handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm/utils/model_handler.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/policy.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/random_search.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm/rs_hyperparams.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm/rs_hyperparams.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/models/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/basis_functions.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/neural_rs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/normalizer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/policy.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/utils/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/rs_hyperparams.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm/utils/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/rs_methods.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/utils/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm/utils/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_algorithm_old/utils/cmd_util.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_algorithm/utils/cmd_util.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/rs_runner.py" beforeDir="false" afterPath="$PROJECT_DIR$/rs_runner.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,12 +220,14 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/rl_algorithms$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1552562963875" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo_algorithm" />
+    <SUITE FILE_PATH="coverage/rl_algorithms$main__3_.coverage" NAME="main (3) Coverage Results" MODIFIED="1552576454428" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo_algorithm" />
     <SUITE FILE_PATH="coverage/rl_algorithms$test__1_.coverage" NAME="test (1) Coverage Results" MODIFIED="1542211651532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/holzgroup/quanser_platforms" />
     <SUITE FILE_PATH="coverage/rl_algorithms$test__2_.coverage" NAME="test (2) Coverage Results" MODIFIED="1542448824327" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo/quanser_platforms" />
     <SUITE FILE_PATH="coverage/rl_algorithms$main__1_.coverage" NAME="main (1) Coverage Results" MODIFIED="1552258499737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/rs_algorithm" />
     <SUITE FILE_PATH="coverage/rl_algorithms$main__2_.coverage" NAME="main (2) Coverage Results" MODIFIED="1546875492753" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo_old" />
     <SUITE FILE_PATH="coverage/rl_algorithms$execute_model.coverage" NAME="execute_model Coverage Results" MODIFIED="1552504375724" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/examples/ppo/qube" />
+    <SUITE FILE_PATH="coverage/rl_algorithms$load__1_.coverage" NAME="load (1) Coverage Results" MODIFIED="1552576441408" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo_algorithm/utils" />
+    <SUITE FILE_PATH="coverage/rl_algorithms$rs_runner.coverage" NAME="rs_runner Coverage Results" MODIFIED="1552591267084" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/rl_algorithms$qube.coverage" NAME="qube Coverage Results" MODIFIED="1542114941694" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/basic_rl_model/quanser_platforms" />
     <SUITE FILE_PATH="coverage/rl_algorithms$main.coverage" NAME="main Coverage Results" MODIFIED="1546704251737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo" />
     <SUITE FILE_PATH="coverage/rl_algorithms$runner.coverage" NAME="runner Coverage Results" MODIFIED="1552508463297" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
@@ -81,224 +238,124 @@
     <SUITE FILE_PATH="coverage/rl_algorithms$ppo.coverage" NAME="ppo Coverage Results" MODIFIED="1542475055370" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ppo" />
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.512425">
-      <split-first>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="345">
-                  <caret line="124" column="16" selection-start-line="124" selection-start-column="16" selection-end-line="124" selection-end-column="50" />
-                  <folding>
-                    <element signature="e#0#44#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ppo_runner.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="264">
-                  <caret line="68" column="25" lean-forward="true" selection-start-line="68" selection-start-column="25" selection-end-line="68" selection-end-column="25" />
-                  <folding>
-                    <element signature="e#0#10#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/examples/ppo/cartpole_swing_up/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="FIRST">
-                  <first_editor relative-caret-position="56">
-                    <caret line="4" column="181" selection-start-line="4" selection-start-column="181" selection-end-line="4" selection-end-column="181" />
-                  </first_editor>
-                  <second_editor />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/rs_algorithm/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="FIRST">
-                  <first_editor />
-                  <second_editor />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/rs_algorithm/main.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="154">
-                  <caret line="48" column="35" selection-end-line="127" />
-                  <folding>
-                    <element signature="e#0#10#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/rs_runner.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="776">
-                  <caret line="127" selection-start-line="127" selection-end-line="127" />
-                  <folding>
-                    <element signature="e#0#10#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/rs_algorithm/random_search.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="280">
-                  <caret line="20" column="32" lean-forward="true" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
-                  <folding>
-                    <element signature="e#0#18#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/examples/ppo/qube/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="SPLIT">
-                  <first_editor relative-caret-position="70">
-                    <caret line="5" column="187" selection-start-line="5" selection-start-column="187" selection-end-line="5" selection-end-column="187" />
-                  </first_editor>
-                  <second_editor />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/examples/ppo/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="SPLIT">
-                  <first_editor relative-caret-position="98">
-                    <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
-                  </first_editor>
-                  <second_editor />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/examples/ppo/qube_rr/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="SPLIT">
-                  <first_editor relative-caret-position="70">
-                    <caret line="5" column="187" selection-start-line="3" selection-end-line="5" selection-end-column="187" />
-                  </first_editor>
-                  <second_editor />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-first>
-      <split-second>
-        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file pinned="false" current-in-tab="true">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/gae.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="294">
-                  <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="465">
-                  <caret line="167" selection-start-line="167" selection-end-line="167" />
-                  <folding>
-                    <element signature="e#0#10#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="FIRST">
-                  <first_editor relative-caret-position="112">
-                    <caret line="8" selection-start-line="8" selection-end-line="8" />
-                  </first_editor>
-                  <second_editor />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="SPLIT">
-                  <first_editor relative-caret-position="224">
-                    <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-                  </first_editor>
-                  <second_editor />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="411">
-                  <caret line="52" column="31" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
-                  <folding>
-                    <element signature="e#0#12#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/examples/ppo/cartpole_swing_up/execute_model.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="392">
-                  <caret line="33" column="15" selection-start-line="33" selection-start-column="15" selection-end-line="33" selection-end-column="15" />
-                  <folding>
-                    <element signature="e#0#12#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/load.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="428">
-                  <caret line="151" column="35" selection-start-line="151" selection-start-column="35" selection-end-line="151" selection-end-column="35" />
-                  <folding>
-                    <element signature="e#0#12#0" expanded="true" />
-                  </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/cmd_util.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="574">
-                  <caret line="41" column="49" selection-start-line="41" selection-start-column="49" selection-end-line="41" selection-end-column="49" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-        </leaf>
-      </split-second>
-    </splitter>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1122">
+              <caret line="120" column="23" lean-forward="true" selection-start-line="120" selection-start-column="23" selection-end-line="120" selection-end-column="23" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rs_algorithm/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="126">
+                <caret line="9" column="99" lean-forward="true" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="99" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rs_algorithm/utils/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="70">
+                <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="471">
+                <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/examples/README.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="SPLIT">
+              <first_editor relative-caret-position="126">
+                <caret line="9" selection-start-line="9" selection-end-line="9" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rs_algorithm/utils/model_handler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#12#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/plot_utility.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="322">
+              <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/ppo_runner.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="108">
+              <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rs_algorithm/utils/cmd_util.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="464">
+              <caret line="57" selection-start-line="57" selection-end-line="57" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/rs_algorithm/rs.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="178">
+              <caret line="60" column="57" selection-start-line="60" selection-start-column="57" selection-end-line="60" selection-end-column="57" />
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -309,7 +366,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>fol</find>
       <find>obser</find>
       <find>detach</find>
       <find>reward</find>
@@ -339,6 +395,7 @@
       <find>normali</find>
       <find>path</find>
       <find>mo</find>
+      <find>perform_roll</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -353,16 +410,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/ppo_algorithm/structures/neural_network_structs.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/structures/ppo_hyperparams.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/utilities/plot_reward.py" />
-        <option value="$PROJECT_DIR$/rs/rs_methods.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/utilities/gae.py" />
-        <option value="$PROJECT_DIR$/rs_algorithm/rs_hyperparams.py" />
-        <option value="$PROJECT_DIR$/rs_algorithm/basis_functions.py" />
-        <option value="$PROJECT_DIR$/normalizer.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/normalizer.py" />
-        <option value="$PROJECT_DIR$/rs_algorithm/normalizer.py" />
         <option value="$PROJECT_DIR$/rs_algorithm/neural_rs.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/data/2/README.md" />
         <option value="$PROJECT_DIR$/ppo_algorithm/data/3/README.md" />
@@ -386,28 +433,38 @@
         <option value="$PROJECT_DIR$/runner.py" />
         <option value="$PROJECT_DIR$/examples/ppo/qube_rr/execute_model.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/cmd_util.py" />
-        <option value="$PROJECT_DIR$/ppo_runner.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/plot_utility.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/load.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/gae.py" />
-        <option value="$PROJECT_DIR$/rs_algorithm/utils/cmd_util.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/main.py" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/utils/load.py" />
-        <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/examples/ppo/qube_rr/README.md" />
         <option value="$PROJECT_DIR$/examples/ppo/qube/README.md" />
         <option value="$PROJECT_DIR$/examples/ppo/README.md" />
-        <option value="$PROJECT_DIR$/ppo_algorithm/README.md" />
         <option value="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/README.md" />
         <option value="$PROJECT_DIR$/rs_algorithm_old/rs_runner.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/gae.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/utils/load.py" />
+        <option value="$PROJECT_DIR$/rs_algorithm/rs_hyperparams.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/utils/cmd_util.py" />
+        <option value="$PROJECT_DIR$/ppo_runner.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/utils/plot_utility.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py" />
+        <option value="$PROJECT_DIR$/rs_algorithm/utils/model_handler.py" />
         <option value="$PROJECT_DIR$/rs_runner.py" />
+        <option value="$PROJECT_DIR$/rs_algorithm/utils/cmd_util.py" />
+        <option value="$PROJECT_DIR$/rs_algorithm/random_search.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/main.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/ppo.py" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/README.md" />
+        <option value="$PROJECT_DIR$/rs_algorithm/rs.py" />
+        <option value="$PROJECT_DIR$/rs_algorithm/utils/README.md" />
+        <option value="$PROJECT_DIR$/examples/README.md" />
+        <option value="$PROJECT_DIR$/ppo_algorithm/models/README.md" />
+        <option value="$PROJECT_DIR$/rs_algorithm/README.md" />
+        <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
     <option name="width" value="1440" />
     <option name="height" value="900" />
   </component>
@@ -419,6 +476,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -429,23 +487,17 @@
             <path>
               <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
               <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
               <item name="ppo_algorithm" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
               <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
-              <item name="rs_algorithm_old" type="462c0819:PsiDirectoryNode" />
+              <item name="rs_algorithm" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -454,7 +506,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -465,6 +517,7 @@
       <recent name="$PROJECT_DIR$/examples/ppo/cartpole_swing_up" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/rs_algorithm/utils" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/ppo_algorithm/data/good_qube_policy_2/best_policy" />
       <recent name="$PROJECT_DIR$/ppo_algorithm" />
@@ -483,7 +536,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.load (1)">
+  <component name="RunManager" selected="Python.main (3)">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
       <module name="rl_algorithms" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -506,32 +559,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="execute_model (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
+    <configuration name="load (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="rl_algorithms" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/examples/ppo/cartpole_swing_up" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/execute_model.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="true" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="load (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="rl_algorithms" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/ppo_algorithm/utils" />
       <option name="IS_MODULE_SDK" value="true" />
@@ -588,6 +622,25 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="rs_runner" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="rl_algorithms" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/rs_runner.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="true" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="runner" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="rl_algorithms" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -614,16 +667,16 @@
       <item itemvalue="Python.main (3)" />
       <item itemvalue="Python.load" />
       <item itemvalue="Python.runner" />
-      <item itemvalue="Python.execute_model (1)" />
       <item itemvalue="Python.load (1)" />
+      <item itemvalue="Python.rs_runner" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.load (1)" />
         <item itemvalue="Python.main (3)" />
+        <item itemvalue="Python.rs_runner" />
+        <item itemvalue="Python.load (1)" />
         <item itemvalue="Python.load" />
         <item itemvalue="Python.runner" />
-        <item itemvalue="Python.execute_model (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -712,7 +765,8 @@
       <workItem from="1552485215799" duration="8949000" />
       <workItem from="1552499545091" duration="16850000" />
       <workItem from="1552560847994" duration="378000" />
-      <workItem from="1552561662456" duration="5671000" />
+      <workItem from="1552561662456" duration="18536000" />
+      <workItem from="1552587302775" duration="9955000" />
     </task>
     <task id="LOCAL-00001" summary="Added quanser platforms with example code">
       <created>1542026556544</created>
@@ -753,7 +807,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1005792000" />
+    <option name="totallyTimeSpent" value="1028612000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -765,16 +819,16 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="27" y="23" width="1412" height="877" extended-state="6" />
+    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49931788" weight="0.14817518" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49931788" visible="true" weight="0.14806867" />
       <window_info id="Structure" order="1" sideWeight="0.5006821" side_tool="true" weight="0.18486486" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4972973" weight="0.32729104" />
+      <window_info anchor="bottom" id="Find" order="1" sideWeight="0.4972973" weight="0.32634032" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32891566" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8054054" weight="0.2496925" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.8054054" weight="0.1958042" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32930514" />
@@ -782,13 +836,13 @@
       <window_info anchor="bottom" id="Version Control" order="8" weight="0.32930514" />
       <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.19459459" side_tool="true" weight="0.25075528" />
-      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49927008" weight="0.32841328" />
-      <window_info anchor="bottom" x="60" y="256" width="634" height="351" id="Python Console" order="12" sideWeight="0.79783785" weight="0.28787878" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49927008" weight="0.32750583" />
+      <window_info anchor="bottom" x="60" y="256" width="634" height="351" id="Python Console" order="12" sideWeight="0.79783785" visible="true" weight="0.26456878" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" x="597" y="265" width="538" height="374" id="SciView" order="3" sideWeight="0.5619048" weight="0.5901288" />
-      <window_info anchor="right" x="0" y="0" width="303" height="677" id="Documentation" order="4" sideWeight="0.43809524" side_tool="true" weight="0.40364963" />
+      <window_info anchor="right" x="597" y="265" width="538" height="374" id="SciView" order="3" sideWeight="0.5619048" weight="0.3277372" />
+      <window_info anchor="right" x="0" y="0" width="303" height="677" id="Documentation" order="4" sideWeight="0.43809524" side_tool="true" weight="0.40343347" />
       <window_info anchor="right" id="R Graphics" order="5" weight="0.32960597" />
       <window_info anchor="right" id="R Packages" order="6" weight="0.32960597" />
       <window_info anchor="right" id="Database" order="7" />
@@ -859,14 +913,14 @@
           <option name="timeStamp" value="67" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/ppo_algorithm/main.py</url>
-          <line>167</line>
-          <option name="timeStamp" value="100" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/ppo_algorithm/utils/load.py</url>
           <line>62</line>
           <option name="timeStamp" value="121" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/ppo_algorithm/main.py</url>
+          <line>34</line>
+          <option name="timeStamp" value="125" />
         </line-breakpoint>
       </breakpoints>
       <default-breakpoints>
@@ -879,39 +933,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-06_16-38-29/hyper_params.pt" />
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-07_14-53-02/reward.png" />
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-07_13-15-08/reward.png" />
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/data/Qube-v0_2019-03-07_15-31-42/reward.png" />
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/normalizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="98">
-          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-07_19-35-58/reward.png" />
-    <entry file="file://$USER_HOME$/anaconda3/envs/rl_torch/lib/python3.6/site-packages/torch/nn/modules/linear.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="46" column="8" selection-start-line="46" selection-start-column="8" selection-end-line="46" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../../quanser_envs/master_branch/clients/quanser_robots/common.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1127">
-          <caret line="127" selection-start-line="127" selection-end-line="127" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rs_algorithm_old/normalizer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda3/envs/rl_torch/lib/python3.6/site-packages/gym-0.10.9-py3.6.egg/gym/core.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -1035,90 +1056,6 @@
     <entry file="file://$PROJECT_DIR$/rs_algorithm_old/utils/cmd_util.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/plot_utility.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/model_handler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="28">
-          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/ppo/cartpole_swing_up/execute_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="33" column="15" selection-start-line="33" selection-start-column="15" selection-end-line="33" selection-end-column="15" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/cmd_util.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="574">
-          <caret line="41" column="49" selection-start-line="41" selection-start-column="49" selection-end-line="41" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="411">
-          <caret line="52" column="31" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="33" column="16" selection-start-line="33" selection-start-column="16" selection-end-line="33" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="167" selection-start-line="167" selection-end-line="167" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/load.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="428">
-          <caret line="151" column="35" selection-start-line="151" selection-start-column="35" selection-end-line="151" selection-end-column="35" />
-          <folding>
-            <element signature="e#0#12#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="224">
-            <caret line="16" column="3" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/examples/ppo/qube_rr/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
@@ -1149,13 +1086,15 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="112">
-            <caret line="8" selection-start-line="8" selection-end-line="8" />
-          </first_editor>
-          <second_editor />
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/rs_methods.py" />
+    <entry file="file://$PROJECT_DIR$/rs_algorithm_old/rs_runner.py" />
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="48" column="35" selection-end-line="127" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1169,50 +1108,88 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rs_algorithm/README.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor />
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rs_algorithm/rs_methods.py">
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/load.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5324">
+        <state relative-caret-position="1904">
+          <caret line="136" column="34" lean-forward="true" selection-start-line="136" selection-start-column="34" selection-end-line="136" selection-end-column="34" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rs_algorithm/random_search.py">
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/model_handler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="20" column="32" lean-forward="true" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
+        <state relative-caret-position="42">
+          <caret line="3" column="31" selection-start-line="3" selection-start-column="31" selection-end-line="3" selection-end-column="31" />
           <folding>
-            <element signature="e#0#18#0" expanded="true" />
+            <element signature="e#0#12#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo_hyperparams.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="12" column="20" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/gae.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="266">
+          <caret line="19" column="32" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/rs_hyperparams.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="10" column="1" selection-start-line="10" selection-start-column="1" selection-end-line="10" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/plot_utility.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="23" column="20" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/myfile.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/utils/cmd_util.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="464">
+          <caret line="57" selection-start-line="57" selection-end-line="57" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ppo_runner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="68" column="25" lean-forward="true" selection-start-line="68" selection-start-column="25" selection-end-line="68" selection-end-column="25" />
+        <state relative-caret-position="108">
+          <caret line="61" column="16" selection-start-line="61" selection-start-column="16" selection-end-line="61" selection-end-column="16" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/rs_algorithm_old/rs_runner.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/rs_algorithm/main.py">
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/cmd_util.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="48" column="35" selection-end-line="127" />
+        <state relative-caret-position="31">
+          <caret line="7" column="90" selection-start-line="7" selection-start-column="90" selection-end-line="7" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1122">
+          <caret line="120" column="23" lean-forward="true" selection-start-line="120" selection-start-column="23" selection-end-line="120" selection-end-column="23" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -1221,28 +1198,131 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/rs_runner.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="776">
-          <caret line="127" selection-start-line="127" selection-end-line="127" />
+        <state relative-caret-position="346">
+          <caret line="73" column="28" selection-start-line="73" selection-start-column="28" selection-end-line="73" selection-end-column="28" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/ppo_algorithm/gae.py">
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/policy.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/utils/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="70">
+            <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/ppo/cartpole_swing_up/execute_model.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="21" column="33" selection-start-line="21" selection-start-column="33" selection-end-line="21" selection-end-column="33" />
+        <state relative-caret-position="462">
+          <caret line="33" column="15" selection-start-line="33" selection-start-column="15" selection-end-line="33" selection-end-column="15" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="126">
+            <caret line="9" selection-start-line="9" selection-end-line="9" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/rs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="178">
+          <caret line="60" column="57" selection-start-line="60" selection-start-column="57" selection-end-line="60" selection-end-column="57" />
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="14">
+            <caret line="1" column="6" selection-start-line="1" selection-start-column="6" selection-end-line="1" selection-end-column="6" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/utils/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor />
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="126">
+            <caret line="9" column="99" lean-forward="true" selection-start-line="9" selection-start-column="37" selection-end-line="9" selection-end-column="99" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/models/actor_critic.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-70">
+          <caret line="15" column="80" lean-forward="true" selection-start-line="15" selection-start-column="80" selection-end-line="15" selection-end-column="80" />
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/ppo_algorithm/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="224">
+            <caret line="16" column="2" selection-start-line="16" selection-start-column="2" selection-end-line="16" selection-end-column="2" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/rs_algorithm/utils/model_handler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#12#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/ppo_algorithm/ppo.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="124" column="16" selection-start-line="124" selection-start-column="16" selection-end-line="124" selection-end-column="50" />
+        <state relative-caret-position="436">
+          <caret line="177" lean-forward="true" selection-start-line="177" selection-end-line="177" />
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="471">
+            <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
+          </first_editor>
+          <second_editor />
         </state>
       </provider>
     </entry>

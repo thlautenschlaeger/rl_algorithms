@@ -1,5 +1,48 @@
 # Group 1 
 
+## Requirements
+This implementation requires python3 (>=3.5). 
+
+## Virtual environment and installation
+We reccomend to create a virtual environment for 
+an easy installation of the dependencies: 
+
+```
+pip install virtualenv
+```
+
+Create a new virtual environment with:
+
+```
+python3 -m virtualenv /path/to/env
+```
+
+Activate the environment and install the project 
+dependencies that are located in the requirements.txt 
+file:
+
+```
+source env/bin/activate
+pip3 install -r requirements.txt
+
+```
+## Testing the installation
+To check if the installation worked, 
+try one of the examples that are located in [examples](examples)
+ 
+``` 
+python3 execute_model.py
+```
+
+## Training the models
+
+
+## Developers
+* Thomas Lautenschläger
+* Jan Rathjens
+
+
+
 ## How to run algorithms
 
 1. Create virtual environment and install dependencies

@@ -17,7 +17,7 @@ def ppo_args_parser():
                         type=str, default='Qube-v0')
     parser.add_argument('--ppoepochs', help='number of ppo optimization epochs',
                         type=int, default=ppo_params['ppo_epochs'])
-    parser.add_argument('--ntraining_steps', help='number of total training steps',
+    parser.add_argument('--training_steps', help='number of total training steps',
                         type=int, default=ppo_params['num_iterations'])
     parser.add_argument('--horizon', help='number of action steps per training epoch',
                         type=int, default=ppo_params['horizon'])
@@ -36,7 +36,7 @@ def ppo_args_parser():
                         type=float, default=ppo_params['cliprange'])
     parser.add_argument('--vfc', help='value function coefficient',
                         type=float, default=ppo_params['vf_coef'])
-    parser.add_argument('-entropy_coef', help='entropy coefficient',
+    parser.add_argument('-entc', help='entropy coefficient',
                         type=float, default=ppo_params['entropy_coef'])
     parser.add_argument('--evaluate_policy', help='evaluate trained policy from given folder',
                         type=bool, default=False)
@@ -46,10 +46,13 @@ def ppo_args_parser():
                         type=bool, default=ppo_params['layer_norm'])
     parser.add_argument('--max_grad_norm', help='sets range for gradient update and clips',
                         type=float,default=ppo_params['max_grad_norm'])
-    parser.add_argument('--num_evals', help='number of policy evaluations after training policy n steps',
+    parser.add_argument('--nevals', help='number of policy evaluations after training policy n steps',
                         type=int, default=ppo_params['num_evals'])
-    parser.add_argument('--eval_step', help='number of policy optimizations until policy gets evaluated',
+    parser.add_argument('--estep', help='number of policy optimizations until policy gets evaluated',
                         type=int, default=ppo_params['eval_step'])
     parser.add_argument('--path', help='model checkpoint path', type=str, default=None)
+
+    parser.add_argument('--resume', help='continue training boolean flag',
+                        type=bool, default=False)
 
     return parser
