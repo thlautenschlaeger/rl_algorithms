@@ -133,11 +133,11 @@ def benchmark_policy(env, policy, num_evals, path):
 			mean, std, _ = policy(torch.FloatTensor(state))
 			dist = Normal(mean, 0)
 			action = dist.sample()
-			# action = torch.clamp(action, min=-6, max=6)
+			action = torch.clamp(action, min=-6, max=6)
 			state, reward, done, _ = env.step(action.cpu().detach().numpy())
 			cum_reward += reward
 			transition_rewards.append(cum_reward)
-			env.render()
+			# env.render()
 		print('Reward:{}, {}'.format(cum_reward, i))
 		# np.save(path+'/tr/transition_rewards'+str(i)+'.npy', np.array(transition_rewards))
 		reward_list.append(cum_reward)
@@ -185,7 +185,7 @@ if __name__ == '__main__':
 	# 	   'reinforcement_learning/project/rl_algorithms/data/cart3'
 	# policy = load_policy_from_checkpoint(env, path)
 
-	path = '/Users/thomas/Desktop/noob/cart4'
+	path = '/Users/thomas/Desktop/noob/cart1' # v1
 	policy = load_best_policy(env, path)
 
 	benchmark_policy(env, policy, 10, path)

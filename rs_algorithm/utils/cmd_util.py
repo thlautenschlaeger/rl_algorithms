@@ -54,5 +54,8 @@ def rs_args_parser():
     parser.add_argument('--resume', help='bool flag that checks if training should be resumed. path must be provided',
                         type=bool, default=False)
 
+    parser.add_argument('--alg', help='three different algorithm versions ars_v1, ars_v2, ars_v1_ff',
+                        type=str, default='ars_v1')
+
     return parser
 

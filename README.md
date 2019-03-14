@@ -35,6 +35,26 @@ python3 execute_model.py
 ```
 
 ## Training the models
+The algorthims are used as follows:
+
+```
+python <algorithm>_runner.py --env=Qube-v0  [additional arguments]
+```
+
+### Example PPO learn furuta pendulum
+
+```
+python ppo_runner.py --env=Qube-v0 --ppoepochs=5 --training_steps=1000 --horzion=1024 --hneurons=[64, 64] --std=1.0 --minibatches=32 --lam=0.97 --gamma=0.95 --cliprange=0.2 --vfc=0.5 --lr=1e-3 
+```
+
+### Example RS learn cartpole swing up
+
+```
+python rs_runner --env=CartpoleSwingUp-v0 --alg=ars_v2 --ndeltas=8 --training_steps=100 --lr=0.015 --bbest=4 --horizon=1024 --snoise=0.025
+
+```
+
+## Saving, loading and visualizing models
 
 
 ## Developers
