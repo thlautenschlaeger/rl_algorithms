@@ -7,14 +7,10 @@ import os
 import datetime
 from ppo_algorithm.ppo_hyperparams import ppo_params
 import sys
-from ppo_algorithm.utilities import cmd_util
+from ppo_algorithm.utils import cmd_util
 import torch
 from torch.distributions import Normal
 from quanser_robots import GentlyTerminating
-from ppo_algorithm.models import actor_critic
-import matplotlib.pyplot as plt
-
-
 
 def choose_environment(selection=0):
 	""" This method returns a selected environment.
@@ -73,7 +69,7 @@ def start_ppo(env, args=None):
 	ppo = PPO(env, hyper_params=ppo_params, path=path)
 	ppo.run_ppo()
 
-def continue_training(env, path):
+def continue_training(env, new, path):
 	try:
 		hyper_params = torch.load(path+'/hyper_params.pt')
 	except:
@@ -82,7 +78,7 @@ def continue_training(env, path):
 	cmd = 'y'
 	if cmd == 'y' or cmd == 'yes':
 		print("Training starts")
-		ppo = PPO(env, path=path, hyper_params=hyper_params, continue_training=True)
+		ppo = PPO(env, path=path, hyper_params=hyper_params, continue_training=True, new=new)
 		ppo.run_ppo()
 	else:
 		print("Training not continued")
@@ -106,12 +102,15 @@ def load_input_to_dict(args):
 		'cliprange' : args.cliprange,
 		'vf_coef' : args.vfc,
 		'entropy_coef' : args.entropy_coef,
-		'lr' : args.lr
+		'lr' : args.lr,
+		'num_evals' : args.num_evals,
+		'eval_step' : args.eval_step,
+		'layer_norm' : args.layer_norm
 	}
 	return ppo_params
 
 
-def benchmark_policy(env, policy, num_evals):
+def benchmark_policy(env, policy, num_evals, path):
 	"""
 	Loads policy from path and evaluates it
 
@@ -125,23 +124,26 @@ def benchmark_policy(env, policy, num_evals):
 		cum_reward = 0
 		done = False
 		state = env.reset()
+		transition_rewards = []
 		while not done:
 			state = torch.FloatTensor(state)
 			mean, std, _ = policy(torch.FloatTensor(state))
-			dist = Normal(mean, std*0)
+			dist = Normal(mean, 0)
 			action = dist.sample()
-			state, reward, done, _ = env.step(action.cpu().detach().numpy()[0])
+			# action = torch.clamp(action, min=-6, max=6)
+			state, reward, done, _ = env.step(action.cpu().detach().numpy())
 			cum_reward += reward
+			transition_rewards.append(cum_reward)
 			env.render()
-
-		print(cum_reward)
+		print('Reward:{}, {}'.format(cum_reward, i))
+		# np.save(path+'/tr/transition_rewards'+str(i)+'.npy', np.array(transition_rewards))
 		reward_list.append(cum_reward)
 	# print(cum_reward)
 	# plt.plot(reward_list)
 	# plt.show()
 
 	print('||||||||||||||||||||||||||||||')
-	print('Average Reward:', np.array(reward_list).sum()/num_evals)
+	print('Average Reward: {}'.format(np.array(reward_list).sum()/num_evals))
 	print('||||||||||||||||||||||||||||||')
 
 
@@ -158,33 +160,38 @@ def load_best_policy(env, path):
 	policy.load_state_dict(torch.load(path + '/best_policy/ppo_network_state_dict.pt', map_location='cpu'))
 	return policy
 
+def load_best_policy_(env, path):
+	hyper_params = torch.load(path + '/hyper_params.pt', map_location='cpu')
+	policy = PPO(env, path, hyper_params).ac_net
+	checkpoint = torch.load(path + '/best_policy/save_file.pt', map_location='cpu')
+	policy.load_state_dict(checkpoint['model_state_dict'])
+	return policy
+
 
 
 if __name__ == '__main__':
 	# torch.save(ppo_params, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/good_qube_policy_2/hyper_params.pt')
-	env = choose_environment(1)
+	env = choose_environment(0)
+	# env = GentlyTerminating(gym.make('CartpoleStabShort-v0'))
 	# policy = load_best_policy(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/good_qube_policy_2')
-	# benchmark_policy(env, policy, 5)
-	start_ppo(env)
-	# continue_training(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/Levitation-v1_2019-03-08_11-26-42')
+	# policy = load_policy_from_checkpoint(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-10_14-14-20')
+	# policy = load_policy_from_checkpoint(env,
+	# 									 '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-12_20-50-29')
+	# policy = load_policy_from_checkpoint(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-12_22-10-07')
 
-	# policy = load_policy_from_checkpoint(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/test')
-	# policy = load_policy_from_checkpoint(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-08_19-07-09')
-	# policy = load_policy_from_checkpoint(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/qube_good_policy_3')
-										 # '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-08_19-07-09')
-	# benchmark_policy(env, policy, 5)
+	# path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/' \
+	# 	   'reinforcement_learning/project/rl_algorithms/data/3copy'
+
+	# path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-13_15-05-02'
+	path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/' \
+		   'reinforcement_learning/project/rl_algorithms/data/cart3'
+	# policy = load_policy_from_checkpoint(env, path)
+	policy = load_best_policy_(env,path)
+
+	# benchmark_policy(env, policy, 1, path)
+	# start_ppo(env)
+	# continue_training(env, False, path)
+	# continue_training(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/lols')
 
 	### for eval
 	# continue_training(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/test')
-
-	# env = choose_environment(0)
-	# ppo = PPO(env, 100000, 1, ppo_params['ppo_epochs'], ppo_params['trajectory_size'], hidden_neurons=ppo_params['num_hidden_neurons'],
-	# 		  policy_std=ppo_params['actor_network_std'], minibatches=ppo_params['minibatch_size'])
-	# ppo.run_ppo()
-	# benchmark_policy(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/good_qube_policy_2/ppo_network.pt')
-
-
-
-	# run_ppo_old(env, training_iterations=ppo_params['num_iterations'], num_actors=ppo_params['num_actors'],
-	# 			ppo_epochs=ppo_params['ppo_epochs'], trajectory_size=ppo_params['trajectory_size'],
-	# 			vis=ppo_params['visualize'], plot=ppo_params['plot_reward'])

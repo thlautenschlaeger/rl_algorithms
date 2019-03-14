@@ -1,7 +1,5 @@
 import torch
 from torch import nn
-from torch.distributions import Normal
-import numpy as np
 
 def init_weights_old(m):
     if isinstance(m, nn.Linear):
@@ -44,7 +42,7 @@ class ActorCriticMLPShared(nn.Module):
 
         self.num_inputs = num_inputs
         self.num_outputs = num_outputs
-        self.log_std = nn.Parameter(torch.ones(1, num_outputs) * std)
+        self.log_std = nn.Parameter(torch.ones(1, num_outputs) * torch.tensor(std).log())
         self.apply(init_weights)
 
     def forward(self, x):
@@ -53,11 +51,7 @@ class ActorCriticMLPShared(nn.Module):
             x = layer(x)
 
         mean = self.out_mean(x)
-
         std = self.log_std.exp()
-
         value = self.out_value(x)
-
-        # dist = Normal(mean, std)
 
         return mean, std, value
