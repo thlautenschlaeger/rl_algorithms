@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="983d662b-7897-404d-9dbd-f3b57a898ee4" name="Default Changelist" comment="Added random search">
-      <change afterPath="$PROJECT_DIR$/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/examples/ppo/qube/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/rl_algorithms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/rl_algorithms.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/execute_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/execute_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/examples/ppo/qube/execute_model.py" beforeDir="false" afterPath="$PROJECT_DIR$/examples/ppo/qube/execute_model.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ppo_algorithm/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/ppo_algorithm/__init__.py" afterDir="false" />
-    </list>
+    <list default="true" id="983d662b-7897-404d-9dbd-f3b57a898ee4" name="Default Changelist" comment="Added random search" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,7 +63,7 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/examples/ppo/qube/execute_model.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="28">
@@ -82,6 +71,15 @@
                   <folding>
                     <element signature="e#0#9#0" expanded="true" />
                   </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/examples/ppo/qube_rr/execute_model.py">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="154">
+                  <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
                 </state>
               </provider>
             </entry>
@@ -127,18 +125,6 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="14">
                   <caret line="1" column="16" selection-end-line="1" selection-end-column="20" />
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file://$PROJECT_DIR$/examples/ppo/README.md">
-              <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-                <state split_layout="SPLIT">
-                  <first_editor relative-caret-position="168">
-                    <caret line="12" selection-start-line="12" selection-end-line="12" />
-                  </first_editor>
-                  <second_editor />
                 </state>
               </provider>
             </entry>
@@ -266,7 +252,6 @@
         <option value="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/test.py" />
         <option value="$PROJECT_DIR$/examples/ppo/load_models.py" />
         <option value="$PROJECT_DIR$/runner.py" />
-        <option value="$PROJECT_DIR$/examples/ppo/qube_rr/execute_model.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/cmd_util.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/plot_utility.py" />
         <option value="$PROJECT_DIR$/ppo_algorithm/utilities/load.py" />
@@ -305,6 +290,7 @@
         <option value="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/__init__.py" />
         <option value="$PROJECT_DIR$/examples/ppo/cartpole_swing_up/execute_model.py" />
         <option value="$PROJECT_DIR$/examples/ppo/qube/execute_model.py" />
+        <option value="$PROJECT_DIR$/examples/ppo/qube_rr/execute_model.py" />
       </list>
     </option>
   </component>
@@ -329,31 +315,6 @@
             <path>
               <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
               <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
-              <item name="ppo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
-              <item name="ppo" type="462c0819:PsiDirectoryNode" />
-              <item name="cartpole_swing_up" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
-              <item name="rl_algorithms" type="462c0819:PsiDirectoryNode" />
-              <item name="examples" type="462c0819:PsiDirectoryNode" />
-              <item name="ppo" type="462c0819:PsiDirectoryNode" />
-              <item name="qube" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="rl_algorithms" type="b2602c69:ProjectViewProjectNode" />
@@ -677,7 +638,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1041289000" />
+    <option name="totallyTimeSpent" value="1041600000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -824,13 +785,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/examples/ppo/qube_rr/model/save_file.pt">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/examples/ppo/qube_rr/execute_model.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$USER_HOME$/anaconda3/envs/rl_torch/lib/python3.6/site-packages/matplotlib/axes/_axes.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -1152,6 +1106,13 @@
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/examples/ppo/qube_rr/execute_model.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
         </state>
       </provider>
     </entry>
