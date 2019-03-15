@@ -50,9 +50,11 @@ def plot_rr():
     ax.errorbar(x=x, y=rewards, yerr=std, linestyle=None, fmt='-o', markersize='3.5', solid_capstyle='projecting', capsize=3)
     ax.set_xlabel('Transitions')
     ax.set_ylabel('Accumulated reward')
+    ax.set_title('Average transition rewards on QubeRR-v0')
     ax.grid(alpha=0.5, linestyle='-')
 
-
+    path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/figures'
+    plt.savefig(path+'/transition.pdf',format='pdf')
     plt.show()
 
 def plot_expected_cumulative_rewards():
@@ -102,13 +104,23 @@ def plot_expected_cumulative_rewards_():
     std = std[choose]
 
     fig, ax = plt.subplots()
+    # ax.set_xlim(0, 5000);
     ax.grid(alpha=0.5, linestyle='-')
-
+    # kek = np.arange(0, 5000, 1000)
+    ax.set_xticklabels(np.arange(-1000, 7000, 1000))
     ax.errorbar(x=x, y=plot_rewards, yerr=std, linestyle=None, fmt='-o', markersize='5.5',
                 solid_capstyle='projecting', capsize=5)
 
     ax.set_xlabel('Episodes')
     ax.set_ylabel('Expected Return')
+
+    ax.set_title('Expected return on Qube-v0')
+    path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/figures'
+    plt.savefig(path + '/qube_expected_return.pdf', format='pdf')
+
+
+
+
 
     plt.show()
 
@@ -146,10 +158,13 @@ def plot_expected_entropy():
     ax.set_xlabel('Episodes')
     ax.set_ylabel('Average Entropy')
 
+    ax.set_title('Average entropy on Qube-v0')
+    path = '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/figures'
+    plt.savefig(path+'/qube_entropy.pdf', format='pdf')
     plt.show()
 
 
-# plot_expected_cumulative_rewards_()
+plot_expected_cumulative_rewards_()
 # plot_expected_entropy()
 
 # plot_rr()

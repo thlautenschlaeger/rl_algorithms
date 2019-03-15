@@ -17,7 +17,7 @@ def save_model(model, optimizer, train_rewards, eval_rewards, eval_rewards_std, 
 
 def load_model(path, model, optimizer, from_checkpoint=False):
     if from_checkpoint == True:
-        path = path + '/checkpoint'
+        path = path + '/best_policy'
         # path = path + '/model'
 
     checkpoint = torch.load(path+'/save_file.pt', map_location='cpu')

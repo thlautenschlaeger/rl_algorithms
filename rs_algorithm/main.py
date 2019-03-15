@@ -41,7 +41,7 @@ def train_rs_policy_v1_rff(rs_hyperparams, env):
            datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     os.makedirs(path)
     random_search = RandomSearch(env, rs_hyperparams, path)
-    random_search.ars_v1_rff()
+    random_search.ars_v1_ff()
 
 
 def train_rs_policy_v2(rs_hyperparams, env):

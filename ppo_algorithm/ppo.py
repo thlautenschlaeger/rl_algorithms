@@ -20,8 +20,10 @@ class PPO():
         self.lamb = hyper_params['lambda']
         self.cliprange  =hyper_params['cliprange']
         self.gamma = hyper_params['gamma']
-        self.ppo_epochs = hyper_params['ppo_epochs']
-        self.horizon = hyper_params['horizon']
+        # self.ppo_epochs = hyper_params['ppo_epochs']
+        self.ppo_epochs = 10
+        # self.horizon = hyper_params['horizon']
+        self.horizon = 10000
         self.minibatches = hyper_params['minibatches']
         self.vf_coef = hyper_params['vf_coef']
         self.entropy_coef = hyper_params['entropy_coef']
@@ -100,7 +102,7 @@ class PPO():
             dist = Normal(mean, std)
             action = dist.sample()
 
-            next_state, reward, done, info = self.env.step(action.cpu().detach().numpy()[0])
+            next_state, reward, done, info = self.env.step(np.clip(action.cpu().detach().numpy()[0], a_min=-6., a_max=6.))
 
             # save values and rewards for gae
             log_prob = dist.log_prob(action)
@@ -213,8 +215,8 @@ class PPO():
                             old_log_probs, returns, cliprange=self.cliprange)
 
             # plotting and evaluating policy
-            if epoch % self.eval_step == 0:
-            # if epoch % 1 == 0:
+            # if epoch % self.eval_step == 0:
+            if epoch % 5 == 0:
                 eval_reward, eval_std = eval_policy(env=self.env,
                                                     policy=self.ac_net,
                                                     num_evals=self.num_evals,)
@@ -253,8 +255,8 @@ class PPO():
 
 
 def eval_policy(env, policy, num_evals=0):
-    cum_reward_list = np.empty(num_evals)
-    for i in range(num_evals):
+    cum_reward_list = np.empty(2)
+    for i in range(2):
         cum_reward = 0
         done = False
         state = env.reset()
@@ -263,6 +265,7 @@ def eval_policy(env, policy, num_evals=0):
             mean, std, _ = policy(state)
             dist = Normal(mean, 0)
             action = dist.sample()
+            action = torch.clamp(action, min=-6, max=6)
             state, reward, done, _ = env.step(action.cpu().detach().numpy())
             cum_reward += reward
         # env.render()

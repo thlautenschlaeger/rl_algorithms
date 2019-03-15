@@ -41,7 +41,7 @@ def train_rs_policy_v1_rff(rs_hyperparams, env):
            datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
     os.makedirs(path)
     random_search = RandomSearch(env, rs_hyperparams, path)
-    random_search.ars_v1_rff()
+    random_search.ars_v1_ff()
 
 
 def train_rs_policy_v2(rs_hyperparams, env):
@@ -70,7 +70,7 @@ def run_rs(args=None):
 
     if not args.resume:
         if args.path == None:
-            path = os.path.dirname(os.path.abspath(__file__)) + '/data/rs' + env.unwrapped.spec.id + '_' + \
+            path = os.path.dirname(os.path.abspath(__file__)) + '/data/rs_' + env.unwrapped.spec.id + '_' + \
                    datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         else:
             path = args.path
@@ -94,7 +94,7 @@ def run_rs(args=None):
 
         elif args.version == 1:
             print("Start training augmented random search v1 with random fourier features")
-            rs.ars_v1_rff()
+            rs.ars_v1_ff()
         elif args.version == 2:
             print("Start training augmented random search v2")
             rs.ars_v2()

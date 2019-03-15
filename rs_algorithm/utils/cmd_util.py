@@ -1,11 +1,13 @@
 from rs_algorithm.rs_hyperparams import rs_params
 
+
 def arg_parser():
     """
     Empty argument parser
     """
     import argparse
     return argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
 
 def rs_args_parser():
     """
@@ -15,7 +17,7 @@ def rs_args_parser():
     parser = arg_parser()
 
     parser.add_argument('--env', help='environment ID',
-                        type=str, default='Qube-v0')
+                        type=str, default='CartpoleSwingShort-v0')
 
     parser.add_argument('--ndeltas', help='number of random delta samples to '
                                              'update linear policy',
@@ -34,9 +36,6 @@ def rs_args_parser():
     parser.add_argument('--horizon', help='length of rollout horizon',
                         type=int, default=rs_params['horizon'])
 
-    parser.add_argument('--tcriterion', help='reward as termination criterion',
-                        type=float, default=rs_params['termination_criterion'])
-
     parser.add_argument('--nfeatures', help='number of fourier features',
                         type=int, default=rs_params['num_features'])
 
@@ -50,12 +49,9 @@ def rs_args_parser():
                         type=float, default=rs_params['sample_noise'])
 
     parser.add_argument('--version', help='rs version. 0=arsv1, 1=arsv1rff, 2=arsv2',
-                        type=int, default=0)
+                        type=int, default=1)
     parser.add_argument('--resume', help='bool flag that checks if training should be resumed. path must be provided',
                         type=bool, default=False)
-
-    parser.add_argument('--alg', help='three different algorithm versions ars_v1, ars_v2, ars_v1_ff',
-                        type=str, default='ars_v1')
 
     return parser
 

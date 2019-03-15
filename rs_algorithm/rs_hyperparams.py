@@ -5,8 +5,6 @@ rs_params = {
     'sample_noise':  0.01,
     'bbest': 2,
     'horizon': 1000,
-    'termination_criterion': 20000.,
     'num_features': 4,
     'eval_step': 20
 }
-

@@ -40,8 +40,18 @@ def choose_environment(selection=0):
 
 	if selection == 3:
 		return GentlyTerminating(gym.make('Pendulum-v0'))
-	if selection ==4:
+	if selection == 4:
 		return GentlyTerminating(gym.make('QubeRR-v0'))
+
+	if selection == 5:
+		env = GentlyTerminating(gym.make('CartpoleSwingRR-v0'))
+		env.action_space.high = np.array([6.0])
+		env.action_space.low = np.array([-6.0])
+
+		# env.unwrapped.timing.render_rate = 100
+		# env.observation_space.high[0] *= 0.9
+		# env.observation_space.low[0] *= 0.9
+		return env
 
 	else:
 		raise NotImplementedError
@@ -139,7 +149,7 @@ def benchmark_policy(env, policy, num_evals, path):
 			transition_rewards.append(cum_reward)
 			# env.render()
 		print('Reward:{}, {}'.format(cum_reward, i))
-		# np.save(path+'/tr/transition_rewards'+str(i)+'.npy', np.array(transition_rewards))
+		np.save(path+'/tr/transition_rewards'+str(i)+'.npy', np.array(transition_rewards))
 		reward_list.append(cum_reward)
 	# print(cum_reward)
 	# plt.plot(reward_list)
@@ -169,7 +179,7 @@ def load_best_policy(env, path):
 
 if __name__ == '__main__':
 	# torch.save(ppo_params, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/good_qube_policy_2/hyper_params.pt')
-	env = choose_environment(0)
+	env = choose_environment(5)
 	# env = GentlyTerminating(gym.make('CartpoleStabShort-v0'))
 	# policy = load_best_policy(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/good_qube_policy_2')
 	# policy = load_policy_from_checkpoint(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/CartpoleSwingShort-v0_2019-03-10_14-14-20')
@@ -185,12 +195,12 @@ if __name__ == '__main__':
 	# 	   'reinforcement_learning/project/rl_algorithms/data/cart3'
 	# policy = load_policy_from_checkpoint(env, path)
 
-	path = '/Users/thomas/Desktop/noob/cart1' # v1
+	path = '/Users/thomas/Desktop/noob/cart6' # v1
 	policy = load_best_policy(env, path)
 
 	benchmark_policy(env, policy, 10, path)
 	# start_ppo(env)
-	# continue_training(env, False, path)
+	# continue_training(env, True, path)
 	# continue_training(env, '/Users/thomas/Seafile/PersonalCloud/informatik/master/semester_2/reinforcement_learning/project/rl_algorithms/ppo_algorithm/data/lols')
 
 	### for eval
