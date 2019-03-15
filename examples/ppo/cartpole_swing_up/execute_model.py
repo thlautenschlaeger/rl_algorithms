@@ -1,3 +1,5 @@
+import sys
+sys.path.append(".")
 import torch
 from ppo_algorithm.ppo import PPO
 import gym
