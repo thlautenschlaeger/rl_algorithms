@@ -17,7 +17,7 @@ def load_policy_v1(path):
     :param path: file to load the path
     """
     linear_policy = np.load(path+'/M.npy')
-    rewards = np.load(path + '/training_rewards.npy')
+    rewards = np.load(path + '/eval_rewards.npy')
     return linear_policy, rewards
 
 
@@ -42,9 +42,9 @@ def load_policy_v2(path):
     """ Loads a policy
     :param path: path to load from
     """
-    M = np.load(path+'/M.npy')
-    sigma = np.load(path+'/sigma_rooted.npy')
-    mean = np.load(path + '/mean.npy')
+    M = np.load(path+'/linear_policy.npy')
+    sigma = np.load(path+'/sigma.npy')
+    mean = np.load(path + '/state_mean.npy')
     nr_states = np.load(path + '/nr_encountered_states.npy')
     eval_rewards = np.load(path + '/eval_rewards.npy')
     return M, sigma, mean, nr_states, eval_rewards

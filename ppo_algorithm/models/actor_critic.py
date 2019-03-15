@@ -1,22 +1,34 @@
 import torch
 from torch import nn
 
-def init_weights_old(m):
-    if isinstance(m, nn.Linear):
-        nn.init.xavier_uniform_(m.weight)
-        nn.init.constant_(m.bias, 0.0)
-
 def init_weights(m):
+    """
+    weight initialization
+
+    :param m: network modules
+    """
     if isinstance(m, nn.Linear):
         nn.init.xavier_normal_(m.weight.data)
         nn.init.constant_(m.bias, 0.0)
 
 class ActorCriticMLPShared(nn.Module):
     """
-    Single neural network acting policy and value network with shared parameters
+    Feed forward network trained to predict
+    policy parameters and value function estimates.
+
     """
 
     def __init__(self, num_inputs, num_hidden_neurons, num_outputs, layer_norm=False, std=1.0):
+        """
+        initializes network graph
+
+        :param num_inputs: corresponds to state dimension
+        :param num_hidden_neurons: list of hidden neurons. each entry
+                        corresponds to number of neurons per layer.
+        :param num_outputs: corresponds to action dimension
+        :param layer_norm: checks if layer_norm should be used
+        :param std: policy stddev as network parameter
+        """
         super(ActorCriticMLPShared, self).__init__()
 
         if layer_norm:

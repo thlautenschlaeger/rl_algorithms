@@ -33,15 +33,17 @@ class RandomSearch:
         original paper for detailed explanation
         :return: all rewards obtained during evaluation of the policy
         """
-        collected_eval_rewards = []
+        collected_eval_rewards = np.array([])
         M = np.full((self.p, self.n), 0)
         if self.resume_training:
-            M, collected_eval_rewards = model_handler.load_policy_v1(self.path)
-        collected_eval_rewards.append(evaluate_policy_v1(self.env, M))
+            M, collected_eval_rewards = model_handler.load_policy_v1(self.path+'/checkpoint')
+
+        collected_eval_rewards = np.append(collected_eval_rewards, evaluate_policy_v1(self.env, M))
         max_evaluated_policy_reward = np.NINF
         for epoch in range(self.epochs):
             deltas = np.random.standard_normal(size=(self.num_deltas, self.p, self.n))
             total_rewards = np.empty((self.num_deltas, 2))
+            # compute update policies
             for k in range(self.num_deltas):
                 mj_minus, mj_plus = self.sample_policy(M, deltas[k])
                 total_reward_plus = self.perform_rollouts_v1(self.horizon, mj_plus)
@@ -53,11 +55,12 @@ class RandomSearch:
 
             if epoch % self.eval_step == 0 and epoch != 0:
                 evaluated_policy_reward = evaluate_policy_v1(self.env, M)
-                collected_eval_rewards.append(evaluated_policy_reward)
-                print("Expected reward: {} in {} epochs".format(evaluated_policy_reward, epoch))
+                collected_eval_rewards = np.append(collected_eval_rewards, evaluated_policy_reward)
+                model_handler.save_model_ars_v1(M, collected_eval_rewards, self.path + '/checkpoint')
+                print("Expected reward: {} after {} epochs".format(evaluated_policy_reward, epoch))
                 if evaluated_policy_reward > max_evaluated_policy_reward:
                     max_evaluated_policy_reward = evaluated_policy_reward
-                    model_handler.save_model_ars_v1(M, collected_eval_rewards, self.path)
+                    model_handler.save_model_ars_v1(M, collected_eval_rewards, self.path+'/best_policy')
 
         return collected_eval_rewards
 
@@ -69,14 +72,16 @@ class RandomSearch:
         self.init_random_fourier_functions(self.num_features)
         linear_policy = np.full((self.p, self.num_features + 1), 0)
         max_evaluated_policy_reward = np.NINF
-        collected_eval_rewards = []
+        collected_eval_rewards = np.array([])
         if self.resume_training:
-            linear_policy, self.features, collected_eval_rewards = model_handler.load_policy_v1_rff(self.path)
+            linear_policy, self.features, collected_eval_rewards = model_handler.load_policy_v1_rff(self.path+'/checkpoint')
             self.num_features = len(self.features)
-        collected_eval_rewards.append(evaluate_policy_v1_rff(self.env, linear_policy, self.features, render=False))
+
+        collected_eval_rewards = np.append(collected_eval_rewards,evaluate_policy_v1_rff(self.env, linear_policy, self.features))
         for epoch in range(self.epochs):
             deltas = np.random.standard_normal(size=(self.num_deltas, self.p, self.num_features + 1))
             total_rewards = np.empty((self.num_deltas, 2))
+            # compute update policies
             for k in range(self.num_deltas):
                 mj_minus, mj_plus = self.sample_policy(linear_policy, deltas[k])
                 total_reward_plus = self.perform_rollouts_v1_rff(self.horizon, mj_plus)
@@ -86,12 +91,14 @@ class RandomSearch:
             sum_b_best_rewards, std_rewards = self.compute_sum_b_best_rewards(deltas, sorted_ids, total_rewards)
             linear_policy = self.update_policy(linear_policy, std_rewards, sum_b_best_rewards)
             if epoch % self.eval_step == 0 and epoch != 0:
-                evaluated_policy_reward = evaluate_policy_v1_rff(self.env, linear_policy, self.features, render=False)
-                collected_eval_rewards.append(evaluated_policy_reward)
-                print("Expected reward: {} in {} epochs".format(evaluated_policy_reward, epoch))
+                evaluated_policy_reward = evaluate_policy_v1_rff(self.env, linear_policy, self.features)
+                collected_eval_rewards = np.append(collected_eval_rewards, evaluated_policy_reward)
+                model_handler.save_model_ars_v1_rff(linear_policy, self.features, collected_eval_rewards,
+                                                    self.path + '/checkpoint')
+                print("Expected reward: {} after {} epochs".format(evaluated_policy_reward, epoch))
                 if evaluated_policy_reward > max_evaluated_policy_reward:
                     max_evaluated_policy_reward = evaluated_policy_reward
-                    model_handler.save_model_ars_v1_rff(linear_policy, self.features, collected_eval_rewards, self.path)
+                    model_handler.save_model_ars_v1_rff(linear_policy, self.features, collected_eval_rewards, self.path+'/best_policy')
         return collected_eval_rewards
 
     def ars_v2(self):
@@ -105,16 +112,17 @@ class RandomSearch:
         collected_eval_rewards = []
         if self.resume_training:
             M, self.sigma_diag_pre_update, self.state_mean, self.number_of_encountered_states_pre_update, \
-                collected_eval_rewards = model_handler.load_policy_v2(self.path)
+                collected_eval_rewards = model_handler.load_policy_v2(self.path+'/checkpoint')
             self.sigma_diag_post_update = self.sigma_diag_pre_update
             self.mean_of_encountered_states_post_update = self.state_mean
             self.number_of_encountered_states_post_update = self.number_of_encountered_states_pre_update
-        collected_eval_rewards.append(evaluate_policy_v2(self.env, M, self.compute_sigma_rooted(self.sigma_diag_pre_update),
+        collected_eval_rewards = np.append(collected_eval_rewards, evaluate_policy_v2(self.env, M, self.compute_sigma_rooted(),
                                                          self.mean_of_encountered_states_post_update))
         for epoch in range(self.epochs):
             deltas = np.random.standard_normal(size=(self.num_deltas, self.p, self.n))
             total_rewards = np.zeros((self.num_deltas, 2))
             sigma_rooted = self.compute_sigma_rooted()
+            # compute update policies
             for k in range(self.num_deltas):
                 mj_minus, mj_plus = self.sample_policy(M, deltas[k])
                 total_reward_plus = self.perform_rollouts_v2(self.horizon, mj_plus, self.state_mean, sigma_rooted)
@@ -124,23 +132,28 @@ class RandomSearch:
             sorted_ids = sort_max_index_reversed(total_rewards)
             sum_b_best_rewards, std_rewards = self.compute_sum_b_best_rewards(deltas, sorted_ids, total_rewards)
             M = self.update_policy(M, std_rewards, sum_b_best_rewards)
+            # normalize states
             self.sigma_diag_pre_update = self.sigma_diag_post_update
             self.state_mean = self.mean_of_encountered_states_post_update
+
             evaluated_policy_reward = evaluate_policy_v2(self.env, M, sigma_rooted,
-                                                         self.mean_of_encountered_states_post_update,
-                                                         self.horizon)
-            collected_eval_rewards.append(evaluated_policy_reward)
+                                                         self.mean_of_encountered_states_post_update)
+            collected_eval_rewards = np.append(collected_eval_rewards, evaluated_policy_reward)
 
             if epoch % self.eval_step == 0 and epoch != 0:
                 evaluated_policy_reward = evaluate_policy_v2(self.env, M, sigma_rooted,
                                                              self.mean_of_encountered_states_post_update)
-                collected_eval_rewards.append(evaluated_policy_reward)
-                print("Expected reward: {} in {} epochs".format(evaluated_policy_reward, epoch))
+                collected_eval_rewards = np.append(collected_eval_rewards, evaluated_policy_reward)
+                print("Expected reward: {} after {} epochs".format(evaluated_policy_reward, epoch))
+                model_handler.save_model_ars_v2(M, self.sigma_diag_post_update,
+                                                self.mean_of_encountered_states_post_update, collected_eval_rewards,
+                                                self.number_of_encountered_states_post_update,
+                                                self.path + '/checkpoint')
                 if evaluated_policy_reward > max_evaluated_policy_reward:
                     max_evaluated_policy_reward = evaluated_policy_reward
                     model_handler.save_model_ars_v2(M, self.sigma_diag_post_update,
                                                     self.mean_of_encountered_states_post_update, collected_eval_rewards,
-                                                    self.number_of_encountered_states_post_update, self.path)
+                                                    self.number_of_encountered_states_post_update, self.path+'/best_policy')
         return collected_eval_rewards
 
     def sample_policy(self, M, delta):
@@ -298,13 +311,12 @@ def sort_max_index_reversed(arr):
     return np.argsort(tmp)[::-1]
 
 
-def evaluate_policy_v2(env, weights, sigma_rooted, mean, render=False):
+def evaluate_policy_v2(env, weights, sigma_rooted, mean):
     """ evaluates a policy
     :param env: gym environment
     :param weights: linear policy
     :param sigma_rooted: covar matrix
     :param mean: the mean of encountered states
-    :param render: bool
     :return: total reward
     """
     total_reward = 0
@@ -315,18 +327,16 @@ def evaluate_policy_v2(env, weights, sigma_rooted, mean, render=False):
         next_state, reward, done, _ = env.step(action)
         state = next_state
         total_reward += reward
-        if render:
-            env.render()
+
     return total_reward
 
 
-def evaluate_policy_v1_rff(env, weights, features, render=False):
+def evaluate_policy_v1_rff(env, weights, features):
     """
     :param env: gym environment
     :param weights: linear policy
     :param features: fourier features
     :param horizon: rollout horizon
-    :param render: bool
 
     :return: total reward
     """
@@ -340,18 +350,15 @@ def evaluate_policy_v1_rff(env, weights, features, render=False):
 
         state = next_state
         total_reward += reward
-        if render:
-            env.render()
 
     return total_reward
 
 
-def evaluate_policy_v1(env, weights, render=False):
+def evaluate_policy_v1(env, weights):
     """
     :param env: gym environment
     :param weights: linear policy
     :param horizon: rollout horizon
-    :param render: bool
     :return: total reward
     """
     total_reward = 0
@@ -362,8 +369,6 @@ def evaluate_policy_v1(env, weights, render=False):
         next_state, reward, done, _ = env.step(action)
         state = next_state
         total_reward += reward
-        if render:
-            env.render()
 
     return total_reward
 

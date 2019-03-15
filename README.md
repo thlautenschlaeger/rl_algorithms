@@ -11,10 +11,10 @@ an easy installation of the dependencies:
 pip install virtualenv
 ```
 
-Create a new virtual environment with:
+Create a new conda environment with:
 
 ```
-python3 -m virtualenv /path/to/env
+conda create -n env_name python=3.6.7
 ```
 
 Activate the environment and install the project 
@@ -22,16 +22,17 @@ dependencies that are located in the requirements.txt
 file:
 
 ```
-source env/bin/activate
+conda activate env_name
 pip3 install -r requirements.txt
 
 ```
 ## Testing the installation
 To check if the installation worked, 
 try one of the examples that are located in [examples](examples)
+using the code below:
  
 ``` 
-python3 execute_model.py
+python3 examples/ppo/cartpole_swing_up/execute_model.py
 ```
 
 ## Training the models
@@ -50,34 +51,34 @@ python ppo_runner.py --env=Qube-v0 --ppoepochs=5 --training_steps=1000 --horzion
 ### Example RS learn cartpole swing up
 
 ```
-python rs_runner --env=CartpoleSwingUp-v0 --alg=ars_v2 --ndeltas=8 --training_steps=100 --lr=0.015 --bbest=4 --horizon=1024 --snoise=0.025
+python rs_runner.py --env=CartpoleSwingShort-v0 --alg=ars_v2 --ndeltas=8 --training_steps=100 --lr=0.015 --bbest=4 --horizon=1024 --snoise=0.025
 
 ```
 
-## Saving, loading and visualizing models
-x
+## Saving, loading
+Every implementation has its own model handler that enables the features to save and load 
+models. 
+
+## Benchmark trained models
+The following code is an example execution to benchmark PPO on 
+Qube-v0 ten times. The benchmarking will be visualized. A model path has to be 
+provided to load a model.  
+```
+python3 ppo_runner.py --env=Qube-v0 --path=<model_path> --benchmark=True --vis=True --benchsteps=10
+```
+
+## Troubleshooting
+If numpy causes trouble, run the uninstall command multiple times until
+no more version is located in your environment. Install numpy again
+with ``pip3 install numpy==1.16.0``
+
+
+
 
 ## Developers
 * Thomas Lautenschläger
 * Jan Rathjens
 
-
-
-## How to run algorithms
-
-1. Create virtual environment and install dependencies
-
-```
-python3 -m virtualenv env
-source env/bin/activate
-pip3 install -r requirements.txt
-```
-
-2. Execute algorithm. Example for to execute PPO 
-with default hyperparameters
-```
-python3 run_ppo --env Qube-v0 
-```
  
 # Project Structure
 
@@ -121,7 +122,7 @@ rl_algorithms
 │   │   └── ppo_hyperparams.py
 │   ├── gae.py
 │   ├── main.py
-│   ├── models				<-- model neural network
+│   ├── models				<-- actor-critic network
 │   │   ├── __init__.py
 │   │   └── actor_critic.py
 │   ├── normalizer.py

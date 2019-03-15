@@ -1,0 +1,1 @@
+{'ppo_epochs': 5, 'num_iterations': 500, 'horizon': 1024, 'num_hidden_neurons': [64, 64], 'policy_std': 1.0, 'max_grad_norm': 0.5, 'minibatches': 32, 'lambda': 0.97, 'gamma': 0.95, 'cliprange': 0.2, 'vf_coef': 0.5, 'entropy_coef': 0.01, 'lr': 0.001, 'num_evals': 2, 'eval_step': 20, 'layer_norm': True}

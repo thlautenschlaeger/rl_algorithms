@@ -64,13 +64,16 @@ def run_rs(args=None):
 
     if args.resume:
         if args.path != None:
-            resume_rs(env, args.path)
+            rs_params = torch.load(args.path+'/hyper_params.pt')
+            rs = RandomSearch(env, hyperparams=rs_params, path=args.path, resume_training=True)
         else:
             print("Path not provided")
 
+
+
     if not args.resume:
         if args.path == None:
-            path = os.path.dirname(os.path.abspath(__file__)) + '/data/rs_' + env.unwrapped.spec.id + '_' + \
+            path = os.path.dirname(os.path.abspath(__file__)) + '/data/'+args.alg + '-' + env.unwrapped.spec.id + '_' + \
                    datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
         else:
             path = args.path
@@ -81,34 +84,25 @@ def run_rs(args=None):
         os.makedirs(checkpoint_path)
         os.makedirs(best_policy_path)
 
-        torch.save(rs_params, path+'/hyper_params.pt')
+        torch.save(rs_params, path + '/hyper_params.pt')
 
-        with open(path+ '/info.txt', 'w') as f:
+        with open(path + '/info.txt', 'w') as f:
             print(rs_params, file=f)
 
         rs = RandomSearch(env, hyperparams=rs_params, path=path)
 
-        if args.version == 0:
-            print("Start training augmented random search v1")
-            rs.ars_v1()
+    if args.alg == 'arsv1':
+        print("Start training augmented random search v1")
+        rs.ars_v1()
 
-        elif args.version == 1:
-            print("Start training augmented random search v1 with random fourier features")
-            rs.ars_v1_ff()
-        elif args.version == 2:
-            print("Start training augmented random search v2")
-            rs.ars_v2()
-        else:
-            print("Version not available")
-
-def resume_rs(env, path):
-    """
-
-    :param env:
-    :param path:
-
-    """
-
+    elif args.alg == 'arsv1ff':
+        print("Start training augmented random search v1 with random fourier features")
+        rs.ars_v1_ff()
+    elif args.alg == 'arsv2':
+        print("Start training augmented random search v2")
+        rs.ars_v2()
+    else:
+        print("Version not available")
 
 
 def load_input_to_dict(args):
@@ -123,7 +117,6 @@ def load_input_to_dict(args):
         'horizon' : args.horizon,
         'lr' : args.lr,
         'bbest' : args.bbest,
-        'termination_criterion' : args.tcriterion,
         'num_features' : args.nfeatures,
         'eval_step' : args.estep,
         'sample_noise' : args.snoise

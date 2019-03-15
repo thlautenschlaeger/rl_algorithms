@@ -48,8 +48,8 @@ def rs_args_parser():
     parser.add_argument('--snoise', help='sample noise parameter',
                         type=float, default=rs_params['sample_noise'])
 
-    parser.add_argument('--version', help='rs version. 0=arsv1, 1=arsv1rff, 2=arsv2',
-                        type=int, default=1)
+    parser.add_argument('--alg', help='rs version. arsv1, arsv1ff, arsv2',
+                        type=str, default='arsv1')
     parser.add_argument('--resume', help='bool flag that checks if training should be resumed. path must be provided',
                         type=bool, default=False)
 

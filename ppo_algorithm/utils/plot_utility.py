@@ -1,19 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plt_expected_cum_reward(mean, std, path, eval_step):
+def plt_expected_cum_reward(path, expected_reward, eval_step):
     """
+    path to store evaluation plots
 
-    :param mean:
-    :param std:
+    :param expected_reward:
     :return:
     """
 
     fig, ax = plt.subplots()
-    ax.plot(mean, color='red')
-    n = len(mean)
-    x = np.arange(n)
-    ax.fill_between(x, mean-std, mean+std, facecolor='blue')
+    ax.plot(expected_reward, color='red')
 
     ax.set_xlabel('Episode')
     ax.set_ylabel('Expected Cumulative Reward')
@@ -22,12 +19,3 @@ def plt_expected_cum_reward(mean, std, path, eval_step):
 
     fig.savefig(path+'/reward.png')
     plt.close('all')
-
-def plot_transitions(mean_reward, std_reward):
-    """
-
-    :param mean_reward:
-    :param std_reward:
-    :return:
-    """
-

@@ -1,49 +1,53 @@
 from quanser_robots import GentlyTerminating
 import torch
 import torch.optim as optim
-import matplotlib.pyplot as plt
 import numpy as np
 from ppo_algorithm.gae import compute_gae
 from ppo_algorithm.models import actor_critic
 from ppo_algorithm.utils import plot_utility
-import time
 from ppo_algorithm.utils import model_handler
 from torch.distributions import Normal
 
 class PPO():
 
-    def __init__(self, env, path, hyper_params, continue_training=False, new=False):
+    def __init__(self, env, path, hyper_params, continue_training=False):
+        """
+        This class provides a PPO implementation
+
+        :param env: gym environment
+        :param path: path where to save checkpoints and results
+        :param hyper_params: hyper parameter for ppo
+        :param continue_training: checks if to continue training or start new
+        """
 
         self.env = GentlyTerminating(env)
         self.path = path
-        self.num_iterations = hyper_params['num_iterations']
-        self.lamb = hyper_params['lambda']
-        self.cliprange  =hyper_params['cliprange']
-        self.gamma = hyper_params['gamma']
-        # self.ppo_epochs = hyper_params['ppo_epochs']
-        self.ppo_epochs = 10
-        # self.horizon = hyper_params['horizon']
-        self.horizon = 10000
-        self.minibatches = hyper_params['minibatches']
-        self.vf_coef = hyper_params['vf_coef']
-        self.entropy_coef = hyper_params['entropy_coef']
-        self.num_hidden_neurons = hyper_params['num_hidden_neurons']
-        self.policy_std = hyper_params['policy_std']
-        self.lr = hyper_params['lr']
-        self.vf_coef = hyper_params['vf_coef']
-        self.max_grad_norm = hyper_params['max_grad_norm']
-        self.num_evals = hyper_params['num_evals']
-        self.eval_step = hyper_params['eval_step']
+        self.num_iterations = hyper_params['num_iterations']    # number of total training iterations
+        self.lamb = hyper_params['lambda']                      # lambda for general advantage estimate
+        self.cliprange  =hyper_params['cliprange']              # ppo cliprange of importance weights
+        self.gamma = hyper_params['gamma']                      # gamma for general advantage estimate
+        self.ppo_epochs = hyper_params['ppo_epochs']            # number ppo optimization epochs
+        self.horizon = hyper_params['horizon']                  # number of training samples per iteration
+        self.minibatches = hyper_params['minibatches']          # minibatch size for ppo optimization
+        self.vf_coef = hyper_params['vf_coef']                  # value function coefficient
+        self.entropy_coef = hyper_params['entropy_coef']        # entropy coefficient
+        self.num_hidden_neurons = hyper_params['num_hidden_neurons']    # number of hidden neurons
+        self.policy_std = hyper_params['policy_std']            # initial policy stddev
+        self.lr = hyper_params['lr']                            # lern rate
+        self.max_grad_norm = hyper_params['max_grad_norm']      # maximum gradient norm for param update
+        self.num_evals = hyper_params['num_evals']              # number of policy evaluations to compute expected reward
+        self.eval_step = hyper_params['eval_step']              # policy gets evaluated after every eval_step
 
         self.num_inputs = self.env.observation_space.shape[0]
         self.num_outputs = self.env.action_space.shape[0]
         self.num_states = self.num_inputs
-        self.cum_train_rewards = np.array([])
+        self.cumulative_rollout_rewards = np.array([])
         self.cum_eval_rewards = np.array([])
         self.cum_eval_rewards_std = np.array([])
         self.entropy = np.array([])
         self.epoch = 0
 
+        # initialize actor critic network
         self.ac_net = actor_critic.ActorCriticMLPShared(num_inputs=self.num_inputs,
                                                         num_hidden_neurons=self.num_hidden_neurons,
                                                         num_outputs=self.num_outputs,
@@ -51,25 +55,15 @@ class PPO():
                                                         std=self.policy_std)
 
 
-        # self.state_normalizer = Normalizer(num_inputs=self.num_inputs)
         self.ac_optim = optim.Adam(self.ac_net.parameters(), lr=self.lr)
-        self.decay = lambda f, x: f * x
 
         if continue_training:
-            self.ac_net, self.ac_optim, self.cum_train_rewards, \
+            self.ac_net, self.ac_optim, self.cumulative_rollout_rewards, \
             self.cum_eval_rewards, self.cum_eval_rewards_std, self.epoch, self.entropy = \
                 model_handler.load_model(path=path,
                                          model=self.ac_net,
                                          optimizer=self.ac_optim,
                                          from_checkpoint=True)
-            if new:
-                self.cum_train_rewards = np.array([])
-                self.cum_eval_rewards = np.array([])
-                self.cum_eval_rewards_std = np.array([])
-                self.entropy = np.array([])
-                self.epoch = 0
-
-
             self.ac_net.train()
 
 
@@ -77,14 +71,9 @@ class PPO():
         """
         collects multiple trajectories limited by horizon
 
-        :return: values,
-                 old_log_probs,
-                 actions, states,
-                 rewards,
-                 masks,
-                 entropy
+        :return: values,old_log_probs, actions, states, rewards, masks, entropy
         """
-
+        # init arrays for data collection
         rewards = np.empty(shape=self.horizon)
         values = torch.empty(self.horizon)
         states = torch.empty(size=(self.horizon, self.num_states))
@@ -102,7 +91,7 @@ class PPO():
             dist = Normal(mean, std)
             action = dist.sample()
 
-            next_state, reward, done, info = self.env.step(np.clip(action.cpu().detach().numpy()[0], a_min=-6., a_max=6.))
+            next_state, reward, done, info = self.env.step(action.cpu().detach().numpy()[0])
 
             # save values and rewards for gae
             log_prob = dist.log_prob(action)
@@ -118,16 +107,11 @@ class PPO():
             if done:
                 state = self.env.reset()
 
-
         _, _, last_value = self.ac_net(torch.FloatTensor(next_state))
         last_value = last_value.detach()
         values = values.detach()
         entropy = dist.entropy().detach().numpy()[0][0]
         old_log_probs = old_log_probs.detach()
-
-        print('policy stddev: {} policy variance {}'.format(
-            self.ac_net.log_std.exp().detach().numpy().squeeze(),
-            dist.variance.detach().numpy().squeeze()))
 
         return values, old_log_probs, actions, states, rewards, last_value, masks, entropy
 
@@ -203,76 +187,83 @@ class PPO():
             # computes general advantages from trajectories
             advantage_est, returns = compute_gae(rewards, values, last_value, masks, self.lamb, self.gamma)
 
+            # interesting to check how model behaves
             total_rollout_reward = rewards.sum()
 
-            print("Total rollout reward: {} in epoch: {}".format(total_rollout_reward, epoch))
-            print("############################################:")
-            self.cum_train_rewards = np.append(self.cum_train_rewards, total_rollout_reward)
+            self.cumulative_rollout_rewards = np.append(self.cumulative_rollout_rewards, total_rollout_reward)
             self.entropy = np.append(self.entropy, entropy)
 
+            # plotting and evaluating policy
+            if epoch % self.eval_step == 0:
+                check_reward = self.logger(check_reward, epoch)
 
+            # actual ppo optimization
             self.ppo_update(advantage_est, states, actions,
                             old_log_probs, returns, cliprange=self.cliprange)
 
-            # plotting and evaluating policy
-            # if epoch % self.eval_step == 0:
-            if epoch % 5 == 0:
-                eval_reward, eval_std = eval_policy(env=self.env,
-                                                    policy=self.ac_net,
-                                                    num_evals=self.num_evals,)
-                self.cum_eval_rewards = np.append(self.cum_eval_rewards, eval_reward)
-                self.cum_eval_rewards_std = np.append(self.cum_eval_rewards_std, eval_std)
+    def logger(self, check_reward, epoch):
+        """
+        evaluates current model, checks if to save best scoring model.
 
-                plot_utility.plt_expected_cum_reward(self.cum_eval_rewards,
-                                                     self.cum_eval_rewards_std,
-                                                     self.path,
-                                                     self.eval_step)
-                # plt.plot(self.cum_eval_rewards)
-                # plt.savefig(self.path+'/reward.png')
+        :param check_reward:
+        :param epoch:
+        :return:
+        """
+        eval_reward, eval_std = eval_policy(env=self.env,
+                                            model=self.ac_net,
+                                            num_evals=self.num_evals, )
+        self.cum_eval_rewards = np.append(self.cum_eval_rewards, eval_reward)
+        self.cum_eval_rewards_std = np.append(self.cum_eval_rewards_std, eval_std)
+        plot_utility.plt_expected_cum_reward(self.path, self.cum_eval_rewards, self.eval_step)
+        print("---------------------------------------------------")
+        print("Expected cumulative reward: {} after {} epochs:".format(eval_reward, epoch))
+        print("---------------------------------------------------")
+        model_handler.save_model(model=self.ac_net,
+                                 optimizer=self.ac_optim,
+                                 train_rewards=self.cumulative_rollout_rewards,
+                                 eval_rewards=self.cum_eval_rewards,
+                                 eval_rewards_std=self.cum_eval_rewards_std,
+                                 epoch=epoch,
+                                 entropy=self.entropy,
+                                 path=self.path + '/checkpoint')
+        if check_reward < eval_reward:
+            print("Found new high scoring model")
+            check_reward = eval_reward
+            model_handler.save_model(model=self.ac_net,
+                                     optimizer=self.ac_optim,
+                                     train_rewards=self.cumulative_rollout_rewards,
+                                     eval_rewards=self.cum_eval_rewards,
+                                     eval_rewards_std=self.cum_eval_rewards_std,
+                                     epoch=epoch,
+                                     entropy=self.entropy,
+                                     path=self.path + '/best_policy')
+
+        return check_reward
 
 
-                model_handler.save_model(model=self.ac_net,
-                                         optimizer=self.ac_optim,
-                                         train_rewards=self.cum_train_rewards,
-                                         eval_rewards=self.cum_eval_rewards,
-                                         eval_rewards_std=self.cum_eval_rewards_std,
-                                         epoch=epoch,
-                                         entropy=self.entropy,
-                                         path=self.path+'/checkpoint')
-                print("Checkpoint saved")
+def eval_policy(env, model, num_evals=0):
+    """
+    evaluates given model
 
-                if check_reward < eval_reward:
-                    print("New highest scoring model saved")
-                    check_reward = eval_reward
-                    model_handler.save_model(model=self.ac_net,
-                                             optimizer=self.ac_optim,
-                                             train_rewards=self.cum_train_rewards,
-                                             eval_rewards=self.cum_eval_rewards,
-                                             eval_rewards_std=self.cum_eval_rewards_std,
-                                             epoch=epoch,
-                                             entropy=self.entropy,
-                                             path=self.path + '/best_policy')
+    :param env: gym environment
+    :param model: actor-critic model
+    :param num_evals: number of model evaluations
 
-
-def eval_policy(env, policy, num_evals=0):
-    cum_reward_list = np.empty(2)
-    for i in range(2):
+    :return: expected model reward and corresponding stddevs
+    """
+    cum_reward_list = np.empty(num_evals)
+    for i in range(num_evals):
         cum_reward = 0
         done = False
         state = env.reset()
         while not done:
             state = torch.FloatTensor(state)
-            mean, std, _ = policy(state)
+            mean, std, _ = model(state)
             dist = Normal(mean, 0)
             action = dist.sample()
-            action = torch.clamp(action, min=-6, max=6)
             state, reward, done, _ = env.step(action.cpu().detach().numpy())
             cum_reward += reward
-        # env.render()
         cum_reward_list[i] = cum_reward
     expected_cum_reward = cum_reward_list.mean()
     expected_cum_reward_std = cum_reward_list.std()
-    print('----------------------------------------------')
-    print('Expected cumulative reward: {} with stddev: {}'.format(expected_cum_reward, expected_cum_reward_std))
-    print('----------------------------------------------')
     return expected_cum_reward, expected_cum_reward_std

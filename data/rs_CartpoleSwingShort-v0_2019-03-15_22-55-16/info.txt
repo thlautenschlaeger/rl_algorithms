@@ -1,0 +1,1 @@
+{'num_deltas': 8, 'num_iterations': 100, 'horizon': 1024, 'lr': 0.015, 'bbest': 4, 'num_features': 4, 'eval_step': 20, 'sample_noise': 0.025}

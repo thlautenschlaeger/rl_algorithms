@@ -54,5 +54,11 @@ def ppo_args_parser():
 
     parser.add_argument('--resume', help='continue training boolean flag',
                         type=bool, default=False)
+    parser.add_argument('--benchmark', help='if benchmark policy, path has to be provided',
+                        type=bool, default=False)
+    parser.add_argument('--vis', help='if active, benchmark gets visualized',
+                        type=bool, default=False)
+    parser.add_argument('--benchsteps', help='number of benchmark evaluations',
+                        type=bool, default=False)
 
     return parser
