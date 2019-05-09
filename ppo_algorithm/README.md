@@ -13,6 +13,4 @@ equipped with
 Implementation of general advantage estimation.
 [link to paper](https://arxiv.org/abs/1506.02438)
 
-### main.py
-
-##
+Default hyper parameters are located in ppo_hyperparams.py
