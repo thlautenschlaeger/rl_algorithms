@@ -72,7 +72,7 @@ If numpy causes trouble, run the uninstall command multiple times until
 no more version is located in your environment. Install numpy again
 with ``pip3 install numpy==1.16.0``
 
-## Example PPO visualizations
+## Example PPO best policy visualizations
 
 ![](animations/qube-rr.gif)
 ![](animations/qube.gif)
