@@ -1,4 +1,4 @@
-# Group 1 
+# Implementation of PPO and RandomSearch
 
 ## Requirements
 This implementation requires python3 (>=3.5). 
